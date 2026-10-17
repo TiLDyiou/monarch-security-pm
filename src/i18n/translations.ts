@@ -475,7 +475,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         title1: 'Tối Ưu Danh Mục',
         title2: 'Đầu Tư Chuẩn Khoa Học',
         subtitle:
-          'Phân bổ tài sản theo Thuyết danh mục hiện đại, đồng hành tái cân bằng định kỳ và bảo vệ tài sản gia đình bạn trong mọi chu kỳ thị trường',
+          'Phân bổ tài sản theo Lý thuyết danh mục hiện đại, tái cân bằng định kỳ và bảo vệ tài sản gia đình bạn qua mọi chu kỳ thị trường',
         cta: 'Bắt Đầu Ngay',
       },
       allocation: {
@@ -510,73 +510,73 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
           defensive: {
             name: 'Bảo toàn',
-            tag: 'Ưu tiên bảo vệ vốn và phòng hộ lạm phát',
+            tag: 'Ưu tiên bảo toàn vốn và hạn chế tác động của lạm phát',
             riskLevel: 'Thấp',
             timeHorizon: 'Ngắn hạn',
           },
         },
         stats: {
           riskLevel: 'Mức rủi ro',
-          timeHorizon: 'Kỳ hạn gợi ý',
+          timeHorizon: 'Thời gian đầu tư',
         },
-        note: 'Tỷ trọng mang tính minh họa. Danh mục thực tế được may đo theo mục tiêu và ngưỡng chấp nhận rủi ro của bạn.',
+        note: 'Tỷ trọng chỉ mang tính minh họa. Danh mục thực tế được xây dựng riêng theo mục tiêu và ngưỡng chấp nhận rủi ro của bạn.',
       },
       features: {
-        sectionTitle: 'Mỗi nhà đầu tư một mục tiêu, một ngưỡng an toàn tài chính',
+        sectionTitle: 'Mỗi nhà đầu tư có mục tiêu và ngưỡng an toàn tài chính riêng',
         sectionSubtitle:
-          'Chúng tôi không đưa lời khuyên chung chung, chúng tôi xây lộ trình khoa học dành riêng cho bạn',
+          'Thay vì lời khuyên chung chung, chúng tôi xây dựng lộ trình đầu tư khoa học dành riêng cho bạn',
         cards: {
           card1: {
-            title: 'Đầu Tư Đúng Người, Đúng Mục Tiêu',
+            title: 'Phân Bổ Vốn Theo Đúng Mục Tiêu Của Bạn',
             description:
-              'Dựa trên mức rủi ro bạn chấp nhận, khả năng tiết kiệm và kế hoạch nghỉ hưu, chúng tôi chia vốn hợp lý vào cổ phiếu, ETF, trái phiếu và tài sản an toàn.',
+              'Dựa trên mức rủi ro bạn chấp nhận, khả năng tiết kiệm và kế hoạch nghỉ hưu, chúng tôi phân bổ vốn hợp lý vào cổ phiếu, ETF, trái phiếu và tài sản an toàn.',
             imageAlt: 'Thiết kế danh mục đầu tư cá nhân',
             buttonText: 'Tìm hiểu phương pháp',
           },
           card2: {
             title: 'Lợi Nhuận Tối Ưu, Rủi Ro Trong Tầm Kiểm Soát',
             description:
-              'Chúng tôi phân tán vốn để giảm rủi ro theo lý thuyết danh mục hiện đại của Harry Markowitz, và chỉ mua khi giá đủ hấp dẫn theo nguyên tắc biên an toàn của Benjamin Graham. Nhờ vậy, danh mục của bạn sinh lời tốt nhất ở mức rủi ro bạn chấp nhận.',
+              'Chúng tôi đa dạng hóa danh mục theo Lý thuyết danh mục hiện đại của Harry Markowitz và chỉ mua khi giá có đủ biên an toàn theo nguyên tắc của Benjamin Graham, để danh mục đạt lợi nhuận tốt nhất trong mức rủi ro bạn chấp nhận.',
             imageAlt: 'Tối ưu hóa danh mục MPT',
             buttonText: 'Khám phá chiến lược',
           },
           card3: {
             title: 'Đội Ngũ Chuyên Viên Đồng Hành, Tái Cân Bằng Định Kỳ',
             description:
-              'Chuyên gia cố vấn tài chính cấp cao trực tiếp theo dõi, hỗ trợ điều chỉnh tỷ trọng tài sản định kỳ trước biến động kinh tế vĩ mô nhằm bảo toàn thành quả đầu tư dài hạn.',
+              'Chuyên viên cố vấn trực tiếp theo dõi danh mục và điều chỉnh tỷ trọng tài sản định kỳ trước biến động vĩ mô, giúp bảo toàn thành quả đầu tư dài hạn.',
             imageAlt: 'Chuyên viên cố vấn đồng hành riêng',
           },
         },
       },
       principles: {
-        title: 'Những Ràng Buộc Định Hình Mọi Danh Mục',
+        title: 'Đầu Tư Trong Đúng Giới Hạn Của Gia Đình',
         subtitle:
-          'Trước khi tối ưu lợi nhuận, chúng tôi xác lập rõ các giới hạn trong Tuyên bố Chính sách Đầu tư để danh mục luôn phù hợp với hoàn cảnh thực tế của gia đình bạn.',
+          'Trước khi tính đến lợi nhuận, chúng tôi xác định rõ các ràng buộc trong Tuyên bố Chính sách Đầu tư để danh mục phù hợp với hoàn cảnh thực tế của gia đình bạn.',
         items: [
           {
             title: 'Thanh khoản',
             description:
-              'Duy trì quỹ dự phòng và tài sản thanh khoản cao để đáp ứng nhu cầu chi tiêu bất ngờ mà không phải bán tháo danh mục.',
+              'Duy trì quỹ dự phòng và tài sản dễ chuyển thành tiền mặt để đáp ứng chi tiêu bất ngờ mà không phải bán tháo danh mục.',
           },
           {
             title: 'Thời gian đầu tư',
             description:
-              'Phân tầng kỳ hạn theo từng mục tiêu: mục tiêu gần ưu tiên an toàn, mục tiêu xa tận dụng sức mạnh của lãi kép.',
+              'Mỗi mục tiêu có kỳ hạn riêng: mục tiêu gần ưu tiên an toàn, mục tiêu xa tận dụng lãi kép.',
           },
           {
             title: 'Thuế',
             description:
-              'Cân nhắc thuế trên cổ tức, lãi tiền gửi và giao dịch chứng khoán để tối ưu lợi nhuận thực nhận.',
+              'Tính đến thuế đối với cổ tức, lãi tiền gửi và giao dịch chứng khoán để tối ưu lợi nhuận thực nhận.',
           },
           {
             title: 'Pháp lý',
             description:
-              'Chỉ lựa chọn tài sản minh bạch, giao dịch qua tổ chức được cấp phép và tuân thủ quy định hiện hành.',
+              'Chỉ chọn tài sản minh bạch, giao dịch qua tổ chức được cấp phép và tuân thủ quy định hiện hành.',
           },
           {
             title: 'Hoàn cảnh riêng',
             description:
-              'Tính đến người phụ thuộc, tài sản sẵn có, nghĩa vụ nợ và những ưu tiên đặc thù của từng gia đình.',
+              'Cân nhắc người phụ thuộc, tài sản hiện có, các khoản nợ và ưu tiên riêng của từng gia đình.',
           },
         ],
       },
@@ -584,22 +584,22 @@ export const translations: Record<Language, TranslationDictionary> = {
         sectionTitle1: 'Quy Trình Hoạch Định Danh Mục',
         sectionTitle2: 'Bài Bản & Tinh Gọn',
         sectionSubtitle:
-          'Gạt bỏ nỗi lo biến động thị trường và những quyết định mua bán cảm tính. Chúng tôi đồng hành cùng bạn tích lũy tài sản một cách kỷ luật, để tài sản tăng trưởng bền vững mà vẫn nằm trong ngưỡng an toàn của gia đình.',
+          'Không còn lo lắng trước biến động thị trường hay mua bán theo cảm tính. Chúng tôi giúp bạn tích lũy có kỷ luật, để tài sản tăng trưởng bền vững trong ngưỡng an toàn của gia đình.',
         cards: {
           step1: {
-            title: 'Thấu Hiểu Ngưỡng An Toàn Tài Chính & Mục Tiêu Gia Đình',
+            title: 'Hiểu Rõ Mục Tiêu & Ngưỡng An Toàn Của Gia Đình',
             description:
-              'Đo lường mức độ chấp nhận rủi ro qua bài khảo sát chuẩn quốc tế, đồng thời sắp xếp lại thu chi và lập quỹ dự phòng để vững vàng hướng tới mục tiêu mua nhà, lo cho con cái và hưu trí.',
+              'Đánh giá mức chấp nhận rủi ro bằng bảng khảo sát chuẩn quốc tế, cân đối lại thu chi và lập quỹ dự phòng, tạo nền tảng cho các mục tiêu mua nhà, học vấn của con và hưu trí.',
           },
           step2: {
             title: 'Thiết Kế & Tối Ưu Hóa Danh Mục Đầu Tư',
             description:
-              'Kết hợp hài hòa các cổ phiếu đầu ngành có nền tảng vững chắc với Trái phiếu Chính phủ an toàn theo mô hình toán học Markowitz, giúp tối ưu lợi nhuận kỳ vọng và kiểm soát biến động.',
+              'Kết hợp cổ phiếu đầu ngành có nền tảng vững chắc với trái phiếu Chính phủ theo mô hình tối ưu Markowitz, để đạt lợi nhuận kỳ vọng cao nhất ở mức biến động phù hợp.',
           },
           step3: {
-            title: 'Giám Sát Tỷ Trọng & Tái Cân Bằng Kỷ Luật',
+            title: 'Theo Dõi Tỷ Trọng & Tái Cân Bằng Định Kỳ',
             description:
-              'Không chạy theo tâm lý đám đông. Chúng tôi rà soát danh mục định kỳ để giữ vững tỷ lệ vàng giữa cổ phiếu và Trái phiếu Chính phủ, đồng thời ưu tiên tái đầu tư từ dòng tiền tiết kiệm hàng tháng nhằm tối ưu chi phí giao dịch.',
+              'Không chạy theo tâm lý đám đông. Chúng tôi rà soát danh mục định kỳ để giữ đúng tỷ trọng mục tiêu giữa cổ phiếu và trái phiếu, ưu tiên dùng tiền tiết kiệm hằng tháng để tái cân bằng nhằm tiết giảm chi phí giao dịch.',
           },
         },
         illustrations: {
@@ -643,43 +643,43 @@ export const translations: Record<Language, TranslationDictionary> = {
       testimonials: {
         title: 'Những Tư Tưởng Dẫn Lối',
         subtitle:
-          'Kim chỉ nam soi đường cho phương pháp luận phân bổ danh mục khoa học, quản trị rủi ro và tăng trưởng tài sản bền vững của chúng tôi.',
+          'Những nguyên tắc định hướng cách chúng tôi phân bổ danh mục, quản trị rủi ro và gia tăng tài sản bền vững.',
         items: [
           {
             quote:
               'Quy tắc thứ nhất: Không bao giờ để mất tiền. Quy tắc thứ hai: Không bao giờ quên quy tắc thứ nhất. Hãy sợ hãi khi người khác tham lam, và hãy tham lam khi người khác sợ hãi.',
             author: 'Warren Buffett',
-            role: 'Huyền thoại Đầu tư, Chủ tịch kiêm CEO Berkshire Hathaway',
+            role: 'Nhà đầu tư huyền thoại, Chủ tịch kiêm CEO Berkshire Hathaway',
           },
           {
             quote:
-              'Đảo ngược, hãy luôn đảo ngược: Hãy nhìn nhận mọi vấn đề theo chiều ngược lại. Thật đáng kinh ngạc khi thấy chúng tôi gặt hái được bao nhiêu lợi thế dài hạn chỉ bằng cách kiên trì không làm điều ngu ngốc, thay vì cố gắng tỏ ra quá thông minh.',
+              'Hãy đảo ngược, luôn đảo ngược: nhìn vấn đề từ chiều ngược lại. Thật đáng ngạc nhiên khi những người như chúng tôi có được nhiều lợi thế dài hạn chỉ nhờ luôn cố gắng không làm điều ngớ ngẩn, thay vì cố tỏ ra thật thông minh.',
             author: 'Charlie Munger',
-            role: 'Bậc thầy Đa ngành, Cố Phó Chủ tịch Berkshire Hathaway',
+            role: 'Cố Phó Chủ tịch Berkshire Hathaway',
           },
           {
             quote:
-              'Đa dạng hóa là bữa trưa miễn phí duy nhất trong tài chính. Một danh mục đầu tư tốt không chỉ là danh sách dài các cổ phiếu và trái phiếu tốt; đó là một tổng thể cân bằng mang lại sự bảo vệ và cơ hội trước mọi biến cố bất ngờ.',
+              'Đa dạng hóa là bữa trưa miễn phí duy nhất trong tài chính. Một danh mục tốt không chỉ là danh sách dài những cổ phiếu và trái phiếu tốt, mà là một tổng thể cân bằng, vừa bảo vệ vừa mở ra cơ hội trước nhiều tình huống bất ngờ.',
             author: 'Harry Markowitz',
-            role: 'Nhà kinh tế đoạt giải Nobel, Cha đẻ Thuyết Danh mục Hiện đại MPT',
+            role: 'Nhà kinh tế đoạt giải Nobel, cha đẻ Lý thuyết danh mục hiện đại',
           },
           {
             quote:
-              'Trong ngắn hạn, thị trường là một chiếc máy bỏ phiếu; nhưng trong dài hạn, nó là một chiếc bàn cân. Đứng trước thử thách đúc kết bí quyết đầu tư đúng đắn trong ba từ, chúng tôi đưa ra phương châm: Biên An Toàn.',
+              'Trong ngắn hạn, thị trường là một cỗ máy bỏ phiếu; về dài hạn, nó là một chiếc cân. Nếu phải gói gọn bí quyết đầu tư đúng đắn trong ba từ, chúng tôi chọn: Biên an toàn.',
             author: 'Benjamin Graham',
-            role: "Cha đẻ của Đầu tư Giá trị, Tác giả 'Nhà đầu tư Thông minh'",
+            role: 'Cha đẻ trường phái đầu tư giá trị, tác giả cuốn Nhà đầu tư thông minh',
           },
           {
             quote:
-              'Thị trường có thể duy trì trạng thái phi lý trí lâu hơn khoảng thời gian bạn có thể duy trì khả năng thanh toán. Khó khăn lớn nhất không nằm ở việc nảy sinh ý tưởng mới, mà là thoát khỏi những thói quen cũ.',
+              'Thị trường có thể phi lý lâu hơn khả năng chi trả của bạn. Cái khó không nằm ở việc nảy ra ý tưởng mới, mà ở việc thoát khỏi lối nghĩ cũ.',
             author: 'John Maynard Keynes',
-            role: 'Nhà Kinh tế học Lỗi lạc, Nhà kiến tạo Kinh tế học Vĩ mô',
+            role: 'Người đặt nền móng cho kinh tế học vĩ mô hiện đại',
           },
           {
             quote:
-              'Không phải từ lòng nhân từ của người bán thịt, người nấu bia hay người làm bánh mì mà chúng ta có bữa tối, mà là từ sự theo đuổi lợi ích chính đáng của chính họ. Khi mưu cầu lợi ích riêng, cá nhân thường đóng góp hiệu quả hơn cho sự phồn vinh của toàn xã hội.',
+              'Chúng ta có bữa tối không phải nhờ lòng tốt của người bán thịt, người nấu bia hay người làm bánh, mà nhờ họ quan tâm đến lợi ích của chính mình. Khi theo đuổi lợi ích riêng, mỗi người thường đóng góp cho xã hội hiệu quả hơn cả khi họ chủ ý làm điều đó.',
             author: 'Adam Smith',
-            role: "Cha đẻ Kinh tế học Hiện đại, Tác giả 'Của cải của các Quốc gia'",
+            role: 'Cha đẻ kinh tế học hiện đại, tác giả cuốn Của cải của các quốc gia',
           },
         ],
       },
@@ -687,33 +687,33 @@ export const translations: Record<Language, TranslationDictionary> = {
         badge: 'Giải đáp thắc mắc',
         title: 'Câu Hỏi Thường Gặp',
         subtitle:
-          'Mọi điều bạn cần biết về nguyên tắc cố vấn độc lập, tính an toàn của tài sản và quy trình đồng hành cùng chúng tôi.',
+          'Những điều bạn cần biết về nguyên tắc tư vấn độc lập, sự an toàn của tài sản và cách chúng tôi làm việc cùng bạn.',
         items: [
           {
-            question: 'Dịch vụ tư vấn danh mục đầu tư tài chính cá nhân của chúng tôi hoạt động ra sao?',
+            question: 'Dịch vụ tư vấn danh mục đầu tư hoạt động như thế nào?',
             answer:
-              'Chúng tôi đóng vai trò là chuyên gia cố vấn tài chính độc lập chuẩn mực Fiduciary. Chúng tôi phân tích thu nhập, chi tiêu, nợ và mức độ chấp nhận rủi ro để thiết kế danh mục phân bổ tài sản may đo như Cổ phiếu, Quỹ mở, Trái phiếu, Vàng, Bất động sản. Bạn tự tay sở hữu và giải ngân trên chính tài khoản của bạn, chúng tôi đồng hành tư vấn và định kỳ tái cân bằng danh mục.',
+              'Chúng tôi là đơn vị tư vấn tài chính độc lập, luôn đặt lợi ích của khách hàng lên hàng đầu. Chúng tôi phân tích thu nhập, chi tiêu, các khoản nợ và mức chấp nhận rủi ro của bạn để thiết kế danh mục riêng gồm cổ phiếu, quỹ mở, trái phiếu, vàng và bất động sản. Bạn sở hữu và giao dịch trên tài khoản của chính mình, còn chúng tôi tư vấn và tái cân bằng danh mục định kỳ.',
           },
           {
-            question: 'Chúng tôi có trực tiếp giữ tiền hoặc tài sản đầu tư của bạn không?',
+            question: 'Monarch Securities có trực tiếp giữ tiền hoặc tài sản của tôi không?',
             answer:
-              'Tuyệt đối không! Tiền và toàn bộ danh mục tài sản luôn nằm hoàn toàn tại tài khoản chứng khoán, ngân hàng hoặc công ty quản lý quỹ do chính bạn đứng tên tại các tổ chức uy tín được Nhà nước cấp phép. Chúng tôi chỉ đưa ra khuyến nghị phân bổ chiến lược, bạn hoàn toàn làm chủ tài sản của mình.',
+              'Không. Tiền và toàn bộ tài sản luôn nằm trong tài khoản chứng khoán, ngân hàng hoặc công ty quản lý quỹ do chính bạn đứng tên, tại các tổ chức được Nhà nước cấp phép. Chúng tôi chỉ đưa ra khuyến nghị phân bổ, mọi quyết định với tài sản vẫn do bạn nắm giữ.',
           },
           {
-            question: 'Chiến lược phân bổ danh mục của chúng tôi dựa trên phương pháp luận nào?',
+            question: 'Chiến lược phân bổ danh mục dựa trên phương pháp nào?',
             answer:
-              'Chúng tôi ứng dụng Thuyết danh mục hiện đại Modern Portfolio Theory của GS. Harry Markowitz, nhà kinh tế đoạt giải Nobel, kết hợp với triết lý đầu tư giá trị và Biên an toàn của Benjamin Graham & Warren Buffett: Đa dạng hóa để triệt tiêu tối đa rủi ro phi hệ thống và tập trung vào các tài sản tạo dòng tiền thực chất.',
+              'Chúng tôi áp dụng Lý thuyết danh mục hiện đại của Harry Markowitz, nhà kinh tế đoạt giải Nobel, kết hợp với triết lý đầu tư giá trị và nguyên tắc biên an toàn của Benjamin Graham và Warren Buffett: đa dạng hóa để giảm thiểu rủi ro phi hệ thống và tập trung vào những tài sản tạo ra dòng tiền thực.',
           },
           {
-            question: 'Tôi cần có số vốn tối thiểu bao nhiêu để bắt đầu nhận tư vấn?',
+            question: 'Tôi cần bao nhiêu vốn để bắt đầu?',
             answer:
-              'Chúng tôi có các gói tư vấn linh hoạt: từ người trẻ đang bắt đầu hành trình tích lũy tài sản đầu đời với số vốn khiêm tốn đến các gia đình hoặc cá nhân có tài sản ròng cao HNWI cần hoạch định danh mục đa lớp phức tạp và kế thừa gia sản.',
+              'Chúng tôi có nhiều gói tư vấn linh hoạt, từ người trẻ mới bắt đầu tích lũy với số vốn khiêm tốn đến những gia đình có tài sản lớn cần hoạch định danh mục nhiều lớp và kế thừa tài sản.',
           },
         ],
       },
       footer: {
         brandDesc:
-          'Monarch Securities cung cấp giải pháp hoạch định tài chính và quản trị danh mục đầu tư độc lập, minh bạch và đồng hành dài hạn cùng gia đình bạn.',
+          'Monarch Securities cung cấp dịch vụ hoạch định tài chính và quản lý danh mục đầu tư độc lập, minh bạch, đồng hành lâu dài cùng gia đình bạn.',
         servicesHeading: 'Dịch vụ',
         methodsHeading: 'Phương pháp',
         legalHeading: 'Pháp lý',
@@ -731,7 +731,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           terms: 'Điều khoản dịch vụ',
           privacy: 'Chính sách bảo mật',
         },
-        copyright: 'Monarch Securities. Dịch vụ tư vấn danh mục đầu tư tài chính cá nhân độc lập. Bảo lưu mọi quyền.',
+        copyright: 'Monarch Securities. Tư vấn danh mục đầu tư cá nhân độc lập. Bảo lưu mọi quyền.',
       },
     },
     dashboard: {
