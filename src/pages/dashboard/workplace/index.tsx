@@ -12,45 +12,15 @@ import {
   ResponsiveContainer,
   Tooltip as RechartsTooltip,
 } from 'recharts';
-import { Landmark, ShieldCheck, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FinancialRoadmap } from './components/FinancialRoadmap';
 import { Panel } from './components/Panel';
-import { formatNumber } from '@/utils/format';
-import { client, netWorth, surplus, totalAssets } from '../mock/client';
+import { client } from '../mock/client';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 const Workplace: FC = () => {
   const { language, t } = useLanguage();
   const wp = t.dashboard.workplace;
-
-  const stats = [
-    {
-      key: 'assets',
-      icon: Landmark,
-      label: wp.stats.totalAssets,
-      value: formatNumber(totalAssets),
-      unit: t.common.millionVnd,
-      note: wp.stats.totalAssetsDesc,
-    },
-    {
-      key: 'netWorth',
-      icon: ShieldCheck,
-      label: wp.stats.netWorth,
-      value: formatNumber(netWorth),
-      unit: t.common.millionVnd,
-      note: wp.stats.netWorthDesc,
-    },
-    {
-      key: 'surplus',
-      icon: TrendingUp,
-      label: wp.stats.surplus,
-      value: `+${formatNumber(surplus)}`,
-      unit: t.common.vndPerMonth,
-      note: wp.stats.surplusDesc,
-      accent: true,
-    },
-  ];
 
   const benchmarkData = useMemo(
     () => [
@@ -171,33 +141,7 @@ const Workplace: FC = () => {
       <Row gutter={[24, 24]}>
         <Col xl={16} lg={24} md={24} sm={24} xs={24}>
           <div className="flex flex-col gap-6">
-            {/* Household: financial capacity on top, members below, in one panel */}
             <Panel title={wp.header.title} subtitle={wp.header.subtitle}>
-              <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border/50 border-b border-border/50">
-                {stats.map((s) => (
-                  <div key={s.key} className="px-4 sm:px-5 py-4 flex items-start gap-3">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-600 dark:bg-teal-950/40 dark:text-teal-400">
-                      <s.icon className="h-4 w-4" />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-xs text-muted-foreground">{s.label}</p>
-                      <p className="mt-0.5 whitespace-nowrap">
-                        <span
-                          className={cn(
-                            'text-lg font-semibold tracking-tight tabular-nums',
-                            s.accent ? 'text-teal-600 dark:text-teal-400' : 'text-foreground',
-                          )}
-                        >
-                          {s.value}
-                        </span>{' '}
-                        <span className="text-xs text-muted-foreground">{s.unit}</span>
-                      </p>
-                      <p className="text-[11px] text-muted-foreground/80 mt-0.5">{s.note}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
               <ul className="grid grid-cols-1 sm:grid-cols-2">
                 {clientProfiles.map((p, i) => (
                   <li

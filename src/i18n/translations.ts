@@ -274,14 +274,6 @@ export interface TranslationDictionary {
         title: string;
         subtitle: string;
       };
-      stats: {
-        totalAssets: string;
-        totalAssetsDesc: string;
-        netWorth: string;
-        netWorthDesc: string;
-        surplus: string;
-        surplusDesc: string;
-      };
       profiles: {
         husband: {
           tag: string;
@@ -841,16 +833,8 @@ export const translations: Record<Language, TranslationDictionary> = {
       },
       workplace: {
         header: {
-          title: 'Thành viên gia đình & Năng lực tài chính',
+          title: 'Thành viên gia đình',
           subtitle: 'Gia đình 4 thành viên · Thuê nhà tại đường Lương Đình Của, Quận 2',
-        },
-        stats: {
-          totalAssets: 'Tổng tài sản',
-          totalAssetsDesc: 'Quy mô tài sản tích lũy',
-          netWorth: 'Tài sản ròng',
-          netWorthDesc: 'Vốn sở hữu sau khi trừ nợ',
-          surplus: 'Thặng dư tích lũy',
-          surplusDesc: 'Dòng tiền đầu tư đều đặn',
         },
         profiles: {
           husband: {
@@ -1407,16 +1391,8 @@ export const translations: Record<Language, TranslationDictionary> = {
       },
       workplace: {
         header: {
-          title: 'Household Members & Financial Profile',
+          title: 'Household Members',
           subtitle: '4-member family · Residing on Luong Dinh Cua St, District 2',
-        },
-        stats: {
-          totalAssets: 'Total Assets',
-          totalAssetsDesc: 'Gross accumulated asset base',
-          netWorth: 'Net Worth',
-          netWorthDesc: 'Equity value net of debt',
-          surplus: 'Monthly Cash Surplus',
-          surplusDesc: 'Consistent investing cash flow',
         },
         profiles: {
           husband: {
