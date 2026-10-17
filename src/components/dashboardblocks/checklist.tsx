@@ -198,14 +198,14 @@ export const Checklist1: React.FC<Checklist1Props> = (props) => {
   };
 
   return (
-    <Card className={cn('@container gap-0 pb-0 border border-border/60 shadow-xs bg-card overflow-hidden', className)}>
-      <CardHeader className="border-b border-border/50 p-5 sm:p-6 pb-4">
+    <Card className={cn('@container gap-0 pb-0 rounded-xl border border-border/60 shadow-xs bg-card overflow-hidden', className)}>
+      <CardHeader className="space-y-0 border-b border-border/50 px-4 sm:px-5 py-3.5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <CardTitle className="text-xl font-bold text-foreground tracking-tight">
+            <CardTitle className="text-sm font-semibold text-foreground tracking-tight">
               {title}
             </CardTitle>
-            <CardDescription className="text-base text-muted-foreground mt-1">
+            <CardDescription className="text-xs text-muted-foreground mt-0.5">
               {description ?? (
                 <>
                   {t.dashboard.workplace.roadmap.progressSummary.doneFormat(progress.done, progress.total)}
@@ -239,13 +239,13 @@ export const Checklist1: React.FC<Checklist1Props> = (props) => {
                   aria-current={step.state === 'current' ? 'step' : undefined}
                   aria-expanded={isOpen}
                   onClick={() => toggle(step.id)}
-                  className="hover:bg-muted/40 focus-visible:ring-ring/50 flex w-full items-center gap-3.5 px-5 sm:px-6 py-4 text-left outline-none focus-visible:ring-2 focus-visible:ring-inset transition-colors"
+                  className="hover:bg-muted/40 focus-visible:ring-ring/50 flex w-full items-center gap-3 px-4 sm:px-5 py-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-inset transition-colors"
                 >
                   <StepIndicator index={index + 1} state={step.state} />
                   <span className="flex min-w-0 flex-1 flex-col gap-1">
                     <span
                       className={cn(
-                        'text-lg font-semibold tracking-tight',
+                        'text-sm font-semibold tracking-tight',
                         step.state === 'skipped'
                           ? 'text-foreground/90'
                           : step.state === 'current'
@@ -255,7 +255,7 @@ export const Checklist1: React.FC<Checklist1Props> = (props) => {
                     >
                       {step.title}
                     </span>
-                    <span className="text-muted-foreground text-sm sm:text-base flex items-center flex-wrap gap-x-2 gap-y-0.5">
+                    <span className="text-muted-foreground text-xs flex items-center flex-wrap gap-x-2 gap-y-0.5">
                       <span className={config.text}>{step.badge ?? config.label}</span>
                       {step.duration && <span>· {step.duration}</span>}
                     </span>
@@ -268,8 +268,8 @@ export const Checklist1: React.FC<Checklist1Props> = (props) => {
                     )}
                   />
                 </button>
-                <div id={panelId} hidden={!isOpen} className="px-5 sm:px-6 pb-4 pt-1 sm:pl-16">
-                  <p className="text-muted-foreground text-base leading-relaxed">{step.description}</p>
+                <div id={panelId} hidden={!isOpen} className="px-4 sm:px-5 pb-4 pt-0 sm:pl-[3.75rem]">
+                  <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
                   {step.extraDetails}
                   {(step.action || step.optional) && (
                     <div className="mt-3 flex flex-wrap gap-2">

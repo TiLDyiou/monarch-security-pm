@@ -870,7 +870,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
         },
         benchmark: {
-          title: 'Số Liệu Chi Tiết',
+          title: 'Số liệu chi tiết',
           metricCol: 'Chỉ tiêu',
           metrics: {
             expectedReturn: 'Lợi suất kỳ vọng',
@@ -880,7 +880,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
         },
         radar: {
-          title: 'Hiệu Quả Đầu Tư',
+          title: 'Hiệu quả đầu tư',
           subjects: {
             return: 'Sinh lời',
             risk: 'Rủi ro',
