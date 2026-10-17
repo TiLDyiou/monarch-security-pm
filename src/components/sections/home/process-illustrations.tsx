@@ -211,9 +211,9 @@ export const FrontierIllustration = () => {
 /* ---------- 3. Drift & disciplined rebalancing ---------- */
 
 const TARGET = 60;
-const PHASE_MS = 1800;
+const PHASE_MS = 1600;
 // Weights glide between phases and labels cross-fade, so no state change lands in a single frame
-const GLIDE = { duration: 0.8, ease: [0.65, 0, 0.35, 1] as [number, number, number, number] };
+const GLIDE = { duration: 1, ease: [0.65, 0, 0.35, 1] as [number, number, number, number] };
 const SWAP = { duration: 0.25, ease: "easeOut" as const };
 
 export const RebalanceIllustration = () => {
