@@ -58,6 +58,15 @@ const AllocationChart = () => {
     },
   ], [t]);
 
+  // The landing page stays qualitative: weights only drive the shapes, the copy shows a tier instead of a figure
+  const tierOf = (weight: number) => {
+    const w = t.landing.allocation.weights;
+    if (weight >= 40) return w.core;
+    if (weight >= 20) return w.significant;
+    if (weight >= 10) return w.moderate;
+    return w.supporting;
+  };
+
   const chartConfig = useMemo(() => {
     return Object.fromEntries(
       ASSETS.map((a) => [a.key, { label: a.label, color: a.color }]),
@@ -102,7 +111,7 @@ const AllocationChart = () => {
                   <div className="flex w-full items-center gap-2">
                     <span className="h-2.5 w-2.5 rounded-[2px]" style={{ background: chartConfig[name as AssetKey]?.color }} />
                     <span className="text-muted-foreground">{chartConfig[name as AssetKey]?.label}</span>
-                    <span className="ml-auto font-semibold text-foreground tabular-nums">{value}%</span>
+                    <span className="ml-auto font-semibold text-foreground">{tierOf(Number(value))}</span>
                   </div>
                 )} />}
               />
@@ -138,8 +147,8 @@ const AllocationChart = () => {
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
             {focus ? (
               <>
-                <span className="text-3xl md:text-4xl font-bold text-foreground tabular-nums">{focus.value}%</span>
-                <span className="text-xs text-muted-foreground mt-1">{focus.label}</span>
+                <span className="text-xs text-muted-foreground">{focus.label}</span>
+                <span className="text-lg md:text-xl font-bold text-foreground mt-0.5">{tierOf(focus.value)}</span>
               </>
             ) : (
               <>
@@ -166,7 +175,7 @@ const AllocationChart = () => {
               >
                 <span className="h-3 w-3 rounded-[3px]" style={{ background: d.fill }} />
                 <span className="text-sm font-medium text-foreground">{d.label}</span>
-                <span className="text-sm font-semibold text-foreground tabular-nums">{d.value}%</span>
+                <span className="text-xs font-medium text-muted-foreground">{tierOf(d.value)}</span>
                 <div className="col-start-2 col-span-2 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-[width] duration-500 ease-out"
@@ -194,7 +203,7 @@ const AllocationChart = () => {
             key={p.id}
             type="button"
             onClick={() => setActiveId(p.id)}
-            aria-label={`${p.name}: ${ASSETS.map((a) => `${a.label} ${p.allocation[a.key]}%`).join(", ")}`}
+            aria-label={`${p.name}: ${ASSETS.map((a) => `${a.label} ${tierOf(p.allocation[a.key])}`).join(", ")}`}
             className={cn(
               "grid w-full grid-cols-[84px_1fr] md:grid-cols-[100px_1fr] items-center gap-3 cursor-pointer transition-opacity",
               p.id === activeId ? "opacity-100" : "opacity-45 hover:opacity-80",

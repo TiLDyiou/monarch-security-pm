@@ -23,6 +23,7 @@ const Footer = () => {
 
   const innerLinks = [
     { title: t.landing.footer.methodLinks.allocation, section: SECTIONS.allocation },
+    { title: t.landing.footer.methodLinks.constraints, section: SECTIONS.principles },
     { title: t.landing.footer.methodLinks.rebalance, section: SECTIONS.process },
   ];
 

@@ -48,6 +48,7 @@ const Features = () => {
       <Container className="space-y-8 md:space-y-20">
         <StaggerContainer className="text-center max-w-2xl mx-auto">
           <AnimateOnView blur>
+            <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-2 inline-block">{t.landing.features.badge}</span>
             <h2 className="h2 mb-4">
               {t.landing.features.sectionTitle}
             </h2>

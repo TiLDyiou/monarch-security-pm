@@ -2,6 +2,7 @@
 export const SECTIONS = {
   allocation: "phan-bo",
   services: "dich-vu",
+  principles: "rang-buoc",
   commitment: "cam-ket",
   process: "quy-trinh",
   reviews: "danh-gia",

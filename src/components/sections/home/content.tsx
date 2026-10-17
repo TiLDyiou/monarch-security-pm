@@ -33,6 +33,7 @@ const Content = () => {
       <Container className="space-y-8 md:space-y-20">
         <StaggerContainer className="text-center max-w-2xl mx-auto">
           <AnimateOnView blur>
+            <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-2 inline-block">{t.landing.process.badge}</span>
             <h2 className="h2 md:mb-5 mb-3">
               {t.landing.process.sectionTitle1} <span className="whitespace-nowrap">{t.landing.process.sectionTitle2}</span>
             </h2>

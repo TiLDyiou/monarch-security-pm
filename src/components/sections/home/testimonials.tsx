@@ -35,6 +35,8 @@ const Testimonials = () => {
           blur
           className="text-center max-w-2xl mx-auto mb-10 md:mb-14"
         >
+          <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-2 inline-block">{t.landing.testimonials.badge}</span>
+          <h2 className="h2 mb-4">{t.landing.testimonials.title}</h2>
           <p className="text-muted-foreground text-base md:text-lg">
             {t.landing.testimonials.subtitle}
           </p>

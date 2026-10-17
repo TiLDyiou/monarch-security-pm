@@ -29,10 +29,17 @@ export interface TranslationDictionary {
       subtitle: string;
       cta: string;
     };
+    concepts: string[];
     allocation: {
       tag: string;
       title: string;
       portfolioLabel: string;
+      weights: {
+        core: string;
+        significant: string;
+        moderate: string;
+        supporting: string;
+      };
       assets: {
         stocks: string;
         funds: string;
@@ -67,6 +74,7 @@ export interface TranslationDictionary {
       note: string;
     };
     features: {
+      badge: string;
       sectionTitle: string;
       sectionSubtitle: string;
       cards: {
@@ -89,7 +97,17 @@ export interface TranslationDictionary {
         };
       };
     };
+    principles: {
+      badge: string;
+      title: string;
+      subtitle: string;
+      items: {
+        title: string;
+        description: string;
+      }[];
+    };
     process: {
+      badge: string;
       sectionTitle1: string;
       sectionTitle2: string;
       sectionSubtitle: string;
@@ -136,12 +154,18 @@ export interface TranslationDictionary {
           stocksLabel: string;
           bondsLabel: string;
           title: string;
-          targetWeight: string;
+          status: {
+            over: string;
+            under: string;
+            onTarget: string;
+          };
           targetWeightNote: string;
         };
       };
     };
     testimonials: {
+      badge: string;
+      title: string;
       subtitle: string;
       items: {
         quote: string;
@@ -170,6 +194,7 @@ export interface TranslationDictionary {
       };
       methodLinks: {
         allocation: string;
+        constraints: string;
         rebalance: string;
       };
       legalLinks: {
@@ -458,10 +483,29 @@ export const translations: Record<Language, TranslationDictionary> = {
           'Phân bổ tài sản theo Thuyết danh mục hiện đại, đồng hành tái cân bằng định kỳ và bảo vệ tài sản gia đình bạn trong mọi chu kỳ thị trường',
         cta: 'Bắt Đầu Ngay',
       },
+      concepts: [
+        'Thuyết danh mục hiện đại',
+        'Đường biên hiệu quả',
+        'Đường phân bổ vốn',
+        'Danh mục rủi ro tối ưu',
+        'Tỷ số Sharpe',
+        'Hệ số ngại rủi ro',
+        'Đa dạng hóa',
+        'Tài sản phi rủi ro',
+        'Tái cân bằng định kỳ',
+        'Tuyên bố chính sách đầu tư',
+        'Biên an toàn',
+      ],
       allocation: {
         tag: 'Phân bổ tài sản mẫu',
-        title: 'So sánh 3 chiến lược danh mục',
+        title: 'So sánh các chiến lược danh mục',
         portfolioLabel: 'Danh mục',
+        weights: {
+          core: 'Chủ đạo',
+          significant: 'Đáng kể',
+          moderate: 'Vừa phải',
+          supporting: 'Bổ trợ',
+        },
         assets: {
           stocks: 'Cổ phiếu',
           funds: 'Quỹ mở / ETF',
@@ -474,19 +518,19 @@ export const translations: Record<Language, TranslationDictionary> = {
             name: 'Tăng trưởng',
             tag: 'Tập trung sinh lời dài hạn, chấp nhận biến động cao',
             riskLevel: 'Cao',
-            timeHorizon: '≥ 5 năm',
+            timeHorizon: 'Dài hạn',
           },
           balanced: {
             name: 'Cân bằng',
             tag: 'Cân đối giữa tăng trưởng và thu nhập ổn định',
             riskLevel: 'Trung bình',
-            timeHorizon: '3 – 5 năm',
+            timeHorizon: 'Trung hạn',
           },
           defensive: {
             name: 'Bảo toàn',
             tag: 'Ưu tiên bảo vệ vốn và phòng hộ lạm phát',
             riskLevel: 'Thấp',
-            timeHorizon: '1 – 3 năm',
+            timeHorizon: 'Ngắn hạn',
           },
         },
         stats: {
@@ -496,6 +540,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         note: 'Tỷ trọng mang tính minh họa. Danh mục thực tế được may đo theo mục tiêu và ngưỡng chấp nhận rủi ro của bạn.',
       },
       features: {
+        badge: 'Dịch vụ',
         sectionTitle: 'Mỗi nhà đầu tư một mục tiêu, một ngưỡng an toàn tài chính',
         sectionSubtitle:
           'Chúng tôi không đưa lời khuyên chung chung, chúng tôi xây lộ trình khoa học dành riêng cho bạn',
@@ -518,11 +563,45 @@ export const translations: Record<Language, TranslationDictionary> = {
             title: 'Đội Ngũ Chuyên Viên Đồng Hành, Tái Cân Bằng Định Kỳ',
             description:
               'Chuyên gia cố vấn tài chính cấp cao trực tiếp theo dõi, hỗ trợ điều chỉnh tỷ trọng tài sản định kỳ trước biến động kinh tế vĩ mô nhằm bảo toàn thành quả đầu tư dài hạn.',
-            imageAlt: 'Đồng hành cố vấn 1:1',
+            imageAlt: 'Chuyên viên cố vấn đồng hành riêng',
           },
         },
       },
+      principles: {
+        badge: 'Chính sách đầu tư',
+        title: 'Những Ràng Buộc Định Hình Mọi Danh Mục',
+        subtitle:
+          'Trước khi tối ưu lợi nhuận, chúng tôi xác lập rõ các giới hạn trong Tuyên bố Chính sách Đầu tư (IPS) để danh mục luôn phù hợp với hoàn cảnh thực tế của gia đình bạn.',
+        items: [
+          {
+            title: 'Thanh khoản',
+            description:
+              'Duy trì quỹ dự phòng và tài sản thanh khoản cao để đáp ứng nhu cầu chi tiêu bất ngờ mà không phải bán tháo danh mục.',
+          },
+          {
+            title: 'Thời gian đầu tư',
+            description:
+              'Phân tầng kỳ hạn theo từng mục tiêu: mục tiêu gần ưu tiên an toàn, mục tiêu xa tận dụng sức mạnh của lãi kép.',
+          },
+          {
+            title: 'Thuế',
+            description:
+              'Cân nhắc thuế trên cổ tức, lãi tiền gửi và giao dịch chứng khoán để tối ưu lợi nhuận thực nhận.',
+          },
+          {
+            title: 'Pháp lý',
+            description:
+              'Chỉ lựa chọn tài sản minh bạch, giao dịch qua tổ chức được cấp phép và tuân thủ quy định hiện hành.',
+          },
+          {
+            title: 'Hoàn cảnh riêng',
+            description:
+              'Tính đến người phụ thuộc, tài sản sẵn có, nghĩa vụ nợ và những ưu tiên đặc thù của từng gia đình.',
+          },
+        ],
+      },
       process: {
+        badge: 'Phương pháp',
         sectionTitle1: 'Quy Trình Hoạch Định Danh Mục',
         sectionTitle2: 'Bài Bản & Tinh Gọn',
         sectionSubtitle:
@@ -541,7 +620,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           step3: {
             title: 'Giám Sát Tỷ Trọng & Tái Cân Bằng Kỷ Luật',
             description:
-              'Không chạy theo tâm lý đám đông. Chúng tôi rà soát danh mục định kỳ mỗi 6 tháng để giữ vững tỷ lệ vàng giữa cổ phiếu và Trái phiếu Chính phủ, đồng thời ưu tiên tái đầu tư từ dòng tiền tiết kiệm hàng tháng nhằm tối ưu chi phí giao dịch.',
+              'Không chạy theo tâm lý đám đông. Chúng tôi rà soát danh mục định kỳ để giữ vững tỷ lệ vàng giữa cổ phiếu và Trái phiếu Chính phủ, đồng thời ưu tiên tái đầu tư từ dòng tiền tiết kiệm hàng tháng nhằm tối ưu chi phí giao dịch.',
           },
         },
         illustrations: {
@@ -566,25 +645,31 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
           rebalance: {
             phases: {
-              p1: { step: 'Tháng 0', note: 'Tỷ trọng mục tiêu', chip: 'Đúng mục tiêu' },
-              p2: { step: 'Tháng 6', note: 'Thị trường tăng, cổ phiếu chiếm quá nhiều', chip: 'Lệch +12%' },
+              p1: { step: 'Khởi tạo', note: 'Tỷ trọng mục tiêu', chip: 'Đúng mục tiêu' },
+              p2: { step: 'Sau một chu kỳ', note: 'Thị trường tăng, cổ phiếu chiếm quá nhiều', chip: 'Lệch khỏi mục tiêu' },
               p3: { step: 'Tái cân bằng', note: 'Chốt bớt cổ phiếu, bổ sung trái phiếu', chip: 'Đã cân bằng' },
             },
             stocksLabel: 'Cổ phiếu',
             bondsLabel: 'Trái phiếu Chính phủ',
             title: 'Tỷ trọng danh mục',
-            targetWeight: 'mục tiêu',
-            targetWeightNote: 'Vạch đen là tỷ trọng mục tiêu. Rà soát định kỳ mỗi 6 tháng.',
+            status: {
+              over: 'Vượt mục tiêu',
+              under: 'Dưới mục tiêu',
+              onTarget: 'Đúng mục tiêu',
+            },
+            targetWeightNote: 'Vạch đen là tỷ trọng mục tiêu. Danh mục được rà soát định kỳ.',
           },
         },
       },
       testimonials: {
+        badge: 'Triết lý đầu tư',
+        title: 'Những Tư Tưởng Dẫn Lối',
         subtitle:
           'Kim chỉ nam soi đường cho phương pháp luận phân bổ danh mục khoa học, quản trị rủi ro và tăng trưởng tài sản bền vững của chúng tôi.',
         items: [
           {
             quote:
-              'Quy tắc số 1: Không bao giờ để mất tiền. Quy tắc số 2: Không bao giờ quên quy tắc số 1. Hãy sợ hãi khi người khác tham lam, và hãy tham lam khi người khác sợ hãi.',
+              'Quy tắc thứ nhất: Không bao giờ để mất tiền. Quy tắc thứ hai: Không bao giờ quên quy tắc thứ nhất. Hãy sợ hãi khi người khác tham lam, và hãy tham lam khi người khác sợ hãi.',
             author: 'Warren Buffett',
             role: 'Huyền thoại Đầu tư, Chủ tịch kiêm CEO Berkshire Hathaway',
           },
@@ -598,7 +683,7 @@ export const translations: Record<Language, TranslationDictionary> = {
             quote:
               'Đa dạng hóa là bữa trưa miễn phí duy nhất trong tài chính. Một danh mục đầu tư tốt không chỉ là danh sách dài các cổ phiếu và trái phiếu tốt; đó là một tổng thể cân bằng mang lại sự bảo vệ và cơ hội trước mọi biến cố bất ngờ.',
             author: 'Harry Markowitz',
-            role: 'Giải Nobel Kinh tế 1990, Cha đẻ Thuyết Danh mục Hiện đại MPT',
+            role: 'Nhà kinh tế đoạt giải Nobel, Cha đẻ Thuyết Danh mục Hiện đại MPT',
           },
           {
             quote:
@@ -634,17 +719,17 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             question: 'Chúng tôi có trực tiếp giữ tiền hoặc tài sản đầu tư của bạn không?',
             answer:
-              'Tuyệt đối không! Tiền và toàn bộ danh mục tài sản luôn nằm 100% tại tài khoản chứng khoán, ngân hàng hoặc công ty quản lý quỹ do chính bạn đứng tên tại các tổ chức uy tín được Nhà nước cấp phép. Chúng tôi chỉ đưa ra khuyến nghị phân bổ chiến lược, bạn hoàn toàn làm chủ tài sản của mình.',
+              'Tuyệt đối không! Tiền và toàn bộ danh mục tài sản luôn nằm hoàn toàn tại tài khoản chứng khoán, ngân hàng hoặc công ty quản lý quỹ do chính bạn đứng tên tại các tổ chức uy tín được Nhà nước cấp phép. Chúng tôi chỉ đưa ra khuyến nghị phân bổ chiến lược, bạn hoàn toàn làm chủ tài sản của mình.',
           },
           {
             question: 'Chiến lược phân bổ danh mục của chúng tôi dựa trên phương pháp luận nào?',
             answer:
-              'Chúng tôi ứng dụng Thuyết danh mục hiện đại Modern Portfolio Theory của GS. Harry Markowitz (Nobel Kinh tế 1990), kết hợp với triết lý đầu tư giá trị và Biên an toàn của Benjamin Graham & Warren Buffett: Đa dạng hóa để triệt tiêu tối đa rủi ro phi hệ thống và tập trung vào các tài sản tạo dòng tiền thực chất.',
+              'Chúng tôi ứng dụng Thuyết danh mục hiện đại Modern Portfolio Theory của GS. Harry Markowitz (Nobel Kinh tế), kết hợp với triết lý đầu tư giá trị và Biên an toàn của Benjamin Graham & Warren Buffett: Đa dạng hóa để triệt tiêu tối đa rủi ro phi hệ thống và tập trung vào các tài sản tạo dòng tiền thực chất.',
           },
           {
             question: 'Tôi cần có số vốn tối thiểu bao nhiêu để bắt đầu nhận tư vấn?',
             answer:
-              'Chúng tôi có các gói tư vấn linh hoạt: từ người trẻ đang bắt đầu hành trình tích lũy tài sản đầu đời với số vốn từ vài chục triệu đồng đến các gia đình hoặc cá nhân có tài sản ròng cao HNWI cần hoạch định danh mục đa lớp phức tạp và kế thừa gia sản.',
+              'Chúng tôi có các gói tư vấn linh hoạt: từ người trẻ đang bắt đầu hành trình tích lũy tài sản đầu đời với số vốn khiêm tốn đến các gia đình hoặc cá nhân có tài sản ròng cao HNWI cần hoạch định danh mục đa lớp phức tạp và kế thừa gia sản.',
           },
         ],
       },
@@ -661,6 +746,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
         methodLinks: {
           allocation: 'Phân bổ tài sản mẫu',
+          constraints: 'Ràng buộc đầu tư',
           rebalance: 'Tái cân bằng danh mục',
         },
         legalLinks: {
@@ -995,13 +1081,32 @@ export const translations: Record<Language, TranslationDictionary> = {
         title1: 'Scientifically Optimized',
         title2: 'Investment Portfolios',
         subtitle:
-          'Asset allocation grounded in Modern Portfolio Theory, semi-annual disciplined rebalancing, and long-term wealth preservation for your family across every market cycle.',
+          'Asset allocation grounded in Modern Portfolio Theory, periodic disciplined rebalancing, and long-term wealth preservation for your family across every market cycle.',
         cta: 'Get Started',
       },
+      concepts: [
+        'Modern Portfolio Theory',
+        'Efficient Frontier',
+        'Capital Allocation Line',
+        'Optimal Risky Portfolio',
+        'Sharpe Ratio',
+        'Risk Aversion',
+        'Diversification',
+        'Risk-Free Asset',
+        'Periodic Rebalancing',
+        'Investment Policy Statement',
+        'Margin of Safety',
+      ],
       allocation: {
         tag: 'Sample Asset Allocation',
-        title: 'Compare 3 Portfolio Strategies',
+        title: 'Compare Portfolio Strategies',
         portfolioLabel: 'Portfolio',
+        weights: {
+          core: 'Core',
+          significant: 'Significant',
+          moderate: 'Moderate',
+          supporting: 'Supporting',
+        },
         assets: {
           stocks: 'Equities',
           funds: 'Mutual Funds / ETFs',
@@ -1014,19 +1119,19 @@ export const translations: Record<Language, TranslationDictionary> = {
             name: 'Growth',
             tag: 'Focuses on long-term capital appreciation; higher volatility tolerance',
             riskLevel: 'High',
-            timeHorizon: '≥ 5 years',
+            timeHorizon: 'Long term',
           },
           balanced: {
             name: 'Balanced',
             tag: 'Balanced blend of capital growth and steady income generation',
             riskLevel: 'Moderate',
-            timeHorizon: '3 – 5 years',
+            timeHorizon: 'Medium term',
           },
           defensive: {
             name: 'Defensive',
             tag: 'Prioritizes capital preservation and inflation protection',
             riskLevel: 'Low',
-            timeHorizon: '1 – 3 years',
+            timeHorizon: 'Short term',
           },
         },
         stats: {
@@ -1036,6 +1141,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         note: 'Illustrative allocation only. Actual portfolios are tailored to each client’s individual financial goals and risk appetite.',
       },
       features: {
+        badge: 'Our Services',
         sectionTitle: 'Every Investor Has Unique Goals & Financial Safety Margins',
         sectionSubtitle:
           'Instead of generic rules of thumb, we build a scientific, disciplined wealth roadmap tailored exclusively for your family.',
@@ -1057,12 +1163,46 @@ export const translations: Record<Language, TranslationDictionary> = {
           card3: {
             title: 'Dedicated Advisory & Disciplined Rebalancing',
             description:
-              'Senior fiduciary wealth advisors actively oversee your assets, performing semi-annual rebalancing across macroeconomic cycles to lock in hard-earned gains.',
-            imageAlt: '1-on-1 wealth advisory',
+              'Senior fiduciary wealth advisors actively oversee your assets, performing periodic rebalancing across macroeconomic cycles to lock in hard-earned gains.',
+            imageAlt: 'Dedicated wealth advisory',
           },
         },
       },
+      principles: {
+        badge: 'Investment Policy',
+        title: 'The Constraints That Shape Every Portfolio',
+        subtitle:
+          'Before optimizing returns, we set clear boundaries in the Investment Policy Statement (IPS) so the portfolio always fits your family’s real circumstances.',
+        items: [
+          {
+            title: 'Liquidity',
+            description:
+              'Keep an emergency reserve and highly liquid assets to meet unexpected spending needs without forced selling.',
+          },
+          {
+            title: 'Time Horizon',
+            description:
+              'Layer horizons by goal: near-term goals favor safety, long-term goals put the power of compounding to work.',
+          },
+          {
+            title: 'Taxes',
+            description:
+              'Account for taxes on dividends, deposit interest, and securities trading to optimize the returns you actually keep.',
+          },
+          {
+            title: 'Legal & Regulatory',
+            description:
+              'Select only transparent assets, transact through licensed institutions, and comply with prevailing regulations.',
+          },
+          {
+            title: 'Unique Circumstances',
+            description:
+              'Factor in dependents, existing assets, debt obligations, and the particular priorities of each family.',
+          },
+        ],
+      },
       process: {
+        badge: 'Methodology',
         sectionTitle1: 'A Disciplined & Streamlined',
         sectionTitle2: 'Portfolio Planning Process',
         sectionSubtitle:
@@ -1081,7 +1221,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           step3: {
             title: 'Continuous Tracking & Disciplined Rebalancing',
             description:
-              'Never follow emotional crowd trends. We audit allocations semi-annually to maintain target equity/bond ratios, deploying recurring monthly savings to rebalance with minimal transaction fees.',
+              'Never follow emotional crowd trends. We audit allocations periodically to maintain target equity/bond ratios, deploying recurring monthly savings to rebalance with minimal transaction fees.',
           },
         },
         illustrations: {
@@ -1106,25 +1246,31 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
           rebalance: {
             phases: {
-              p1: { step: 'Month 0', note: 'Target allocation', chip: 'On Target' },
-              p2: { step: 'Month 6', note: 'Market rallies; equities overweight', chip: 'Drift +12%' },
+              p1: { step: 'Inception', note: 'Target allocation', chip: 'On Target' },
+              p2: { step: 'One Cycle Later', note: 'Market rallies; equities overweight', chip: 'Off Target' },
               p3: { step: 'Rebalance', note: 'Trim equities; reallocate to bonds', chip: 'Rebalanced' },
             },
             stocksLabel: 'Equities',
             bondsLabel: 'Government Bonds',
             title: 'Portfolio Weights',
-            targetWeight: 'target',
-            targetWeightNote: 'Black indicator denotes target weight. Semi-annual rebalancing review.',
+            status: {
+              over: 'Overweight',
+              under: 'Underweight',
+              onTarget: 'On target',
+            },
+            targetWeightNote: 'Black indicator denotes target weight. Allocations are reviewed periodically.',
           },
         },
       },
       testimonials: {
+        badge: 'Investment Philosophy',
+        title: 'The Ideas That Guide Us',
         subtitle:
           'The guiding principles behind our scientific asset allocation methodology, risk management, and sustainable wealth growth.',
         items: [
           {
             quote:
-              'Rule No. 1: Never lose money. Rule No. 2: Never forget rule No. 1. Be fearful when others are greedy, and greedy when others are fearful.',
+              'Rule number one: Never lose money. Rule number two: Never forget rule number one. Be fearful when others are greedy, and greedy when others are fearful.',
             author: 'Warren Buffett',
             role: 'Chairman & CEO, Berkshire Hathaway',
           },
@@ -1169,12 +1315,12 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             question: 'How does our personal financial & portfolio advisory service work?',
             answer:
-              'We act as independent fiduciary financial advisors. We evaluate your household income, expenses, liabilities, and risk tolerance to design an individualized asset allocation (Equities, ETFs, Sovereign Bonds, Gold, Real Estate). You maintain 100% legal custody of your funds on your own brokerage and bank accounts while we provide ongoing strategic recommendations and periodic rebalancing.',
+              'We act as independent fiduciary financial advisors. We evaluate your household income, expenses, liabilities, and risk tolerance to design an individualized asset allocation (Equities, ETFs, Sovereign Bonds, Gold, Real Estate). You retain full legal custody of your funds on your own brokerage and bank accounts while we provide ongoing strategic recommendations and periodic rebalancing.',
           },
           {
             question: 'Do we ever take direct custody of your funds or investment assets?',
             answer:
-              'Never! Your capital and portfolio holdings remain 100% deposited in your personal accounts at licensed banks, regulated securities firms, and fund management companies under your legal name. We provide strategic advisory recommendations only, while you retain complete control over your wealth.',
+              'Never! Your capital and portfolio holdings remain entirely deposited in your personal accounts at licensed banks, regulated securities firms, and fund management companies under your legal name. We provide strategic advisory recommendations only, while you retain complete control over your wealth.',
           },
           {
             question: 'What methodology guides our portfolio allocation strategies?',
@@ -1184,7 +1330,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             question: 'What is the minimum capital required to begin advisory engagement?',
             answer:
-              'We provide flexible advisory tiers: from young professionals starting their wealth accumulation journey with tens of millions of VND, to high-net-worth families (HNWI) requiring multi-asset estate planning, tax optimization, and wealth preservation.',
+              'We provide flexible advisory tiers: from young professionals starting their wealth accumulation journey with modest starting capital, to high-net-worth families (HNWI) requiring multi-asset estate planning, tax optimization, and wealth preservation.',
           },
         ],
       },
@@ -1201,6 +1347,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
         methodLinks: {
           allocation: 'Sample Asset Allocation',
+          constraints: 'Investment Constraints',
           rebalance: 'Portfolio Rebalancing',
         },
         legalLinks: {

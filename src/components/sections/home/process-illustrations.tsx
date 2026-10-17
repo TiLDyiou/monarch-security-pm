@@ -237,6 +237,7 @@ export const RebalanceIllustration = () => {
   }, [live, phases.length]);
 
   const current = phases[phase];
+  const status = t.landing.process.illustrations.rebalance.status;
   const drifted = phase === 1;
   const rows = [
     { label: t.landing.process.illustrations.rebalance.stocksLabel, value: current.stocks, target: TARGET, color: STOCKS },
@@ -257,7 +258,7 @@ export const RebalanceIllustration = () => {
                   i === phase ? "border-primary bg-primary text-white" : i < phase ? "border-primary/40 bg-primary/10 text-primary" : "border-slate-200 bg-white text-muted-foreground",
                 )}
               >
-                {i === 2 && phase === 2 ? <Check className="h-3.5 w-3.5" /> : i + 1}
+                {i === 2 && phase === 2 ? <Check className="h-3.5 w-3.5" /> : <span className="h-1.5 w-1.5 rounded-full bg-current" />}
               </span>
               <div className={cn("transition-opacity duration-300", i === phase ? "opacity-100" : "opacity-50")}>
                 <p className="text-sm font-semibold text-foreground">{p.step}</p>
@@ -295,9 +296,8 @@ export const RebalanceIllustration = () => {
                     <span className="h-2.5 w-2.5 rounded-[3px]" style={{ background: r.color }} />
                     {r.label}
                   </span>
-                  <span className="tabular-nums">
-                    <span className="font-semibold text-foreground">{r.value}%</span>
-                    <span className="text-muted-foreground"> / {t.landing.process.illustrations.rebalance.targetWeight} {r.target}%</span>
+                  <span className={cn("font-medium", r.value === r.target ? "text-primary" : "text-foreground")}>
+                    {r.value > r.target ? status.over : r.value < r.target ? status.under : status.onTarget}
                   </span>
                 </div>
                 <div className="relative h-3 rounded-full bg-slate-100">
