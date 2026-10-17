@@ -493,7 +493,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           riskLevel: 'Mức rủi ro',
           timeHorizon: 'Kỳ hạn gợi ý',
         },
-        note: 'Tỷ trọng mang tính minh họa. Danh mục thực tế được may đo theo mục tiêu và khẩu vị rủi ro của từng khách hàng.',
+        note: 'Tỷ trọng mang tính minh họa. Danh mục thực tế được may đo theo mục tiêu và ngưỡng chấp nhận rủi ro của bạn.',
       },
       features: {
         sectionTitle: 'Mỗi nhà đầu tư một mục tiêu, một ngưỡng an toàn tài chính',
