@@ -357,46 +357,6 @@
   }
 }
 
-/* News feed: drawn straight on the card surface, no inner panel, anchored to the top of the tile */
-.magic-bento__feed {
-  position: relative;
-  display: flex;
-  min-height: 0;
-  flex: 1;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.magic-bento__doc-title {
-  color: var(--mb-ink);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 18px;
-}
-
-.magic-bento__lines {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.magic-bento__line {
-  position: relative;
-  width: var(--w);
-  height: 6px;
-  border-radius: 3px;
-  background: var(--mb-line);
-}
-
-.magic-bento__line--gap {
-  margin-top: 8px;
-}
-
-.magic-bento__line--accent {
-  background: rgba(var(--mb-accent-rgb), 0.22);
-}
-
 /* Goal steps */
 .magic-bento__flow {
   position: relative;
@@ -644,9 +604,6 @@
   animation: magic-bento-grow 760ms var(--mb-spring) calc(var(--mb-delay) + 200ms + var(--i) * 55ms) both paused;
 }
 
-.magic-bento[data-motion] .magic-bento__line {
-  animation: magic-bento-fade 500ms ease calc(var(--mb-delay) + 300ms + var(--i, 0) * 60ms) both paused;
-}
 
 .magic-bento[data-motion] .magic-bento__pending {
   animation: magic-bento-wait 1ms linear calc(var(--mb-delay) + 360ms + var(--i) * 520ms) both paused;
@@ -689,7 +646,6 @@
     .magic-bento__chart-line,
     .magic-bento__chart-area,
     .magic-bento__bar,
-    .magic-bento__line,
     .magic-bento__pending,
     .magic-bento__spinner,
     .magic-bento__done,

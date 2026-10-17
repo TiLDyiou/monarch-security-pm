@@ -32,7 +32,6 @@ export interface TranslationDictionary {
     bento: {
       price: { title: string; description: string };
       flows: { title: string; description: string };
-      news: { title: string; description: string; heading: string };
       goals: { title: string; description: string; heading: string; steps: string[] };
       structure: { title: string; description: string };
       metrics: { title: string; description: string; items: string[] };
@@ -450,11 +449,6 @@ export const translations: Record<Language, TranslationDictionary> = {
         flows: {
           title: 'Chi tiêu và dòng tiền',
           description: 'Chi tiêu và dòng tiền gia đình theo tháng, quý và năm.',
-        },
-        news: {
-          title: 'Tin tức thị trường',
-          description: 'Cập nhật tin tức theo từng mã trong danh mục hoặc thị trường chung, có tìm kiếm nhanh.',
-          heading: 'Thị trường chung',
         },
         goals: {
           title: 'Mục tiêu tài chính',
@@ -1020,11 +1014,6 @@ export const translations: Record<Language, TranslationDictionary> = {
         flows: {
           title: 'Spending & Cash Flow',
           description: 'Family spending and cash flow by month, quarter, and year.',
-        },
-        news: {
-          title: 'Market News',
-          description: 'News for each stock in the portfolio or the broad market, with quick search.',
-          heading: 'Broad market',
         },
         goals: {
           title: 'Financial Goals',

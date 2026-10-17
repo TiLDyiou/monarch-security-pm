@@ -157,41 +157,6 @@ const BarsVisual = () => {
   );
 };
 
-const FEED_LINES = [
-  { w: "92%", accent: true },
-  { w: "78%" },
-  { w: "86%" },
-  { w: "44%" },
-  { w: "88%", gap: true, accent: true },
-  { w: "70%" },
-  { w: "82%" },
-  { w: "90%", gap: true, accent: true },
-  { w: "74%" },
-  { w: "84%" },
-  { w: "52%" },
-];
-
-const FeedVisual = ({ heading }: { heading: string }) => (
-  <div className="magic-bento__feed">
-    <span className="magic-bento__doc-title">{heading}</span>
-    <div className="magic-bento__lines">
-      {FEED_LINES.map((line, index) => (
-        <span
-          key={index}
-          className={[
-            "magic-bento__line",
-            line.gap && "magic-bento__line--gap",
-            line.accent && "magic-bento__line--accent",
-          ]
-            .filter(Boolean)
-            .join(" ")}
-          style={vars({ "--w": line.w, "--i": index })}
-        />
-      ))}
-    </div>
-  </div>
-);
-
 const GoalsVisual = ({ heading, steps }: { heading: string; steps: string[] }) => (
   <div className="magic-bento__flow" style={vars({ "--n": steps.length })}>
     <div className="magic-bento__flow-trigger magic-bento__tile">
@@ -284,14 +249,6 @@ const DashboardBento = () => {
     () => [
       { id: "price", ...b.price, visual: <PriceVisual />, onClick: () => navigate("/dashboard/monitor") },
       { id: "flows", ...b.flows, visual: <BarsVisual />, onClick: () => navigate("/dashboard/analysis") },
-      {
-        id: "news",
-        ...b.news,
-        visual: <FeedVisual heading={b.news.heading} />,
-        colSpan: 2,
-        rowSpan: 2,
-        onClick: () => navigate("/dashboard/monitor"),
-      },
       {
         id: "goals",
         ...b.goals,
