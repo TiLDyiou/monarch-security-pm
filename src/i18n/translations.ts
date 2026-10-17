@@ -622,7 +622,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       },
       faq: {
         badge: 'Giải đáp thắc mắc',
-        title: 'Câu Hỏi Thường Gặp Về Dịch Vụ Cố Vấn',
+        title: 'Câu Hỏi Thường Gặp',
         subtitle:
           'Mọi điều bạn cần biết về nguyên tắc cố vấn độc lập, tính an toàn của tài sản và quy trình đồng hành cùng chúng tôi.',
         items: [
@@ -1161,8 +1161,8 @@ export const translations: Record<Language, TranslationDictionary> = {
         ],
       },
       faq: {
-        badge: 'Frequently Asked Questions',
-        title: 'Common Questions About Our Advisory Services',
+        badge: 'Questions & Answers',
+        title: 'Frequently Asked Questions',
         subtitle:
           'Everything you need to know about our fiduciary independence, asset custody security, and advisory roadmap.',
         items: [
