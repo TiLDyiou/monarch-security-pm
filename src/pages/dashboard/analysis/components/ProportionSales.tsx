@@ -90,8 +90,15 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
     });
   }, [salesPieData, proportionTexts]);
 
-  // While a slice is hovered its tooltip sits over the centre, so the total steps aside
-  const [hovering, setHovering] = React.useState(false);
+  // The tooltip sits just right of the ring, level with the hovered slice, so it never covers the centre total
+  const [tipAt, setTipAt] = React.useState<{ x: number; y: number } | null>(null);
+  const placeTip = (sector: { cx: number; cy: number; midAngle: number; outerRadius: number }) => {
+    const angle = (-sector.midAngle * Math.PI) / 180;
+    setTipAt({
+      x: sector.cx + sector.outerRadius + 12,
+      y: sector.cy + sector.outerRadius * Math.sin(angle),
+    });
+  };
 
   const total = React.useMemo(
     () => segments.reduce((sum, seg) => sum + seg.value, 0),
@@ -142,11 +149,15 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
         <div className="relative size-48 sm:size-52 shrink-0 flex items-center justify-center">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
-              {/* Lift the tooltip above the centre total, which is layered over the chart */}
               <Tooltip
-                wrapperStyle={{ zIndex: 20 }}
+                position={tipAt ?? undefined}
+                allowEscapeViewBox={{ x: true, y: true }}
+                isAnimationActive={false}
+                wrapperStyle={{ zIndex: 20, pointerEvents: 'none' }}
                 content={(tooltipProps) => (
-                  <ChartPanelTooltip {...tooltipProps} valueFormatter={formatter} />
+                  <div className="-translate-y-1/2">
+                    <ChartPanelTooltip {...tooltipProps} valueFormatter={formatter} />
+                  </div>
                 )}
               />
               <Pie
@@ -160,8 +171,8 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
                 endAngle={-270}
                 stroke="var(--color-card, #ffffff)"
                 strokeWidth={2}
-                onMouseEnter={() => setHovering(true)}
-                onMouseLeave={() => setHovering(false)}
+                onMouseEnter={placeTip}
+                onMouseLeave={() => setTipAt(null)}
               >
                 {segments.map((segment) => (
                   <Cell key={segment.rawKey} fill={segment.color} />
@@ -169,9 +180,7 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          <div
-            className={`pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center transition-opacity duration-200 ${hovering ? 'opacity-0' : 'opacity-100'}`}
-          >
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
             <span className="text-2xl font-bold tracking-tight text-foreground tabular-nums">
               {formatCompact(total)}
             </span>
