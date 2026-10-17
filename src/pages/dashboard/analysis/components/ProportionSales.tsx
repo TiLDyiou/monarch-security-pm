@@ -90,6 +90,9 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
     });
   }, [salesPieData, proportionTexts]);
 
+  // While a slice is hovered its tooltip sits over the centre, so the total steps aside
+  const [hovering, setHovering] = React.useState(false);
+
   const total = React.useMemo(
     () => segments.reduce((sum, seg) => sum + seg.value, 0),
     [segments],
@@ -139,7 +142,9 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
         <div className="relative size-48 sm:size-52 shrink-0 flex items-center justify-center">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
+              {/* Lift the tooltip above the centre total, which is layered over the chart */}
               <Tooltip
+                wrapperStyle={{ zIndex: 20 }}
                 content={(tooltipProps) => (
                   <ChartPanelTooltip {...tooltipProps} valueFormatter={formatter} />
                 )}
@@ -155,6 +160,8 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
                 endAngle={-270}
                 stroke="var(--color-card, #ffffff)"
                 strokeWidth={2}
+                onMouseEnter={() => setHovering(true)}
+                onMouseLeave={() => setHovering(false)}
               >
                 {segments.map((segment) => (
                   <Cell key={segment.rawKey} fill={segment.color} />
@@ -162,7 +169,9 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
+          <div
+            className={`pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center transition-opacity duration-200 ${hovering ? 'opacity-0' : 'opacity-100'}`}
+          >
             <span className="text-2xl font-bold tracking-tight text-foreground tabular-nums">
               {formatCompact(total)}
             </span>
