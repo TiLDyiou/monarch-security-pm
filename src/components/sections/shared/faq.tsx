@@ -25,19 +25,20 @@ const FAQ = () => {
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center justify-center">
           <AnimateOnView once className="max-w-[480px] w-full flex justify-center">
-            {/* Holographic foil card: tilts toward the cursor and drifts gently when idle */}
+            {/* Holographic card with a banknote-style guilloche foil: tilts slightly toward the cursor and drifts when idle */}
             <HoloCard
               image="/images/home/logo-card.webp"
               alt="Monarch Securities"
-              preset="bursts"
-              foilColor="#e2e6ec"
-              intensity={0.4}
+              preset="guilloche"
+              foilColor="#5cc4cf"
+              intensity={0.35}
               scale={1}
-              edgeSparkle={0.8}
-              frame={4}
-              glare={0.35}
-              tiltMax={14}
-              hoverScale={1.04}
+              edgeSparkle={0}
+              frame={0}
+              glare={0.2}
+              tiltMax={6}
+              hoverScale={1.015}
+              lightFollow={0.35}
               radius={24}
               width={480}
               idle

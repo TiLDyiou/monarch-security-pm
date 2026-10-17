@@ -5,7 +5,7 @@ import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 
 import './HoloCard.css';
 
-type HoloPreset = 'bursts' | 'stars' | 'shards' | 'cosmos' | 'rainbow' | 'swirl' | 'glitter' | 'gold';
+type HoloPreset = 'bursts' | 'stars' | 'shards' | 'cosmos' | 'rainbow' | 'swirl' | 'glitter' | 'gold' | 'guilloche';
 
 export interface HoloCardProps {
   image?: string;
@@ -23,6 +23,8 @@ export interface HoloCardProps {
   radius?: number;
   tiltMax?: number;
   hoverScale?: number;
+  // 0..1, how far the light follows the pointer; lower values make the foil react more calmly
+  lightFollow?: number;
   idle?: boolean;
   shadow?: boolean;
   className?: string;
@@ -40,10 +42,11 @@ interface Settings {
   radius: number;
   tiltMax: number;
   hoverScale: number;
+  lightFollow: number;
   idle: boolean;
 }
 
-const PRESETS: HoloPreset[] = ['bursts', 'stars', 'shards', 'cosmos', 'rainbow', 'swirl', 'glitter', 'gold'];
+const PRESETS: HoloPreset[] = ['bursts', 'stars', 'shards', 'cosmos', 'rainbow', 'swirl', 'glitter', 'gold', 'guilloche'];
 const PERSPECTIVE = 1100;
 const CARD_RATIO = 63 / 88;
 
@@ -221,6 +224,21 @@ Foil gold(vec2 p) {
   return Foil(etch, 0.9, 0.4, vec2(0.0));
 }
 
+// Banknote-style guilloche: two interleaved families of wavy rings around the card centre
+Foil guilloche(vec2 p) {
+  vec2 d = (p - vec2(0.5, 0.5 * uAspect)) * uScale;
+  float r = length(d);
+  float a = atan(d.y, d.x);
+  float rings = r * 52.0;
+  float w1 = rings + 1.1 * sin(a * 18.0 + r * 9.0);
+  float w2 = rings + 1.1 * sin(-a * 18.0 + r * 9.0);
+  float d1 = 0.5 - abs(fract(w1) - 0.5);
+  float d2 = 0.5 - abs(fract(w2) - 0.5);
+  float l1 = 1.0 - smoothstep(0.06, 0.06 + fwidth(w1) * 1.2, d1);
+  float l2 = 1.0 - smoothstep(0.06, 0.06 + fwidth(w2) * 1.2, d2);
+  return Foil(max(l1, l2) * 0.85, a, r * 2.0, vec2(0.0));
+}
+
 vec3 sparkles(vec2 p, vec3 halfway, vec2 sweep, float awake) {
   vec2 g = p * 62.0;
   vec2 cell = floor(g);
@@ -279,7 +297,8 @@ void main() {
   else if (uPreset == 4) f = rainbow(p);
   else if (uPreset == 5) f = swirl(p);
   else if (uPreset == 6) f = glitter(p);
-  else f = gold(p);
+  else if (uPreset == 7) f = gold(p);
+  else f = guilloche(p);
 
   vec3 metal = uPreset == 7 ? vec3(1.0, 0.74, 0.38) * dot(uFoil, vec3(0.3333)) * 1.15 : uFoil;
   vec4 look = uPreset == 0 ? vec4(0.25, 1.9, 0.12, 1.0)
@@ -289,7 +308,8 @@ void main() {
     : uPreset == 4 ? vec4(0.0, 2.2, 0.0, 0.45)
     : uPreset == 5 ? vec4(1.6, 0.3, 0.0, 0.4)
     : uPreset == 6 ? vec4(0.9, 1.0, 0.6, 1.0)
-    : vec4(0.3, 1.0, 0.2, 0.95);
+    : uPreset == 7 ? vec4(0.3, 1.0, 0.2, 0.95)
+    : vec4(0.35, 1.0, 0.25, 0.9);
   vec2 dir = vec2(cos(f.angle), sin(f.angle));
   float phase = dot(sweep, dir) * look.x + dot(sweep, vec2(0.8, 0.6)) * look.y + f.jitter * look.z;
   float spoke = 1.0;
@@ -300,12 +320,15 @@ void main() {
   }
   vec3 tint = hue(phase);
   if (uPreset == 7) tint = mix(tint, metal, 0.65);
+  if (uPreset == 8) tint = mix(tint, metal, 0.55);
   float glint = pow(max(dot(normalize(vec3(f.facet, 1.0)), halfway), 0.0), 24.0) * step(0.001, length(f.facet));
   bool layered = uPreset == 2 || uPreset == 4 || uPreset == 5 || uPreset == 7;
   vec3 foil = (layered ? tint : mix(tint, vec3(1.0), 0.12)) * (1.15 + 0.3 * sheen) + metal * glint * 1.2;
   float tilted = smoothstep(0.02, 0.21, length(sin(uTilt)));
   float awake = mix(0.2, 1.0, tilted);
   float strength = uIntensity * f.mask * (1.0 - frame) * awake;
+  // Guilloche is printed on the light ground only, so artwork such as a logo stays clean
+  if (uPreset == 8) strength *= smoothstep(0.55, 0.85, dot(art, vec3(0.2126, 0.7152, 0.0722)));
   float band = uPreset == 5 ? spoke : layered ? 0.25 + 0.75 * smoothstep(0.3, 0.95, 0.5 + 0.5 * cos(phase * TAU * 0.5 + 1.3)) : 1.0;
   vec3 color = layered
     ? 1.0 - (1.0 - art) * (1.0 - clamp(foil * look.w * band * strength, 0.0, 1.0))
@@ -358,6 +381,7 @@ export default function HoloCard({
   radius = 14,
   tiltMax = 14,
   hoverScale = 1.04,
+  lightFollow = 1,
   idle = true,
   shadow = true,
   className = '',
@@ -388,6 +412,7 @@ export default function HoloCard({
     radius: Math.max(0, radius),
     tiltMax: clamp(tiltMax, 0, 45),
     hoverScale: clamp(hoverScale, 0.8, 1.3),
+    lightFollow: clamp(lightFollow, 0, 1),
     idle
   };
   flipRef.current = flippable && flipped;
@@ -544,8 +569,8 @@ export default function HoloCard({
       if (pointer.inside && !reduce) {
         targetX = (0.5 - pointer.y) * 2 * s.tiltMax;
         targetY = (pointer.x - 0.5) * 2 * s.tiltMax;
-        lightX = pointer.x;
-        lightY = pointer.y;
+        lightX += (pointer.x - lightX) * s.lightFollow;
+        lightY += (pointer.y - lightY) * s.lightFollow;
         lift = s.hoverScale;
       } else if (drifting) {
         state.clock += dt;
