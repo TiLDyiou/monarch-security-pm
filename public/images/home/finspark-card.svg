@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 756 1056" width="756" height="1056">
+  <defs>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0f12"/>
+      <stop offset="35%" stop-color="#181b22"/>
+      <stop offset="70%" stop-color="#0b0d10"/>
+      <stop offset="100%" stop-color="#14171d"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fae092"/>
+      <stop offset="30%" stop-color="#dfb75c"/>
+      <stop offset="70%" stop-color="#fae092"/>
+      <stop offset="100%" stop-color="#b88a32"/>
+    </linearGradient>
+    <linearGradient id="chipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8cb75"/>
+      <stop offset="50%" stop-color="#c99f3b"/>
+      <stop offset="100%" stop-color="#ebd38d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <rect width="756" height="1056" rx="46" fill="url(#cardBg)"/>
+  <rect width="756" height="1056" rx="46" fill="url(#glow)"/>
+  <rect x="3" y="3" width="750" height="1050" rx="43" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" stroke-opacity="0.4"/>
+  
+  <!-- Subtle geometric mesh patterns -->
+  <path d="M0,200 Q378,350 756,200" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1.5"/>
+  <path d="M0,350 Q378,500 756,350" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1.5"/>
+  <path d="M0,700 Q378,550 756,700" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1.5"/>
+  <path d="M0,850 Q378,700 756,850" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1.5"/>
+
+  <!-- Top Logo / Header -->
+  <g transform="translate(56, 68)">
+    <circle cx="32" cy="32" r="28" fill="none" stroke="url(#goldGrad)" stroke-width="3"/>
+    <path d="M22 42 L32 20 L42 42 Z" fill="url(#goldGrad)"/>
+    <text x="75" y="41" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="800" font-size="34" fill="#ffffff" letter-spacing="4">FINSPARK</text>
+    <text x="76" y="60" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="600" font-size="14" fill="url(#goldGrad)" letter-spacing="6">PRIVATE WEALTH</text>
+  </g>
+
+  <!-- Contactless Icon -->
+  <g transform="translate(636, 76)" stroke="#94a3b8" stroke-width="3" fill="none" stroke-linecap="round">
+    <path d="M0 4 C 6 8, 6 20, 0 24"/>
+    <path d="M8 0 C 18 6, 18 26, 8 32"/>
+    <path d="M16 -4 C 28 4, 28 32, 16 40"/>
+  </g>
+
+  <!-- EMV Chip -->
+  <g transform="translate(56, 210)">
+    <rect width="112" height="90" rx="16" fill="url(#chipGrad)"/>
+    <rect x="3" y="3" width="106" height="84" rx="13" fill="none" stroke="#785310" stroke-width="1" opacity="0.5"/>
+    <!-- Chip contacts -->
+    <path d="M0,45 L112,45 M40,0 L40,90 M72,0 L72,90 M40,28 L72,28 M40,62 L72,62" stroke="#694406" stroke-width="2.5" opacity="0.75" fill="none"/>
+  </g>
+
+  <!-- Central Hologram / Emblem -->
+  <g transform="translate(378, 520)">
+    <circle cx="0" cy="0" r="160" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="2"/>
+    <circle cx="0" cy="0" r="120" fill="none" stroke="url(#goldGrad)" stroke-opacity="0.15" stroke-width="1.5" stroke-dasharray="6 6"/>
+    <circle cx="0" cy="0" r="80" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="2"/>
+    
+    <!-- Stylized Compass / Star -->
+    <path d="M0,-55 L16,-16 L55,0 L16,16 L0,55 L-16,16 L-55,0 L-16,-16 Z" fill="url(#goldGrad)" opacity="0.9"/>
+    <circle cx="0" cy="0" r="8" fill="#ffffff"/>
+  </g>
+
+  <!-- Card Number & Details -->
+  <g transform="translate(56, 770)">
+    <text x="0" y="0" font-family="'Courier New', Courier, monospace" font-size="36" font-weight="bold" fill="#f8fafc" letter-spacing="6">
+      4829  9200  8821  6688
+    </text>
+  </g>
+
+  <g transform="translate(56, 850)">
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="14" font-weight="500" fill="#64748b" letter-spacing="2">VALID THRU</text>
+    <text x="0" y="26" font-family="'Courier New', monospace" font-size="22" font-weight="bold" fill="#e2e8f0">12 / 30</text>
+  </g>
+
+  <g transform="translate(240, 850)">
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="14" font-weight="500" fill="#64748b" letter-spacing="2">SECURITY</text>
+    <text x="0" y="26" font-family="'Courier New', monospace" font-size="22" font-weight="bold" fill="#e2e8f0">VIP ELITE</text>
+  </g>
+
+  <!-- Cardholder Name -->
+  <g transform="translate(56, 960)">
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="14" font-weight="600" fill="#64748b" letter-spacing="3">CARDHOLDER</text>
+    <text x="0" y="32" font-family="'Inter', 'Segoe UI', sans-serif" font-size="28" font-weight="700" fill="#ffffff" letter-spacing="4">PREMIER PARTNER</text>
+  </g>
+
+  <!-- Payment Network Logo (Double intersecting rings) -->
+  <g transform="translate(590, 950)">
+    <circle cx="40" cy="20" r="40" fill="#eb001b" opacity="0.85"/>
+    <circle cx="84" cy="20" r="40" fill="#ff5f00" opacity="0.85"/>
+    <path d="M62, -12 A40,40 0 0,0 62,52 A40,40 0 0,0 62,-12" fill="#f79e1b" opacity="0.9"/>
+  </g>
+</svg>

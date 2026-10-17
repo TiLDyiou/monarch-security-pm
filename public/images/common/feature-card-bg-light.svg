@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2124" height="1120" viewBox="0 0 2124 1120">
+  <defs>
+    <linearGradient id="cardBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#fbfdff"/>
+      <stop offset="100%" stop-color="#f4f8fe"/>
+    </linearGradient>
+    <radialGradient id="cyanGlow" cx="90%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#97b5ff" stop-opacity="0.15"/>
+      <stop offset="60%" stop-color="#00a0b0" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tealGlow" cx="10%" cy="85%" r="50%">
+      <stop offset="0%" stop-color="#00a0b0" stop-opacity="0.08"/>
+      <stop offset="60%" stop-color="#97b5ff" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <rect width="2124" height="1120" rx="60" fill="url(#cardBase)"/>
+  <rect width="2124" height="1120" rx="60" fill="url(#cyanGlow)"/>
+  <rect width="2124" height="1120" rx="60" fill="url(#tealGlow)"/>
+  <rect x="2" y="2" width="2120" height="1116" rx="58" fill="none" stroke="#e2e8f0" stroke-width="3"/>
+</svg>

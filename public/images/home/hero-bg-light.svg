@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960">
+  <defs>
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f8fbff"/>
+      <stop offset="100%" stop-color="#f1f6fd"/>
+    </linearGradient>
+    <radialGradient id="blueAura" cx="50%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#97b5ff" stop-opacity="0.22"/>
+      <stop offset="50%" stop-color="#97b5ff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#97b5ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tealAura" cx="20%" cy="45%" r="45%">
+      <stop offset="0%" stop-color="#00a0b0" stop-opacity="0.15"/>
+      <stop offset="60%" stop-color="#00a0b0" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#00a0b0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tealAura2" cx="80%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="#00a0b0" stop-opacity="0.14"/>
+      <stop offset="60%" stop-color="#00a0b0" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#00a0b0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="subtleGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#00a0b0" stroke-width="1" stroke-opacity="0.04"/>
+    </pattern>
+  </defs>
+  
+  <rect width="1440" height="960" fill="url(#baseGrad)"/>
+  <rect width="1440" height="960" fill="url(#subtleGrid)"/>
+  <rect width="1440" height="960" fill="url(#blueAura)"/>
+  <rect width="1440" height="960" fill="url(#tealAura)"/>
+  <rect width="1440" height="960" fill="url(#tealAura2)"/>
+</svg>
