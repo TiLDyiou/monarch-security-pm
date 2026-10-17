@@ -165,6 +165,10 @@ const FEED_LINES = [
   { w: "88%", gap: true, accent: true },
   { w: "70%" },
   { w: "82%" },
+  { w: "90%", gap: true, accent: true },
+  { w: "74%" },
+  { w: "84%" },
+  { w: "52%" },
 ];
 
 const FeedVisual = ({ heading }: { heading: string }) => (
