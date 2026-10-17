@@ -7,7 +7,6 @@ import {
   Gauge,
   Landmark,
   PieChart,
-  Target,
   TrendingUp,
   Wallet,
 } from "lucide-react";
@@ -157,32 +156,24 @@ const BarsVisual = () => {
   );
 };
 
-const GoalsVisual = ({ heading, steps }: { heading: string; steps: string[] }) => (
-  <div className="magic-bento__flow" style={vars({ "--n": steps.length })}>
-    <div className="magic-bento__flow-trigger magic-bento__tile">
-      <span className="magic-bento__flow-glyph">
-        <Target size={15} strokeWidth={1.8} />
-      </span>
-      <span className="magic-bento__flow-name">{heading}</span>
-    </div>
-    <ol className="magic-bento__steps magic-bento__well">
-      <span className="magic-bento__rail">
-        <span className="magic-bento__rail-fill" />
-      </span>
-      {steps.map((step, index) => (
-        <li key={step} className="magic-bento__step" style={vars({ "--i": index })}>
-          <span className="magic-bento__status">
-            <span className="magic-bento__pending" />
-            <span className="magic-bento__spinner" />
-            <span className="magic-bento__done">
-              <Check size={11} strokeWidth={2.6} />
-            </span>
+const GoalsVisual = ({ steps }: { steps: string[] }) => (
+  <ol className="magic-bento__timeline" style={vars({ "--n": steps.length })}>
+    <span className="magic-bento__timeline-rail">
+      <span className="magic-bento__timeline-fill" />
+    </span>
+    {steps.map((step, index) => (
+      <li key={step} className="magic-bento__milestone" style={vars({ "--i": index })}>
+        <span className="magic-bento__status">
+          <span className="magic-bento__pending" />
+          <span className="magic-bento__spinner" />
+          <span className="magic-bento__done">
+            <Check size={11} strokeWidth={2.6} />
           </span>
-          {step}
-        </li>
-      ))}
-    </ol>
-  </div>
+        </span>
+        {step}
+      </li>
+    ))}
+  </ol>
 );
 
 // Mirrors the four tabs of the dashboard's asset structure chart
@@ -245,24 +236,30 @@ const DashboardBento = () => {
   const navigate = useNavigate();
   const b = t.landing.bento;
 
-  // Goals sit in the middle column; the four modules frame it from the corners
+  // Ten-column grid: 4 / 3 / 3 over 5 / 5, so the seams of the two rows never line up
   const items = useMemo<MagicBentoItem[]>(
     () => [
-      { id: "price", ...b.price, visual: <PriceVisual />, onClick: () => navigate("/dashboard/monitor") },
+      { id: "price", ...b.price, visual: <PriceVisual />, colSpan: 4, onClick: () => navigate("/dashboard/monitor") },
+      { id: "flows", ...b.flows, visual: <BarsVisual />, colSpan: 3, onClick: () => navigate("/dashboard/analysis") },
+      {
+        id: "structure",
+        ...b.structure,
+        visual: <StructureVisual />,
+        colSpan: 3,
+        onClick: () => navigate("/dashboard/analysis"),
+      },
       {
         id: "goals",
         ...b.goals,
-        visual: <GoalsVisual heading={b.goals.heading} steps={b.goals.steps} />,
-        rowSpan: 2,
-        fit: true,
+        visual: <GoalsVisual steps={b.goals.steps} />,
+        colSpan: 5,
         onClick: () => navigate("/dashboard/workplace"),
       },
-      { id: "flows", ...b.flows, visual: <BarsVisual />, onClick: () => navigate("/dashboard/analysis") },
-      { id: "structure", ...b.structure, visual: <StructureVisual />, onClick: () => navigate("/dashboard/analysis") },
       {
         id: "metrics",
         ...b.metrics,
         visual: <MetricsVisual items={b.metrics.items} />,
+        colSpan: 5,
         onClick: () => navigate("/dashboard/analysis"),
       },
     ],
@@ -272,8 +269,8 @@ const DashboardBento = () => {
   return (
     <MagicBento
       items={items}
-      columns={3}
-      columnTemplate="minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr)"
+      columns={10}
+      minCellWidth={64}
       rowHeight={200}
       gap={12}
       radius={20}

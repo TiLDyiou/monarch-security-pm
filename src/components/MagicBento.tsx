@@ -28,15 +28,13 @@ export interface MagicBentoItem {
   onClick?: (event: ReactMouseEvent<HTMLElement>) => void;
   colSpan?: number;
   rowSpan?: number;
-  // Size the card to its content and centre it in its grid area instead of filling the rows
-  fit?: boolean;
 }
 
 export interface MagicBentoProps {
   items?: MagicBentoItem[];
   columns?: number;
-  // grid-template-columns used while the full column count fits, e.g. '1fr 1.2fr 1fr'
-  columnTemplate?: string;
+  // Narrowest column the full grid may use before falling back to two columns or one
+  minCellWidth?: number;
   rowHeight?: number;
   gap?: number;
   radius?: number;
@@ -61,6 +59,7 @@ export interface MagicBentoProps {
 interface Settings {
   items: MagicBentoItem[];
   columns: number;
+  minCellWidth: number;
   gap: number;
   enableBorderGlow: boolean;
   enableSpotlight: boolean;
@@ -189,10 +188,10 @@ const REPLAY = new Set([
   'magic-bento-wait',
   'magic-bento-run',
   'magic-bento-check',
-  'magic-bento-rail'
+  'magic-bento-rail-x'
 ]);
 
-const FLOW = new Set(['magic-bento-wait', 'magic-bento-run', 'magic-bento-check', 'magic-bento-rail']);
+const FLOW = new Set(['magic-bento-wait', 'magic-bento-run', 'magic-bento-check', 'magic-bento-rail-x']);
 
 const finite = (animation: Animation) => {
   const timing = animation.effect?.getTiming?.();
@@ -204,7 +203,7 @@ const nameOf = (animation: Animation) => (animation as CSSAnimation).animationNa
 const MagicBento = ({
   items = [],
   columns = 4,
-  columnTemplate,
+  minCellWidth = MIN_CELL,
   rowHeight = 200,
   gap = 12,
   radius = 20,
@@ -237,6 +236,7 @@ const MagicBento = ({
   const settings: Settings = {
     items,
     columns: Math.max(1, Math.round(columns)),
+    minCellWidth: Math.max(1, minCellWidth),
     gap: Math.max(0, gap),
     enableBorderGlow,
     enableSpotlight,
@@ -471,7 +471,7 @@ const MagicBento = ({
           state.active = inside;
           if (inside) {
             card.dataset.active = '';
-            if (now - (lastFlow[index] || -1e9) > 3200 && card.querySelector('.magic-bento__steps')) {
+            if (now - (lastFlow[index] || -1e9) > 3200 && card.querySelector('.magic-bento__timeline')) {
               lastFlow[index] = now;
               replay(card, FLOW);
             }
@@ -633,7 +633,7 @@ const MagicBento = ({
       const s = settingsRef.current;
       const width = root.clientWidth;
       const cell = (count: number) => (width - s.gap * (count - 1)) / count;
-      const next = cell(s.columns) >= MIN_CELL ? s.columns : s.columns >= 2 && cell(2) >= MIN_PAIR ? 2 : 1;
+      const next = cell(s.columns) >= s.minCellWidth ? s.columns : s.columns >= 2 && cell(2) >= MIN_PAIR ? 2 : 1;
       setCols(next);
       dirty = true;
       wake();
@@ -771,10 +771,7 @@ const MagicBento = ({
           '--mb-spot-size': `${Math.max(40, spotlightRadius)}px`,
           '--mb-border-size': `${Math.round(Math.max(40, spotlightRadius) * 0.75)}px`
         }),
-        gridTemplateColumns:
-          columnTemplate && span === Math.max(1, Math.round(columns))
-            ? columnTemplate
-            : `repeat(${span}, minmax(0, 1fr))`,
+        gridTemplateColumns: `repeat(${span}, minmax(0, 1fr))`,
         gridAutoRows: span === 1 ? `minmax(${rowHeight}px, auto)` : `${rowHeight}px`,
         gap: `${Math.max(0, gap)}px`,
         ...style
@@ -836,12 +833,9 @@ const MagicBento = ({
               cellRefs.current[index] = element;
             }}
             className="magic-bento__cell"
-            data-fit={entry.fit ? '' : undefined}
             style={{
               gridColumn: `span ${Math.min(span, Math.max(1, Math.round(entry.colSpan ?? 1)))}`,
-              // A fitted card only needs its row span while columns sit side by side; stacked rows grow with content
-              gridRow: `span ${entry.fit && span === 1 ? 1 : Math.max(1, Math.round(entry.rowSpan ?? 1))}`,
-              alignSelf: entry.fit && span > 1 ? 'center' : undefined
+              gridRow: `span ${Math.max(1, Math.round(entry.rowSpan ?? 1))}`
             }}
           >
             {entry.href ? (

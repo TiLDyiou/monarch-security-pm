@@ -32,7 +32,7 @@ export interface TranslationDictionary {
     bento: {
       price: { title: string; description: string };
       flows: { title: string; description: string };
-      goals: { title: string; description: string; heading: string; steps: string[] };
+      goals: { title: string; description: string; steps: string[] };
       structure: { title: string; description: string };
       metrics: { title: string; description: string; items: string[] };
     };
@@ -453,8 +453,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         goals: {
           title: 'Mục tiêu tài chính',
           description: 'Đánh giá tính khả thi của từng mục tiêu và theo dõi lộ trình thực hiện.',
-          heading: 'Lộ trình tài chính',
-          steps: ['Mua xe hơi', 'Thu hồi khoản cho vay', 'Mua nhà'],
+          steps: ['Mua xe hơi', 'Thu hồi nợ', 'Mua nhà'],
         },
         structure: {
           title: 'Cơ cấu tài sản',
@@ -1018,8 +1017,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         goals: {
           title: 'Financial Goals',
           description: 'Assess the feasibility of each goal and track the roadmap toward it.',
-          heading: 'Financial roadmap',
-          steps: ['Buy a car', 'Recover a personal loan', 'Buy a home'],
+          steps: ['Buy a car', 'Recover a loan', 'Buy a home'],
         },
         structure: {
           title: 'Asset Structure',
