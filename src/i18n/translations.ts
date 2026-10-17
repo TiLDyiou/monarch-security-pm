@@ -443,7 +443,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       },
       bento: {
         price: {
-          title: 'Biểu đồ giá cổ phiếu',
+          title: 'Theo dõi danh mục đầu tư',
           description: 'Giá từng mã theo khung thời gian, MA20 và khối lượng.',
         },
         flows: {
@@ -1008,7 +1008,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       },
       bento: {
         price: {
-          title: 'Stock Price Chart',
+          title: 'Portfolio Tracking',
           description: 'Each holding by timeframe, with MA20 and volume.',
         },
         flows: {

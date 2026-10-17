@@ -245,18 +245,19 @@ const DashboardBento = () => {
   const navigate = useNavigate();
   const b = t.landing.bento;
 
+  // Goals sit in the middle column; the four modules frame it from the corners
   const items = useMemo<MagicBentoItem[]>(
     () => [
       { id: "price", ...b.price, visual: <PriceVisual />, onClick: () => navigate("/dashboard/monitor") },
-      { id: "flows", ...b.flows, visual: <BarsVisual />, onClick: () => navigate("/dashboard/analysis") },
       {
         id: "goals",
         ...b.goals,
         visual: <GoalsVisual heading={b.goals.heading} steps={b.goals.steps} />,
-        colSpan: 2,
         rowSpan: 2,
+        fit: true,
         onClick: () => navigate("/dashboard/workplace"),
       },
+      { id: "flows", ...b.flows, visual: <BarsVisual />, onClick: () => navigate("/dashboard/analysis") },
       { id: "structure", ...b.structure, visual: <StructureVisual />, onClick: () => navigate("/dashboard/analysis") },
       {
         id: "metrics",
@@ -271,7 +272,8 @@ const DashboardBento = () => {
   return (
     <MagicBento
       items={items}
-      columns={4}
+      columns={3}
+      columnTemplate="minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr)"
       rowHeight={200}
       gap={12}
       radius={20}

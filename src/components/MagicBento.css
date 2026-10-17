@@ -88,6 +88,15 @@
   -webkit-user-select: none;
 }
 
+.magic-bento__cell[data-fit] .magic-bento__card {
+  height: auto;
+}
+
+.magic-bento__cell[data-fit] .magic-bento__visual {
+  flex: none;
+  container-type: normal;
+}
+
 .magic-bento__card[data-clickable] {
   cursor: pointer;
 }

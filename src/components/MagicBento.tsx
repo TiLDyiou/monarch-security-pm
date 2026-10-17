@@ -28,11 +28,15 @@ export interface MagicBentoItem {
   onClick?: (event: ReactMouseEvent<HTMLElement>) => void;
   colSpan?: number;
   rowSpan?: number;
+  // Size the card to its content and centre it in its grid area instead of filling the rows
+  fit?: boolean;
 }
 
 export interface MagicBentoProps {
   items?: MagicBentoItem[];
   columns?: number;
+  // grid-template-columns used while the full column count fits, e.g. '1fr 1.2fr 1fr'
+  columnTemplate?: string;
   rowHeight?: number;
   gap?: number;
   radius?: number;
@@ -200,6 +204,7 @@ const nameOf = (animation: Animation) => (animation as CSSAnimation).animationNa
 const MagicBento = ({
   items = [],
   columns = 4,
+  columnTemplate,
   rowHeight = 200,
   gap = 12,
   radius = 20,
@@ -766,7 +771,10 @@ const MagicBento = ({
           '--mb-spot-size': `${Math.max(40, spotlightRadius)}px`,
           '--mb-border-size': `${Math.round(Math.max(40, spotlightRadius) * 0.75)}px`
         }),
-        gridTemplateColumns: `repeat(${span}, minmax(0, 1fr))`,
+        gridTemplateColumns:
+          columnTemplate && span === Math.max(1, Math.round(columns))
+            ? columnTemplate
+            : `repeat(${span}, minmax(0, 1fr))`,
         gridAutoRows: span === 1 ? `minmax(${rowHeight}px, auto)` : `${rowHeight}px`,
         gap: `${Math.max(0, gap)}px`,
         ...style
@@ -828,9 +836,12 @@ const MagicBento = ({
               cellRefs.current[index] = element;
             }}
             className="magic-bento__cell"
+            data-fit={entry.fit ? '' : undefined}
             style={{
               gridColumn: `span ${Math.min(span, Math.max(1, Math.round(entry.colSpan ?? 1)))}`,
-              gridRow: `span ${Math.max(1, Math.round(entry.rowSpan ?? 1))}`
+              // A fitted card only needs its row span while columns sit side by side; stacked rows grow with content
+              gridRow: `span ${entry.fit && span === 1 ? 1 : Math.max(1, Math.round(entry.rowSpan ?? 1))}`,
+              alignSelf: entry.fit && span > 1 ? 'center' : undefined
             }}
           >
             {entry.href ? (
