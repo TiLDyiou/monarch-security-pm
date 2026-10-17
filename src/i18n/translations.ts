@@ -909,10 +909,10 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
         },
         roadmap: {
-          title: 'Mục tiêu tài chính & Đánh giá tính khả thi',
-          subtitle: 'Tỷ lệ lạm phát giả định 4,5%/năm',
-          tags: { car: 'Tạm hoãn', loanRecovery: 'Tái đầu tư', house: 'Khả thi' },
-          labels: { need: 'Cần', fund: 'Quỹ' },
+          title: 'Mục tiêu tài chính',
+          subtitle: 'Tính theo lạm phát giả định 4,5%/năm',
+          tags: { car: 'Nên hoãn', loanRecovery: 'Tái đầu tư', house: 'Khả thi' },
+          labels: { need: 'Nhu cầu', fund: 'Quỹ dự kiến' },
           bannerTitle: 'Cơ chế quỹ tích lũy liên tục:',
           bannerDesc:
             'Toàn bộ kế hoạch vận hành trên cùng một quỹ đầu tư tăng trưởng liên tục. Quyết định không rút vốn ở các mốc ngắn hạn giúp bảo toàn trọn vẹn sức mạnh lãi kép để hiện thực hóa mục tiêu an cư lớn nhất.',
@@ -928,8 +928,8 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
           steps: {
             car: {
-              title: 'Mua xe hơi phục vụ gia đình',
-              duration: 'Mốc 3 năm',
+              title: 'Mua ô tô cho gia đình',
+              duration: 'Sau 3 năm',
               badge: 'Chưa khả thi · Khuyến nghị tạm hoãn',
               description: 'Để tiện đưa đón con đi học và sinh hoạt cuối tuần.',
               needLabel: 'Nhu cầu vốn điều chỉnh lạm phát',
@@ -937,25 +937,25 @@ export const translations: Record<Language, TranslationDictionary> = {
               needOriginal: 'gốc 800 triệu ₫',
               fundLabel: 'Giá trị quỹ dự phóng tại năm thứ 3',
               fundValue: '723,80 triệu ₫',
-              fundPercent: 'Đạt 79,3% · Thiếu 189,13 triệu ₫',
+              fundPercent: 'Đáp ứng 79,3%, còn thiếu 189,13 triệu ₫',
               recommendationTitle: 'Khuyến nghị chiến lược:',
               recommendationText:
-                'Tạm hoãn mục tiêu mua xe để không rút 723,80 triệu ₫ ra khỏi quỹ, bảo toàn toàn bộ dòng vốn tiếp tục sinh lãi kép cho mục tiêu an cư dài hạn.',
+                'Giữ nguyên 723,80 triệu ₫ trong quỹ để tiếp tục sinh lãi kép cho mục tiêu mua nhà.',
             },
             loanRecovery: {
-              title: 'Thu hồi nợ cá nhân cho mượn',
-              duration: 'Mốc 5 năm',
+              title: 'Thu hồi khoản cho vay cá nhân',
+              duration: 'Sau 5 năm',
               badge: 'Dòng tiền vào · Bổ sung tái đầu tư',
               description:
-                'Thu hồi toàn bộ 100,00 triệu ₫ tiền gốc cho mượn đúng hạn ở tháng thứ 60 để tăng quy mô quỹ đầu tư.',
-              recoveredLabel: 'Dòng tiền gốc thu hồi đúng hạn',
+                'Thu hồi đủ tiền gốc đúng hạn vào tháng thứ 60 và đưa toàn bộ vào quỹ đầu tư.',
+              recoveredLabel: 'bổ sung vào quỹ OCP',
               recoveredValue: '+100,00 triệu ₫',
               detailsText:
                 'Toàn bộ 100 triệu ₫ được nạp trực tiếp vào quỹ đầu tư OCP, gia tăng quy mô tài sản sinh lời ngay trước giai đoạn tăng tốc 5 năm cuối.',
             },
             house: {
-              title: 'Mua nhà đất khu vực Quận 2, Quận 9 cũ',
-              duration: 'Mốc 10 năm',
+              title: 'Mua nhà tại Quận 2 hoặc Quận 9 cũ',
+              duration: 'Sau 10 năm',
               badge: 'Khả thi vượt trội · Vượt 153% nhu cầu',
               description: 'Mục tiêu an cư dài hạn gần chỗ làm của hai vợ chồng và trường học của hai con.',
               needLabel: 'Nhu cầu vốn điều chỉnh lạm phát',
@@ -963,12 +963,12 @@ export const translations: Record<Language, TranslationDictionary> = {
               needOriginal: 'gốc 3.450 triệu ₫',
               fundLabel: 'Giá trị quỹ dự phóng tại năm thứ 10',
               fundValue: '8.199,80 triệu ₫',
-              fundPercent: 'Đạt 153,0% · Dôi dư vượt trội',
+              fundPercent: 'Đáp ứng 153,0% nhu cầu',
               outcomeTitle: 'Kết quả hoạch định:',
-              outcomeTextPrefix: 'Cán đích vượt mức với thặng dư dôi dư',
+              outcomeTextPrefix: 'Vượt mục tiêu, còn dư',
               outcomeSurplus: '+2.842,10 triệu ₫',
               outcomeTextSuffix:
-                '. Gia đình sở hữu trọn vẹn nhà đất an cư mà không cần vay nợ, đồng thời giữ được quỹ tài sản đệm cho tương lai.',
+                '. Gia đình mua được nhà mà không cần vay, vẫn giữ lại một khoản dự phòng cho tương lai.',
             },
           },
         },
@@ -1514,7 +1514,7 @@ export const translations: Record<Language, TranslationDictionary> = {
               badge: 'Cash Inflow · Reinvestment Capital',
               description:
                 'Recover full 100.00M VND principal on schedule at month 60 to expand investment portfolio scale.',
-              recoveredLabel: 'Principal Inflow on Schedule',
+              recoveredLabel: 'added to the OCP fund',
               recoveredValue: '+100.00M VND',
               detailsText:
                 'The full 100M VND is channeled directly into the OCP portfolio, expanding productive earning assets immediately ahead of the final 5-year compounding sprint.',

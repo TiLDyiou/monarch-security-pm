@@ -58,9 +58,10 @@ export const FinancialRoadmap: React.FC<FinancialRoadmapProps> = ({ className })
       description: loanRecovery.description,
       figures: (
         <>
-          <span className="text-sky-700 dark:text-sky-400 font-medium">{loanRecovery.recoveredValue}</span>
-          <span aria-hidden="true">·</span>
-          <span>{loanRecovery.recoveredLabel}</span>
+          <span>
+            <span className="text-sky-700 dark:text-sky-400 font-medium">{loanRecovery.recoveredValue}</span>{' '}
+            {loanRecovery.recoveredLabel}
+          </span>
         </>
       ),
     },
