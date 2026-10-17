@@ -1,4 +1,5 @@
 import Container from "@/components/container";
+import DotGrid from "@/components/DotGrid";
 import HoloCard from "@/components/HoloCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AnimateOnView } from "@/components/ui/motion/animate-on-view";
@@ -9,13 +10,26 @@ const FAQ = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="hoi-dap" className="scroll-mt-4 md:pt-20 xl:pt-32 pt-12 md:pb-20 xl:pb-32 pb-12">
-      <Container>
+    <section id="hoi-dap" className="relative overflow-hidden scroll-mt-4 md:pt-20 xl:pt-32 pt-12 md:pb-20 xl:pb-32 pb-12">
+      {/* Quiet dot field: dots near the cursor drift aside and pick up the brand teal, fading out toward the edges */}
+      <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+        <DotGrid
+          dotSize={3}
+          gap={22}
+          baseColor="#d6dde8"
+          activeColor="#00a0b0"
+          proximity={120}
+          strength={0.6}
+          swell={0.5}
+          glow={0.2}
+          fade={0.6}
+          opacity={0.6}
+          clickShock={false}
+        />
+      </div>
+      <Container className="relative z-10">
         <AnimateOnView once blur>
           <div className="text-center mb-8 md:mb-20 max-w-2xl mx-auto">
-            <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-2 inline-block">
-              {t.landing.faq.badge}
-            </span>
             <h2 className="h2 mb-4">{t.landing.faq.title}</h2>
             <p className="text-muted-foreground text-base md:text-lg">
               {t.landing.faq.subtitle}

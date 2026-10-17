@@ -169,7 +169,6 @@ export interface TranslationDictionary {
       }[];
     };
     faq: {
-      badge: string;
       title: string;
       subtitle: string;
       items: {
@@ -684,7 +683,6 @@ export const translations: Record<Language, TranslationDictionary> = {
         ],
       },
       faq: {
-        badge: 'Giải đáp thắc mắc',
         title: 'Câu Hỏi Thường Gặp',
         subtitle:
           'Những điều bạn cần biết về nguyên tắc tư vấn độc lập, sự an toàn của tài sản và cách chúng tôi làm việc cùng bạn.',
@@ -1268,7 +1266,6 @@ export const translations: Record<Language, TranslationDictionary> = {
         ],
       },
       faq: {
-        badge: 'Questions & Answers',
         title: 'Frequently Asked Questions',
         subtitle:
           'Everything you need to know about our fiduciary independence, asset custody security, and advisory roadmap.',
