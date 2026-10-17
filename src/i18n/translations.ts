@@ -343,6 +343,15 @@ export interface TranslationDictionary {
         subtitle: string;
         bannerTitle: string;
         bannerDesc: string;
+        tags: {
+          car: string;
+          loanRecovery: string;
+          house: string;
+        };
+        labels: {
+          need: string;
+          fund: string;
+        };
         states: {
           done: string;
           current: string;
@@ -902,6 +911,8 @@ export const translations: Record<Language, TranslationDictionary> = {
         roadmap: {
           title: 'Mục tiêu tài chính & Đánh giá tính khả thi',
           subtitle: 'Tỷ lệ lạm phát giả định 4,5%/năm',
+          tags: { car: 'Tạm hoãn', loanRecovery: 'Tái đầu tư', house: 'Khả thi' },
+          labels: { need: 'Cần', fund: 'Quỹ' },
           bannerTitle: 'Cơ chế quỹ tích lũy liên tục:',
           bannerDesc:
             'Toàn bộ kế hoạch vận hành trên cùng một quỹ đầu tư tăng trưởng liên tục. Quyết định không rút vốn ở các mốc ngắn hạn giúp bảo toàn trọn vẹn sức mạnh lãi kép để hiện thực hóa mục tiêu an cư lớn nhất.',
@@ -1466,6 +1477,8 @@ export const translations: Record<Language, TranslationDictionary> = {
         roadmap: {
           title: 'Financial Milestones & Feasibility Analysis',
           subtitle: 'Assumed benchmark inflation rate: 4.5%/year',
+          tags: { car: 'Deferred', loanRecovery: 'Reinvested', house: 'Feasible' },
+          labels: { need: 'Need', fund: 'Fund' },
           bannerTitle: 'Unified Compounding Mechanism:',
           bannerDesc:
             'The entire roadmap is powered by a continuous compounding growth portfolio. Electing not to withdraw capital prematurely preserves the exponential power of compounding to attain the major homeownership milestone.',

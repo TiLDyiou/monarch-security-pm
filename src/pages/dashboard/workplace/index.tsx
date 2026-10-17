@@ -1,7 +1,7 @@
 import { ManOutlined, SmileOutlined, WomanOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { Col, Row } from 'antd';
-import type { FC, ReactNode } from 'react';
+import type { FC } from 'react';
 import { useMemo } from 'react';
 import {
   PolarAngleAxis,
@@ -15,25 +15,10 @@ import {
 import { Landmark, ShieldCheck, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FinancialRoadmap } from './components/FinancialRoadmap';
+import { Panel } from './components/Panel';
 import { formatNumber } from '@/utils/format';
 import { client, netWorth, surplus, totalAssets } from '../mock/client';
 import { useLanguage } from '@/i18n/LanguageContext';
-
-// One shell for every block on the page, so headers, borders and spacing read as a single system
-const Panel: FC<{ title: ReactNode; subtitle?: ReactNode; className?: string; children: ReactNode }> = ({
-  title,
-  subtitle,
-  className,
-  children,
-}) => (
-  <section className={cn('rounded-xl border border-border/60 bg-card shadow-xs overflow-hidden', className)}>
-    <header className="px-4 sm:px-5 py-3.5 border-b border-border/50">
-      <h2 className="text-sm font-semibold text-foreground tracking-tight">{title}</h2>
-      {subtitle && <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>}
-    </header>
-    {children}
-  </section>
-);
 
 const Workplace: FC = () => {
   const { language, t } = useLanguage();
