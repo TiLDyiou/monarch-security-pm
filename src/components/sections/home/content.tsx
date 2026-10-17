@@ -50,7 +50,7 @@ const Content = () => {
                 key={feature.id}
                 delay={index * 0.1}
               >
-                <div className="border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 shadow-card hover:shadow-neumorphic transition-all duration-300">
+                <div className="border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 transition-all duration-300">
                   <div className="w-full aspect-[4/3] sm:aspect-[519/317]">
                     <feature.Illustration />
                   </div>
@@ -67,7 +67,7 @@ const Content = () => {
             ))}
           </div>
           <AnimateOnView delay={0.2}>
-            <div className="border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 shadow-card hover:shadow-neumorphic transition-all duration-300">
+            <div className="border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 transition-all duration-300">
               <div className="w-full h-[300px] md:h-[320px] xl:h-[350px]">
                 <RebalanceIllustration />
               </div>

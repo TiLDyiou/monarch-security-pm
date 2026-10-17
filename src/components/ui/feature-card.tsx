@@ -22,7 +22,7 @@ const FeatureCard = React.forwardRef<HTMLDivElement, FeatureCardProps>(
         <Card
           ref={ref}
           className={cn(
-            "overflow-hidden md:p-8 p-5 md:rounded-[30px] rounded-lg border-0 bg-[url(images/common/feature-card-bg.webp)] bg-cover",
+            "overflow-hidden md:p-8 p-5 md:rounded-[30px] rounded-lg border-0 shadow-none bg-[url(images/common/feature-card-bg.webp)] bg-cover",
             variant === "full-width" && "w-full",
             variant === "split" && "grid md:grid-cols-2 md:gap-[90px] md:items-center",
             variant === "default" && "flex flex-col-reverse md:flex-row md:items-center justify-between md:gap-[90px] gap-6",

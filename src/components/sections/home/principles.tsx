@@ -33,7 +33,7 @@ const Principles = () => {
             const Icon = ICONS[i] ?? Scale;
             return (
               <AnimateOnView key={item.title} delay={i * 0.1} className={cn("h-full", SPANS[i])}>
-                <div className="h-full border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 shadow-card hover:shadow-neumorphic transition-all duration-300 p-6 md:p-8">
+                <div className="h-full border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 transition-all duration-300 p-6 md:p-8">
                   <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200/70 bg-gradient-to-br from-[#eef9fb] via-white to-[#eef2ff] text-primary">
                     <Icon className="h-5 w-5" aria-hidden />
                   </div>

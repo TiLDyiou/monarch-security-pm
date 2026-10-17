@@ -76,7 +76,6 @@ const Hero = () => {
 
           {/* Preview of the dashboard modules */}
           <div id="phan-bo" className="relative flex justify-center mt-6 scroll-mt-6">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] md:w-[600px] h-[340px] md:h-[500px] bg-gradient-to-tr from-[#00a0b0]/20 to-[#97b5ff]/25 rounded-full blur-[90px] pointer-events-none -z-10" />
             <AnimateOnView delay={0.2} className="relative z-10 w-full max-w-[1040px]">
               <DashboardBento />
             </AnimateOnView>

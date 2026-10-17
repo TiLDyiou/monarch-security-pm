@@ -53,7 +53,7 @@ const TestimonialSlider = () => {
             exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
-            <div className="relative md:w-80 md:h-80 h-64 w-64 flex-shrink-0 overflow-hidden rounded-2xl border border-border shadow-xl bg-card group">
+            <div className="relative md:w-80 md:h-80 h-64 w-64 flex-shrink-0 overflow-hidden rounded-2xl border border-border bg-card group">
               <img
                 src={current.image}
                 alt={current.author}
@@ -97,7 +97,7 @@ const TestimonialSlider = () => {
                     setCurrentIndex(index);
                   }}
                   title={previewItem.author}
-                  className="group cursor-pointer flex-shrink-0 w-60 h-80 flex flex-col justify-end p-4 relative rounded-2xl overflow-hidden border border-border/60 bg-card grayscale hover:grayscale-0 hover:scale-[1.03] transition-all duration-300 shadow-md"
+                  className="group cursor-pointer flex-shrink-0 w-60 h-80 flex flex-col justify-end p-4 relative rounded-2xl overflow-hidden border border-border/60 bg-card grayscale hover:grayscale-0 hover:scale-[1.03] transition-all duration-300"
                   initial={{ opacity: 0, x: direction > 0 ? 120 : -120 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: direction > 0 ? -120 : 120 }}
@@ -131,14 +131,14 @@ const TestimonialSlider = () => {
       <div className="flex items-center justify-center md:justify-start gap-4 mt-4 pt-4 border-t border-border">
         <button
           onClick={prev}
-          className="w-12 h-12 rounded-full border border-border bg-card flex items-center justify-center hover:bg-slate-100 hover:border-primary/50 shadow-sm transition-all group cursor-pointer"
+          className="w-12 h-12 rounded-full border border-border bg-card flex items-center justify-center hover:bg-slate-100 hover:border-primary/50 transition-all group cursor-pointer"
           aria-label="Previous quote"
         >
           <ChevronLeft className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
         </button>
         <button
           onClick={next}
-          className="w-12 h-12 rounded-full border border-border bg-card flex items-center justify-center hover:bg-slate-100 hover:border-primary/50 shadow-sm transition-all group cursor-pointer"
+          className="w-12 h-12 rounded-full border border-border bg-card flex items-center justify-center hover:bg-slate-100 hover:border-primary/50 transition-all group cursor-pointer"
           aria-label="Next quote"
         >
           <ChevronRight className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />

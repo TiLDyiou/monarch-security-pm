@@ -24,8 +24,6 @@ const Stage = ({ children, className }: { children: ReactNode; className?: strin
       className,
     )}
   >
-    <div className="pointer-events-none absolute -top-16 -right-10 h-48 w-48 rounded-full bg-[#00a0b0]/10 blur-3xl" />
-    <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-[#97b5ff]/20 blur-3xl" />
     {children}
   </div>
 );

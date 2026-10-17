@@ -56,7 +56,7 @@ const FAQ = () => {
               radius={24}
               width={480}
               idle
-              shadow
+              shadow={false}
             />
           </AnimateOnView>
 
