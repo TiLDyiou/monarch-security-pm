@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { Check, GraduationCap, Home, Palmtree, ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -211,6 +211,10 @@ export const FrontierIllustration = () => {
 /* ---------- 3. Drift & disciplined rebalancing ---------- */
 
 const TARGET = 60;
+const PHASE_MS = 1800;
+// Weights glide between phases and labels cross-fade, so no state change lands in a single frame
+const GLIDE = { duration: 0.8, ease: [0.65, 0, 0.35, 1] as [number, number, number, number] };
+const SWAP = { duration: 0.25, ease: "easeOut" as const };
 
 export const RebalanceIllustration = () => {
   const { t } = useLanguage();
@@ -229,7 +233,7 @@ export const RebalanceIllustration = () => {
       return;
     }
     setPhase(0);
-    const id = window.setInterval(() => setPhase((p) => (p + 1) % phases.length), 2200);
+    const id = window.setInterval(() => setPhase((p) => (p + 1) % phases.length), PHASE_MS);
     return () => window.clearInterval(id);
   }, [live, phases.length]);
 
@@ -240,7 +244,6 @@ export const RebalanceIllustration = () => {
     { label: t.landing.process.illustrations.rebalance.stocksLabel, value: current.stocks, target: TARGET, color: STOCKS },
     { label: t.landing.process.illustrations.rebalance.bondsLabel, value: 100 - current.stocks, target: 100 - TARGET, color: BONDS },
   ];
-  const spring = { type: "spring" as const, stiffness: 120, damping: 18 };
 
   return (
     <Stage>
@@ -251,13 +254,13 @@ export const RebalanceIllustration = () => {
             <li key={p.step} className="flex items-start gap-3">
               <span
                 className={cn(
-                  "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[11px] font-semibold transition-colors duration-300",
+                  "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[11px] font-semibold transition-colors duration-500",
                   i === phase ? "border-primary bg-primary text-white" : i < phase ? "border-primary/40 bg-primary/10 text-primary" : "border-slate-200 bg-white text-muted-foreground",
                 )}
               >
                 {i === 2 && phase === 2 ? <Check className="h-3.5 w-3.5" /> : <span className="h-1.5 w-1.5 rounded-full bg-current" />}
               </span>
-              <div className={cn("transition-opacity duration-300", i === phase ? "opacity-100" : "opacity-50")}>
+              <div className={cn("transition-opacity duration-500", i === phase ? "opacity-100" : "opacity-50")}>
                 <p className="text-sm font-semibold text-foreground">{p.step}</p>
                 <p className="text-xs text-muted-foreground">{p.note}</p>
               </div>
@@ -271,18 +274,22 @@ export const RebalanceIllustration = () => {
             <p className="text-xs md:text-sm font-semibold text-foreground">
               {t.landing.process.illustrations.rebalance.title} <span className="font-normal text-muted-foreground md:hidden">· {current.step}</span>
             </p>
-            <motion.span
-              key={phase}
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={cn(
-                "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold",
-                drifted ? "bg-slate-900 text-white" : "bg-primary/10 text-primary",
-              )}
-            >
-              {!drifted && <Check className="h-3 w-3" aria-hidden />}
-              {current.chip}
-            </motion.span>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={current.chip}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 4 }}
+                transition={SWAP}
+                className={cn(
+                  "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold",
+                  drifted ? "bg-slate-900 text-white" : "bg-primary/10 text-primary",
+                )}
+              >
+                {!drifted && <Check className="h-3 w-3" aria-hidden />}
+                {current.chip}
+              </motion.span>
+            </AnimatePresence>
           </div>
 
           <div className="space-y-4">
@@ -293,9 +300,18 @@ export const RebalanceIllustration = () => {
                     <span className="h-2.5 w-2.5 rounded-[3px]" style={{ background: r.color }} />
                     {r.label}
                   </span>
-                  <span className={cn("font-medium", r.value === r.target ? "text-primary" : "text-foreground")}>
-                    {r.value > r.target ? status.over : r.value < r.target ? status.under : status.onTarget}
-                  </span>
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.span
+                      key={r.value > r.target ? "over" : r.value < r.target ? "under" : "on"}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={SWAP}
+                      className={cn("font-medium", r.value === r.target ? "text-primary" : "text-foreground")}
+                    >
+                      {r.value > r.target ? status.over : r.value < r.target ? status.under : status.onTarget}
+                    </motion.span>
+                  </AnimatePresence>
                 </div>
                 <div className="relative h-3 rounded-full bg-slate-200/70">
                   <motion.div
@@ -303,7 +319,7 @@ export const RebalanceIllustration = () => {
                     style={{ background: r.color }}
                     initial={false}
                     animate={{ width: `${r.value}%` }}
-                    transition={spring}
+                    transition={GLIDE}
                   />
                   <span
                     className="absolute -top-1 -bottom-1 w-0.5 rounded-full bg-slate-900/70"
@@ -316,7 +332,7 @@ export const RebalanceIllustration = () => {
           </div>
 
           <div className="mt-4 flex h-2.5 w-full gap-[2px] overflow-hidden rounded-full">
-            <motion.span className="h-full" style={{ background: STOCKS }} initial={false} animate={{ width: `${current.stocks}%` }} transition={spring} />
+            <motion.span className="h-full" style={{ background: STOCKS }} initial={false} animate={{ width: `${current.stocks}%` }} transition={GLIDE} />
             <motion.span className="h-full flex-1" style={{ background: BONDS }} />
           </div>
           <p className="mt-2 text-[11px] text-muted-foreground">{t.landing.process.illustrations.rebalance.targetWeightNote}</p>
