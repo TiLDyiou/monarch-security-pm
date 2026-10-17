@@ -17,6 +17,10 @@ import { Panel } from './components/Panel';
 import { client } from '../mock/client';
 import { useLanguage } from '@/i18n/LanguageContext';
 
+// Children get a neutral figure by age: under 3 a baby, under 14 a child, from 14 a teenager
+const childAvatar = (age: number) =>
+  age < 3 ? '/images/avatars/baby.webp' : age < 14 ? '/images/avatars/child.webp' : '/images/avatars/teen.webp';
+
 const Workplace: FC = () => {
   const { language, t } = useLanguage();
   const wp = t.dashboard.workplace;
@@ -89,8 +93,8 @@ const Workplace: FC = () => {
   ];
 
   const clientProfiles = useMemo(() => {
-    const age = (year: number) =>
-      `${new Date().getFullYear() - year} ${language === 'en' ? 'yrs' : 'tuổi'}`;
+    const yearsOld = (year: number) => new Date().getFullYear() - year;
+    const age = (year: number) => `${yearsOld(year)} ${language === 'en' ? 'yrs' : 'tuổi'}`;
     return [
       {
         id: 'husband',
@@ -121,7 +125,7 @@ const Workplace: FC = () => {
         tag: `${age(client.children[0].birthYear)} · ${wp.profiles.child1.tag}`,
         role: wp.profiles.child1.role,
         org: wp.profiles.child1.org,
-        avatar: '/images/avatars/child.webp',
+        avatar: childAvatar(yearsOld(client.children[0].birthYear)),
       },
       {
         id: 'child-1',
@@ -130,7 +134,7 @@ const Workplace: FC = () => {
         tag: `${age(client.children[1].birthYear)} · ${wp.profiles.child2.tag}`,
         role: wp.profiles.child2.role,
         org: wp.profiles.child2.org,
-        avatar: '/images/avatars/baby.webp',
+        avatar: childAvatar(yearsOld(client.children[1].birthYear)),
       },
     ];
   }, [wp, language]);
@@ -152,7 +156,7 @@ const Workplace: FC = () => {
                       i % 2 === 0 && 'sm:border-r',
                     )}
                   >
-                    {/* Fluent Emoji 3D figures (MIT, Microsoft); the children's genders are not recorded, so neutral child and baby */}
+                    {/* Fluent Emoji 3D figures (MIT, Microsoft) */}
                     <img
                       src={p.avatar}
                       alt=""
