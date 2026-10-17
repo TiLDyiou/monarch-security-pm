@@ -97,7 +97,6 @@ export interface TranslationDictionary {
     };
     principles: {
       title: string;
-      cardHeading: string;
       subtitle: string;
       items: {
         title: string;
@@ -551,7 +550,6 @@ export const translations: Record<Language, TranslationDictionary> = {
       },
       principles: {
         title: 'Những Ràng Buộc Định Hình Mọi Danh Mục',
-        cardHeading: 'Khung ràng buộc đầu tư',
         subtitle:
           'Trước khi tối ưu lợi nhuận, chúng tôi xác lập rõ các giới hạn trong Tuyên bố Chính sách Đầu tư để danh mục luôn phù hợp với hoàn cảnh thực tế của gia đình bạn.',
         items: [
@@ -586,7 +584,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         sectionTitle1: 'Quy Trình Hoạch Định Danh Mục',
         sectionTitle2: 'Bài Bản & Tinh Gọn',
         sectionSubtitle:
-          'Gạt bỏ nỗi lo biến động thị trường và những quyết định mua bán cảm tính. Chúng tôi đồng hành cùng bạn xây dựng lộ trình tích lũy kỷ luật, gia tăng tài sản bền vững trong đúng ngưỡng an toàn của gia đình bạn.',
+          'Gạt bỏ nỗi lo biến động thị trường và những quyết định mua bán cảm tính. Chúng tôi đồng hành cùng bạn tích lũy tài sản một cách kỷ luật, để tài sản tăng trưởng bền vững mà vẫn nằm trong ngưỡng an toàn của gia đình.',
         cards: {
           step1: {
             title: 'Thấu Hiểu Ngưỡng An Toàn Tài Chính & Mục Tiêu Gia Đình',
@@ -1136,7 +1134,6 @@ export const translations: Record<Language, TranslationDictionary> = {
       },
       principles: {
         title: 'The Constraints That Shape Every Portfolio',
-        cardHeading: 'Investment constraints',
         subtitle:
           'Before optimizing returns, we set clear boundaries in the Investment Policy Statement so the portfolio always fits your family’s real circumstances.',
         items: [
@@ -1171,7 +1168,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         sectionTitle1: 'A Disciplined & Streamlined',
         sectionTitle2: 'Portfolio Planning Process',
         sectionSubtitle:
-          'Free yourself from market noise and emotional trading decisions. We partner with you to engineer a disciplined wealth accumulation journey strictly within your family’s comfort zone.',
+          'Free yourself from market noise and emotional trading decisions. We help you build wealth with discipline, so it grows steadily while staying within your family’s safety threshold.',
         cards: {
           step1: {
             title: 'Understand Risk Tolerance & Family Milestones',
