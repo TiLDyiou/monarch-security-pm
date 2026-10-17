@@ -97,9 +97,9 @@ const TestimonialSlider = () => {
                     setCurrentIndex(index);
                   }}
                   title={previewItem.author}
-                  className="cursor-pointer flex-shrink-0 w-60 h-80 flex flex-col justify-end p-4 relative rounded-2xl overflow-hidden border border-border/60 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 hover:scale-[1.03] transition-all duration-300 shadow-md"
+                  className="group cursor-pointer flex-shrink-0 w-60 h-80 flex flex-col justify-end p-4 relative rounded-2xl overflow-hidden border border-border/60 bg-card grayscale hover:grayscale-0 hover:scale-[1.03] transition-all duration-300 shadow-md"
                   initial={{ opacity: 0, x: direction > 0 ? 120 : -120 }}
-                  animate={{ opacity: 0.45, x: 0 }}
+                  animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: direction > 0 ? -120 : 120 }}
                   transition={{
                     type: "spring",
@@ -114,6 +114,8 @@ const TestimonialSlider = () => {
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                  {/* Opaque veil instead of element opacity, so nothing behind the card bleeds into the portrait */}
+                  <div className="absolute inset-0 bg-white/55 transition-opacity duration-300 group-hover:opacity-0" />
                   <div className="relative z-10">
                     <p className="text-sm font-bold text-white leading-tight mb-1">{previewItem.author}</p>
                     <p className="text-xs text-zinc-300 line-clamp-1">{previewItem.role}</p>

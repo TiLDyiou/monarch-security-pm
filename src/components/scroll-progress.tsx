@@ -1,17 +1,26 @@
-import { motion, useScroll, useSpring } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { motion, useScroll, type MotionProps } from "framer-motion";
 
-// Hairline reading-progress bar pinned to the top of the viewport
-const ScrollProgress = () => {
+// Magic UI "scroll-progress" (magicui.design/r/scroll-progress), on framer-motion and the brand gradient
+interface ScrollProgressProps extends Omit<React.HTMLAttributes<HTMLElement>, keyof MotionProps> {
+  ref?: React.Ref<HTMLDivElement>;
+}
+
+export function ScrollProgress({ className, ref, ...props }: ScrollProgressProps) {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
 
   return (
     <motion.div
-      style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-50 h-[2px] origin-left bg-gradient-to-r from-[#00a0b0] to-[#97b5ff]"
+      ref={ref}
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 h-px origin-left bg-gradient-to-r from-[#00a0b0] via-[#2f6bff] to-[#97b5ff]",
+        className,
+      )}
+      style={{ scaleX: scrollYProgress }}
       aria-hidden
+      {...props}
     />
   );
-};
+}
 
 export default ScrollProgress;

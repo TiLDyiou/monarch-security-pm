@@ -29,7 +29,6 @@ export interface TranslationDictionary {
       subtitle: string;
       cta: string;
     };
-    concepts: string[];
     allocation: {
       tag: string;
       title: string;
@@ -74,7 +73,6 @@ export interface TranslationDictionary {
       note: string;
     };
     features: {
-      badge: string;
       sectionTitle: string;
       sectionSubtitle: string;
       cards: {
@@ -98,8 +96,8 @@ export interface TranslationDictionary {
       };
     };
     principles: {
-      badge: string;
       title: string;
+      cardHeading: string;
       subtitle: string;
       items: {
         title: string;
@@ -107,7 +105,6 @@ export interface TranslationDictionary {
       }[];
     };
     process: {
-      badge: string;
       sectionTitle1: string;
       sectionTitle2: string;
       sectionSubtitle: string;
@@ -164,7 +161,6 @@ export interface TranslationDictionary {
       };
     };
     testimonials: {
-      badge: string;
       title: string;
       subtitle: string;
       items: {
@@ -483,19 +479,6 @@ export const translations: Record<Language, TranslationDictionary> = {
           'Phân bổ tài sản theo Thuyết danh mục hiện đại, đồng hành tái cân bằng định kỳ và bảo vệ tài sản gia đình bạn trong mọi chu kỳ thị trường',
         cta: 'Bắt Đầu Ngay',
       },
-      concepts: [
-        'Thuyết danh mục hiện đại',
-        'Đường biên hiệu quả',
-        'Đường phân bổ vốn',
-        'Danh mục rủi ro tối ưu',
-        'Tỷ số Sharpe',
-        'Hệ số ngại rủi ro',
-        'Đa dạng hóa',
-        'Tài sản phi rủi ro',
-        'Tái cân bằng định kỳ',
-        'Tuyên bố chính sách đầu tư',
-        'Biên an toàn',
-      ],
       allocation: {
         tag: 'Phân bổ tài sản mẫu',
         title: 'So sánh các chiến lược danh mục',
@@ -540,7 +523,6 @@ export const translations: Record<Language, TranslationDictionary> = {
         note: 'Tỷ trọng mang tính minh họa. Danh mục thực tế được may đo theo mục tiêu và ngưỡng chấp nhận rủi ro của bạn.',
       },
       features: {
-        badge: 'Dịch vụ',
         sectionTitle: 'Mỗi nhà đầu tư một mục tiêu, một ngưỡng an toàn tài chính',
         sectionSubtitle:
           'Chúng tôi không đưa lời khuyên chung chung, chúng tôi xây lộ trình khoa học dành riêng cho bạn',
@@ -568,10 +550,10 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
       },
       principles: {
-        badge: 'Chính sách đầu tư',
         title: 'Những Ràng Buộc Định Hình Mọi Danh Mục',
+        cardHeading: 'Khung ràng buộc đầu tư',
         subtitle:
-          'Trước khi tối ưu lợi nhuận, chúng tôi xác lập rõ các giới hạn trong Tuyên bố Chính sách Đầu tư (IPS) để danh mục luôn phù hợp với hoàn cảnh thực tế của gia đình bạn.',
+          'Trước khi tối ưu lợi nhuận, chúng tôi xác lập rõ các giới hạn trong Tuyên bố Chính sách Đầu tư để danh mục luôn phù hợp với hoàn cảnh thực tế của gia đình bạn.',
         items: [
           {
             title: 'Thanh khoản',
@@ -601,7 +583,6 @@ export const translations: Record<Language, TranslationDictionary> = {
         ],
       },
       process: {
-        badge: 'Phương pháp',
         sectionTitle1: 'Quy Trình Hoạch Định Danh Mục',
         sectionTitle2: 'Bài Bản & Tinh Gọn',
         sectionSubtitle:
@@ -625,7 +606,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
         illustrations: {
           riskGauge: {
-            label: 'Khẩu vị rủi ro',
+            label: 'Ngưỡng chấp nhận rủi ro',
             balanced: 'Cân bằng',
             goals: {
               emergency: 'Quỹ dự phòng',
@@ -662,7 +643,6 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
       },
       testimonials: {
-        badge: 'Triết lý đầu tư',
         title: 'Những Tư Tưởng Dẫn Lối',
         subtitle:
           'Kim chỉ nam soi đường cho phương pháp luận phân bổ danh mục khoa học, quản trị rủi ro và tăng trưởng tài sản bền vững của chúng tôi.',
@@ -724,7 +704,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             question: 'Chiến lược phân bổ danh mục của chúng tôi dựa trên phương pháp luận nào?',
             answer:
-              'Chúng tôi ứng dụng Thuyết danh mục hiện đại Modern Portfolio Theory của GS. Harry Markowitz (Nobel Kinh tế), kết hợp với triết lý đầu tư giá trị và Biên an toàn của Benjamin Graham & Warren Buffett: Đa dạng hóa để triệt tiêu tối đa rủi ro phi hệ thống và tập trung vào các tài sản tạo dòng tiền thực chất.',
+              'Chúng tôi ứng dụng Thuyết danh mục hiện đại Modern Portfolio Theory của GS. Harry Markowitz, nhà kinh tế đoạt giải Nobel, kết hợp với triết lý đầu tư giá trị và Biên an toàn của Benjamin Graham & Warren Buffett: Đa dạng hóa để triệt tiêu tối đa rủi ro phi hệ thống và tập trung vào các tài sản tạo dòng tiền thực chất.',
           },
           {
             question: 'Tôi cần có số vốn tối thiểu bao nhiêu để bắt đầu nhận tư vấn?',
@@ -1084,19 +1064,6 @@ export const translations: Record<Language, TranslationDictionary> = {
           'Asset allocation grounded in Modern Portfolio Theory, periodic disciplined rebalancing, and long-term wealth preservation for your family across every market cycle.',
         cta: 'Get Started',
       },
-      concepts: [
-        'Modern Portfolio Theory',
-        'Efficient Frontier',
-        'Capital Allocation Line',
-        'Optimal Risky Portfolio',
-        'Sharpe Ratio',
-        'Risk Aversion',
-        'Diversification',
-        'Risk-Free Asset',
-        'Periodic Rebalancing',
-        'Investment Policy Statement',
-        'Margin of Safety',
-      ],
       allocation: {
         tag: 'Sample Asset Allocation',
         title: 'Compare Portfolio Strategies',
@@ -1138,10 +1105,9 @@ export const translations: Record<Language, TranslationDictionary> = {
           riskLevel: 'Risk Level',
           timeHorizon: 'Suggested Horizon',
         },
-        note: 'Illustrative allocation only. Actual portfolios are tailored to each client’s individual financial goals and risk appetite.',
+        note: 'Illustrative allocation only. Actual portfolios are tailored to each client’s individual financial goals and risk tolerance.',
       },
       features: {
-        badge: 'Our Services',
         sectionTitle: 'Every Investor Has Unique Goals & Financial Safety Margins',
         sectionSubtitle:
           'Instead of generic rules of thumb, we build a scientific, disciplined wealth roadmap tailored exclusively for your family.',
@@ -1169,10 +1135,10 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
       },
       principles: {
-        badge: 'Investment Policy',
         title: 'The Constraints That Shape Every Portfolio',
+        cardHeading: 'Investment constraints',
         subtitle:
-          'Before optimizing returns, we set clear boundaries in the Investment Policy Statement (IPS) so the portfolio always fits your family’s real circumstances.',
+          'Before optimizing returns, we set clear boundaries in the Investment Policy Statement so the portfolio always fits your family’s real circumstances.',
         items: [
           {
             title: 'Liquidity',
@@ -1202,14 +1168,13 @@ export const translations: Record<Language, TranslationDictionary> = {
         ],
       },
       process: {
-        badge: 'Methodology',
         sectionTitle1: 'A Disciplined & Streamlined',
         sectionTitle2: 'Portfolio Planning Process',
         sectionSubtitle:
           'Free yourself from market noise and emotional trading decisions. We partner with you to engineer a disciplined wealth accumulation journey strictly within your family’s comfort zone.',
         cards: {
           step1: {
-            title: 'Understand Risk Appetite & Family Milestones',
+            title: 'Understand Risk Tolerance & Family Milestones',
             description:
               'Assess risk tolerance through standardized psychometric profiling, streamline monthly cash flows, and build emergency reserves to secure homeownership, education, and retirement.',
           },
@@ -1226,7 +1191,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
         illustrations: {
           riskGauge: {
-            label: 'Risk Appetite',
+            label: 'Risk Tolerance',
             balanced: 'Balanced',
             goals: {
               emergency: 'Emergency Fund',
@@ -1241,7 +1206,7 @@ export const translations: Record<Language, TranslationDictionary> = {
             feasible: 'Feasible Portfolios',
             optimal: 'Optimal',
             optimalTag: 'Optimal Portfolio',
-            riskAxis: 'Risk (σ) →',
+            riskAxis: 'Risk →',
             returnAxis: '↑ Expected Return',
           },
           rebalance: {
@@ -1263,7 +1228,6 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
       },
       testimonials: {
-        badge: 'Investment Philosophy',
         title: 'The Ideas That Guide Us',
         subtitle:
           'The guiding principles behind our scientific asset allocation methodology, risk management, and sustainable wealth growth.',
@@ -1315,7 +1279,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             question: 'How does our personal financial & portfolio advisory service work?',
             answer:
-              'We act as independent fiduciary financial advisors. We evaluate your household income, expenses, liabilities, and risk tolerance to design an individualized asset allocation (Equities, ETFs, Sovereign Bonds, Gold, Real Estate). You retain full legal custody of your funds on your own brokerage and bank accounts while we provide ongoing strategic recommendations and periodic rebalancing.',
+              'We act as independent fiduciary financial advisors. We evaluate your household income, expenses, liabilities, and risk tolerance to design an individualized asset allocation across equities, ETFs, sovereign bonds, gold, and real estate. You retain full legal custody of your funds on your own brokerage and bank accounts while we provide ongoing strategic recommendations and periodic rebalancing.',
           },
           {
             question: 'Do we ever take direct custody of your funds or investment assets?',
@@ -1325,12 +1289,12 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             question: 'What methodology guides our portfolio allocation strategies?',
             answer:
-              'We apply Modern Portfolio Theory (MPT) established by Nobel Laureate Prof. Harry Markowitz, paired with the value investing and Margin of Safety principles of Benjamin Graham and Warren Buffett. This systematically diversifies away unsystematic risk while allocating capital to productive, cash-generating assets.',
+              'We apply Modern Portfolio Theory, established by Nobel Laureate Prof. Harry Markowitz, paired with the value investing and Margin of Safety principles of Benjamin Graham and Warren Buffett. This systematically diversifies away unsystematic risk while allocating capital to productive, cash-generating assets.',
           },
           {
             question: 'What is the minimum capital required to begin advisory engagement?',
             answer:
-              'We provide flexible advisory tiers: from young professionals starting their wealth accumulation journey with modest starting capital, to high-net-worth families (HNWI) requiring multi-asset estate planning, tax optimization, and wealth preservation.',
+              'We provide flexible advisory tiers: from young professionals starting their wealth accumulation journey with modest starting capital, to high-net-worth families requiring multi-asset estate planning, tax optimization, and wealth preservation.',
           },
         ],
       },
