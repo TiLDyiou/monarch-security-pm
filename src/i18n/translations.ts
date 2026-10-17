@@ -98,7 +98,6 @@ export interface TranslationDictionary {
           completed: string;
         };
         frontier: {
-          title: string;
           feasible: string;
           optimal: string;
           optimalTag: string;
@@ -560,7 +559,6 @@ export const translations: Record<Language, TranslationDictionary> = {
             completed: 'Hoàn thành',
           },
           frontier: {
-            title: 'Đường biên hiệu quả',
             feasible: 'Danh mục khả thi',
             optimal: 'Tối ưu',
             optimalTag: 'Danh mục tối ưu',
@@ -1118,7 +1116,6 @@ export const translations: Record<Language, TranslationDictionary> = {
             completed: 'Achieved',
           },
           frontier: {
-            title: 'Efficient Frontier',
             feasible: 'Feasible Portfolios',
             optimal: 'Optimal',
             optimalTag: 'Optimal Portfolio',

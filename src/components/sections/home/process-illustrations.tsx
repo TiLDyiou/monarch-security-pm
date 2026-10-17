@@ -133,8 +133,7 @@ export const FrontierIllustration = () => {
   return (
     <Stage>
       <div ref={ref} className="relative flex h-full flex-col p-5 md:p-6">
-        <div className="mb-1 flex items-center justify-between text-[11px] md:text-xs">
-          <span className="font-semibold text-foreground">{t.landing.process.illustrations.frontier.title}</span>
+        <div className="mb-1 flex items-center justify-end text-[11px] md:text-xs">
           <span className="flex items-center gap-3 text-muted-foreground">
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#97b5ff]" />{t.landing.process.illustrations.frontier.feasible}</span>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: TEAL }} />{t.landing.process.illustrations.frontier.optimal}</span>

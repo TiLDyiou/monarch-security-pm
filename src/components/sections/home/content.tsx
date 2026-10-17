@@ -44,26 +44,25 @@ const Content = () => {
           </AnimateOnView>
         </StaggerContainer>
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {/* Side by side the two cards share subgrid rows (illustration, title, description), so titles and
+              descriptions line up whatever the title length; stacked on mobile they flow as a column */}
+          <div className="flex flex-col gap-6 mb-6 md:grid md:grid-cols-2 md:gap-x-6 md:gap-y-0">
             {streamlineFeatures.slice(0, 2).map((feature, index) => (
               <AnimateOnView
                 key={feature.id}
                 delay={index * 0.1}
-                className="h-full"
+                className="md:row-span-3 md:grid md:grid-rows-subgrid"
               >
-                {/* Both cards stretch to the row height so a longer title does not leave them uneven */}
-                <div className="h-full flex flex-col border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 transition-all duration-300">
-                  <div className="w-full shrink-0 grow-0 min-h-0 overflow-hidden aspect-[4/3] sm:aspect-[519/317]">
+                <div className="flex flex-col md:row-span-3 md:grid md:grid-rows-subgrid border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 transition-all duration-300">
+                  <div className="w-full min-h-0 overflow-hidden aspect-[4/3] sm:aspect-[519/317]">
                     <feature.Illustration />
                   </div>
-                  <div className="flex-1 p-6 md:p-8 text-center md:text-left">
-                    <h3 className="h4 text-xl font-bold mb-3">
-                      {feature.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
+                  <h3 className="h4 text-xl font-bold px-6 md:px-8 pt-6 md:pt-8 pb-3 text-center md:text-left">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 text-center md:text-left">
+                    {feature.description}
+                  </p>
                 </div>
               </AnimateOnView>
             ))}
