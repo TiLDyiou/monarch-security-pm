@@ -49,12 +49,14 @@ const Content = () => {
               <AnimateOnView
                 key={feature.id}
                 delay={index * 0.1}
+                className="h-full"
               >
-                <div className="border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 transition-all duration-300">
-                  <div className="w-full aspect-[4/3] sm:aspect-[519/317]">
+                {/* Both cards stretch to the row height so a longer title does not leave them uneven */}
+                <div className="h-full flex flex-col border border-border bg-card rounded-[32px] overflow-hidden hover:border-[#00a0b0]/40 transition-all duration-300">
+                  <div className="w-full shrink-0 grow-0 min-h-0 overflow-hidden aspect-[4/3] sm:aspect-[519/317]">
                     <feature.Illustration />
                   </div>
-                  <div className="p-6 md:p-8 text-center md:text-left">
+                  <div className="flex-1 p-6 md:p-8 text-center md:text-left">
                     <h3 className="h4 text-xl font-bold mb-3">
                       {feature.title}
                     </h3>
