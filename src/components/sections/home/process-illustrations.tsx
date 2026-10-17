@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Check, GraduationCap, Home, Palmtree, ShieldCheck } from "lucide-react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const TEAL = "#00a0b0";
 // Same entity colors as the hero allocation chart
@@ -42,16 +43,17 @@ const arc = (from: number, to: number, r = 78) => {
   return `M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`;
 };
 
-const GOALS = [
-  { icon: ShieldCheck, label: "Quỹ dự phòng", value: 100 },
-  { icon: Home, label: "Mua nhà", value: 64 },
-  { icon: GraduationCap, label: "Học phí cho con", value: 45 },
-  { icon: Palmtree, label: "Hưu trí", value: 28 },
-];
-
 export const RiskProfileIllustration = () => {
+  const { t } = useLanguage();
   const { ref, live, reduce } = useLive();
   const loop = { duration: 5, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" as const };
+
+  const goals = useMemo(() => [
+    { icon: ShieldCheck, label: t.landing.process.illustrations.riskGauge.goals.emergency, value: 100 },
+    { icon: Home, label: t.landing.process.illustrations.riskGauge.goals.home, value: 64 },
+    { icon: GraduationCap, label: t.landing.process.illustrations.riskGauge.goals.education, value: 45 },
+    { icon: Palmtree, label: t.landing.process.illustrations.riskGauge.goals.retirement, value: 28 },
+  ], [t]);
 
   return (
     <Stage>
@@ -73,22 +75,22 @@ export const RiskProfileIllustration = () => {
             <circle cx="100" cy="100" r="9" fill="#0f172a" />
             <circle cx="100" cy="100" r="3.5" fill="#fff" />
           </svg>
-          <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">Khẩu vị rủi ro</p>
+          <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">{t.landing.process.illustrations.riskGauge.label}</p>
           <motion.p
             className="text-base md:text-lg font-bold text-foreground"
             initial={false}
             animate={live ? { opacity: [0, 0, 1, 1] } : { opacity: 1 }}
             transition={live ? { ...loop, times: [0, 0.62, 0.72, 1] } : { duration: 0 }}
           >
-            Cân bằng
+            {t.landing.process.illustrations.riskGauge.balanced}
           </motion.p>
         </div>
 
         <ul className="space-y-2 sm:space-y-2.5">
-          {GOALS.map((g, i) => (
+          {goals.map((g, i) => (
             <motion.li
               key={g.label}
-              className={cn("rounded-xl border border-slate-200/80 bg-white/90 px-3 py-2 shadow-sm", i === GOALS.length - 1 && "max-sm:hidden")}
+              className={cn("rounded-xl border border-slate-200/80 bg-white/90 px-3 py-2 shadow-sm", i === goals.length - 1 && "max-sm:hidden")}
               initial={reduce ? false : { opacity: 0, x: 16 }}
               animate={live || reduce ? { opacity: 1, x: 0 } : undefined}
               transition={{ delay: 0.15 + i * 0.12, duration: 0.45 }}
@@ -96,7 +98,7 @@ export const RiskProfileIllustration = () => {
               <div className="flex items-center gap-2">
                 <g.icon className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
                 <span className="truncate text-[11px] md:text-xs font-medium text-foreground">{g.label}</span>
-                {g.value === 100 && <Check className="ml-auto h-3.5 w-3.5 text-primary" aria-label="Hoàn thành" />}
+                {g.value === 100 && <Check className="ml-auto h-3.5 w-3.5 text-primary" aria-label={t.landing.process.illustrations.riskGauge.completed} />}
               </div>
               <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-100">
                 <motion.div
@@ -117,7 +119,6 @@ export const RiskProfileIllustration = () => {
 
 /* ---------- 2. Markowitz efficient frontier ---------- */
 
-// Plot area: x 40..370 (risk), y 20..200 (return, inverted)
 const FRONTIER = "M 70 176 C 82 120, 120 78, 190 60 S 310 40, 360 34";
 const OPTIMAL = { x: 190, y: 60 };
 const DOTS = [
@@ -127,6 +128,7 @@ const DOTS = [
 ];
 
 export const FrontierIllustration = () => {
+  const { t } = useLanguage();
   const { ref, live } = useLive();
   const loop = { duration: 6, repeat: Infinity, repeatDelay: 1, ease: "easeInOut" as const };
 
@@ -134,10 +136,10 @@ export const FrontierIllustration = () => {
     <Stage>
       <div ref={ref} className="relative flex h-full flex-col p-5 md:p-6">
         <div className="mb-1 flex items-center justify-between text-[11px] md:text-xs">
-          <span className="font-semibold text-foreground">Đường biên hiệu quả</span>
+          <span className="font-semibold text-foreground">{t.landing.process.illustrations.frontier.title}</span>
           <span className="flex items-center gap-3 text-muted-foreground">
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#97b5ff]" />Danh mục khả thi</span>
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: TEAL }} />Tối ưu</span>
+            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#97b5ff]" />{t.landing.process.illustrations.frontier.feasible}</span>
+            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full" style={{ background: TEAL }} />{t.landing.process.illustrations.frontier.optimal}</span>
           </span>
         </div>
         <svg viewBox="0 0 380 222" className="h-full w-full flex-1" aria-hidden>
@@ -146,8 +148,8 @@ export const FrontierIllustration = () => {
           ))}
           <line x1="40" y1="200" x2="370" y2="200" stroke="#cbd5e1" />
           <line x1="40" y1="20" x2="40" y2="200" stroke="#cbd5e1" />
-          <text x="370" y="216" textAnchor="end" fontSize="10" fill="#64748b">Rủi ro →</text>
-          <text x="46" y="16" fontSize="10" fill="#64748b">↑ Lợi nhuận kỳ vọng</text>
+          <text x="370" y="216" textAnchor="end" fontSize="10" fill="#64748b">{t.landing.process.illustrations.frontier.riskAxis}</text>
+          <text x="46" y="16" fontSize="10" fill="#64748b">{t.landing.process.illustrations.frontier.returnAxis}</text>
 
           {DOTS.map(([x, y], i) => (
             <motion.circle
@@ -200,7 +202,7 @@ export const FrontierIllustration = () => {
           >
             <rect x={OPTIMAL.x - 58} y={OPTIMAL.y + 14} width="116" height="24" rx="12" fill="#0f172a" />
             <text x={OPTIMAL.x} y={OPTIMAL.y + 30} textAnchor="middle" fontSize="11" fontWeight="600" fill="#fff">
-              Danh mục tối ưu
+              {t.landing.process.illustrations.frontier.optimalTag}
             </text>
           </motion.g>
         </svg>
@@ -211,16 +213,18 @@ export const FrontierIllustration = () => {
 
 /* ---------- 3. Drift & disciplined rebalancing ---------- */
 
-const PHASES = [
-  { step: "Tháng 0", note: "Tỷ trọng mục tiêu", stocks: 60, chip: "Đúng mục tiêu" },
-  { step: "Tháng 6", note: "Thị trường tăng, cổ phiếu chiếm quá nhiều", stocks: 72, chip: "Lệch +12%" },
-  { step: "Tái cân bằng", note: "Chốt bớt cổ phiếu, bổ sung trái phiếu", stocks: 60, chip: "Đã cân bằng" },
-];
 const TARGET = 60;
 
 export const RebalanceIllustration = () => {
+  const { t } = useLanguage();
   const { ref, live } = useLive();
   const [phase, setPhase] = useState(2);
+
+  const phases = useMemo(() => [
+    { step: t.landing.process.illustrations.rebalance.phases.p1.step, note: t.landing.process.illustrations.rebalance.phases.p1.note, stocks: 60, chip: t.landing.process.illustrations.rebalance.phases.p1.chip },
+    { step: t.landing.process.illustrations.rebalance.phases.p2.step, note: t.landing.process.illustrations.rebalance.phases.p2.note, stocks: 72, chip: t.landing.process.illustrations.rebalance.phases.p2.chip },
+    { step: t.landing.process.illustrations.rebalance.phases.p3.step, note: t.landing.process.illustrations.rebalance.phases.p3.note, stocks: 60, chip: t.landing.process.illustrations.rebalance.phases.p3.chip },
+  ], [t]);
 
   useEffect(() => {
     if (!live) {
@@ -228,15 +232,15 @@ export const RebalanceIllustration = () => {
       return;
     }
     setPhase(0);
-    const id = window.setInterval(() => setPhase((p) => (p + 1) % PHASES.length), 2200);
+    const id = window.setInterval(() => setPhase((p) => (p + 1) % phases.length), 2200);
     return () => window.clearInterval(id);
-  }, [live]);
+  }, [live, phases.length]);
 
-  const current = PHASES[phase];
+  const current = phases[phase];
   const drifted = phase === 1;
   const rows = [
-    { label: "Cổ phiếu", value: current.stocks, target: TARGET, color: STOCKS },
-    { label: "Trái phiếu Chính phủ", value: 100 - current.stocks, target: 100 - TARGET, color: BONDS },
+    { label: t.landing.process.illustrations.rebalance.stocksLabel, value: current.stocks, target: TARGET, color: STOCKS },
+    { label: t.landing.process.illustrations.rebalance.bondsLabel, value: 100 - current.stocks, target: 100 - TARGET, color: BONDS },
   ];
   const spring = { type: "spring" as const, stiffness: 120, damping: 18 };
 
@@ -245,7 +249,7 @@ export const RebalanceIllustration = () => {
       <div ref={ref} className="relative grid h-full items-center gap-5 p-5 md:grid-cols-[0.9fr_1.6fr] md:gap-10 md:p-10">
         {/* Timeline */}
         <ol className="hidden md:flex md:flex-col md:gap-3">
-          {PHASES.map((p, i) => (
+          {phases.map((p, i) => (
             <li key={p.step} className="flex items-start gap-3">
               <span
                 className={cn(
@@ -267,7 +271,7 @@ export const RebalanceIllustration = () => {
         <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-4 md:p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between gap-3">
             <p className="text-xs md:text-sm font-semibold text-foreground">
-              Tỷ trọng danh mục <span className="font-normal text-muted-foreground md:hidden">· {current.step}</span>
+              {t.landing.process.illustrations.rebalance.title} <span className="font-normal text-muted-foreground md:hidden">· {current.step}</span>
             </p>
             <motion.span
               key={phase}
@@ -293,7 +297,7 @@ export const RebalanceIllustration = () => {
                   </span>
                   <span className="tabular-nums">
                     <span className="font-semibold text-foreground">{r.value}%</span>
-                    <span className="text-muted-foreground"> / mục tiêu {r.target}%</span>
+                    <span className="text-muted-foreground"> / {t.landing.process.illustrations.rebalance.targetWeight} {r.target}%</span>
                   </span>
                 </div>
                 <div className="relative h-3 rounded-full bg-slate-100">
@@ -318,7 +322,7 @@ export const RebalanceIllustration = () => {
             <motion.span className="h-full" style={{ background: STOCKS }} initial={false} animate={{ width: `${current.stocks}%` }} transition={spring} />
             <motion.span className="h-full flex-1" style={{ background: BONDS }} />
           </div>
-          <p className="mt-2 text-[11px] text-muted-foreground">Vạch đen là tỷ trọng mục tiêu. Rà soát định kỳ mỗi 6 tháng.</p>
+          <p className="mt-2 text-[11px] text-muted-foreground">{t.landing.process.illustrations.rebalance.targetWeightNote}</p>
         </div>
       </div>
     </Stage>

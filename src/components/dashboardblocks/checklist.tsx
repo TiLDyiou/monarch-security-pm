@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export type StepState = 'done' | 'current' | 'todo' | 'skipped';
 
@@ -154,6 +155,8 @@ export const Checklist1: React.FC<Checklist1Props> = (props) => {
     className,
     defaultExpandedMode = 'none',
   } = props;
+  const { t } = useLanguage();
+  const stateLabels = t.dashboard.workplace.roadmap.states;
   const id = React.useId();
   const [steps, setSteps] = React.useState(props.steps);
   const [expanded, setExpanded] = React.useState<Set<string>>(() => {
@@ -205,8 +208,8 @@ export const Checklist1: React.FC<Checklist1Props> = (props) => {
             <CardDescription className="text-base text-muted-foreground mt-1">
               {description ?? (
                 <>
-                  Hoàn tất {progress.done} trên {progress.total} cột mốc kế hoạch
-                  {progress.skipped > 0 && ` · ${progress.skipped} mốc tạm hoãn để bảo toàn vốn`}
+                  {t.dashboard.workplace.roadmap.progressSummary.doneFormat(progress.done, progress.total)}
+                  {progress.skipped > 0 && t.dashboard.workplace.roadmap.progressSummary.skippedFormat(progress.skipped)}
                 </>
               )}
             </CardDescription>
@@ -221,7 +224,11 @@ export const Checklist1: React.FC<Checklist1Props> = (props) => {
         </p>
         <ol>
           {steps.map((step, index) => {
-            const config = stepStateConfig[step.state] || stepStateConfig.todo;
+            const baseConfig = stepStateConfig[step.state] || stepStateConfig.todo;
+            const config = {
+              ...baseConfig,
+              label: stateLabels[step.state] || baseConfig.label,
+            };
             const isOpen = expanded.has(step.id);
             const panelId = `${id}-${step.id}`;
             return (

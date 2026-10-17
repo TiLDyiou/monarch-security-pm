@@ -34,6 +34,7 @@ import {
 } from '@/pages/dashboard/services/stockService';
 import { formatNumber } from '@/utils/format';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const { Text } = Typography;
 
@@ -64,6 +65,9 @@ interface HoverInfo {
 }
 
 export default function LightweightChart() {
+  const { t } = useLanguage();
+  const chartTexts = t.dashboard.monitor.chart;
+
   const [selectedCode, setSelectedCode] = useState<string>('BID');
   const [selectedRange, setSelectedRange] = useState<string>('6M');
   const [showMA, setShowMA] = useState<boolean>(true);
@@ -509,17 +513,17 @@ export default function LightweightChart() {
             value={selectedRange}
             onChange={(val) => applyTimeRange(val as string)}
             options={[
-              { label: '1T', value: '1M' },
-              { label: '3T', value: '3M' },
-              { label: '6T', value: '6M' },
-              { label: '1N', value: '1Y' },
-              { label: 'Tất cả', value: 'ALL' },
+              { label: chartTexts.timeframes['1M'], value: '1M' },
+              { label: chartTexts.timeframes['3M'], value: '3M' },
+              { label: chartTexts.timeframes['6M'], value: '6M' },
+              { label: chartTexts.timeframes['1Y'], value: '1Y' },
+              { label: chartTexts.timeframes.ALL, value: 'ALL' },
             ]}
             size="middle"
           />
 
           {/* Indicator toggles */}
-          <Tooltip title="Đường trung bình MA20">
+          <Tooltip title={chartTexts.ma20Tooltip}>
             <Button
               type={showMA ? 'primary' : 'default'}
               size="middle"
@@ -535,7 +539,7 @@ export default function LightweightChart() {
             </Button>
           </Tooltip>
 
-          <Tooltip title="Khối lượng Vol">
+          <Tooltip title={chartTexts.volumeTooltip}>
             <Button
               type={showVolume ? 'primary' : 'default'}
               size="middle"
@@ -547,7 +551,7 @@ export default function LightweightChart() {
           </Tooltip>
 
           {/* Quick utility icons */}
-          <Tooltip title="Cập nhật giá mới nhất">
+          <Tooltip title={chartTexts.refreshTooltip}>
             <Button
               type="text"
               icon={<ReloadOutlined spin={loading} style={{ fontSize: 13 }} />}
@@ -559,7 +563,7 @@ export default function LightweightChart() {
             />
           </Tooltip>
 
-          <Tooltip title={heightMode === 'expanded' ? 'Thu gọn (480px)' : 'Mở rộng (800px)'}>
+          <Tooltip title={heightMode === 'expanded' ? chartTexts.collapseTooltip : chartTexts.expandTooltip}>
             <Button
               type="text"
               icon={heightMode === 'expanded' ? <CompressOutlined style={{ fontSize: 13 }} /> : <ExpandOutlined style={{ fontSize: 13 }} />}
@@ -568,7 +572,7 @@ export default function LightweightChart() {
             />
           </Tooltip>
 
-          <Tooltip title={heightMode === 'fullscreen' ? 'Thoát toàn màn hình' : 'Toàn màn hình'}>
+          <Tooltip title={heightMode === 'fullscreen' ? chartTexts.exitFullscreenTooltip : chartTexts.fullscreenTooltip}>
             <Button
               type="text"
               icon={heightMode === 'fullscreen' ? <FullscreenExitOutlined style={{ fontSize: 13 }} /> : <FullscreenOutlined style={{ fontSize: 13 }} />}

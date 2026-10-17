@@ -1,3 +1,4 @@
+import { LanguageProvider } from "@/i18n/LanguageContext";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,42 +34,44 @@ const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <BrowserRouter>
-          <AuthProvider>
-            <Toaster />
-            <Sonner />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/pricing/starter" element={<StarterPricing />} />
-              <Route path="/pricing/professional" element={<ProfessionalPricing />} />
-              <Route path="/early-access" element={<EarlyAccess />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <Suspense fallback={null}>
-                    <DashboardLayout />
-                  </Suspense>
-                }
-              >
-                <Route index element={<Navigate to="/dashboard/analysis" replace />} />
-                <Route path="analysis" element={<DashboardAnalysis />} />
-                <Route path="monitor" element={<DashboardMonitor />} />
-                <Route path="workplace" element={<DashboardWorkplace />} />
-              </Route>
-              <Route path="/dashboard/profile" element={<ProfilePage />} />
-              <Route path="/dashboard/blog" element={<BlogDashboard />} />
-              <Route path="/dashboard/blog/new" element={<BlogEditor />} />
-              <Route path="/dashboard/blog/edit/:id" element={<BlogEditor />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/legal/terms-&-condition" element={<TermsAndConditionPage />} />
-              <Route path="/legal/privacy-policy" element={<PrivacyPolicyPage />} />
-              <Route path="/legal/cookie-policy" element={<CookiePolicyPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AuthProvider>
-        </BrowserRouter>
+        <LanguageProvider>
+          <BrowserRouter>
+            <AuthProvider>
+              <Toaster />
+              <Sonner />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/pricing/starter" element={<StarterPricing />} />
+                <Route path="/pricing/professional" element={<ProfessionalPricing />} />
+                <Route path="/early-access" element={<EarlyAccess />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <Suspense fallback={null}>
+                      <DashboardLayout />
+                    </Suspense>
+                  }
+                >
+                  <Route index element={<Navigate to="/dashboard/analysis" replace />} />
+                  <Route path="analysis" element={<DashboardAnalysis />} />
+                  <Route path="monitor" element={<DashboardMonitor />} />
+                  <Route path="workplace" element={<DashboardWorkplace />} />
+                </Route>
+                <Route path="/dashboard/profile" element={<ProfilePage />} />
+                <Route path="/dashboard/blog" element={<BlogDashboard />} />
+                <Route path="/dashboard/blog/new" element={<BlogEditor />} />
+                <Route path="/dashboard/blog/edit/:id" element={<BlogEditor />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/legal/terms-&-condition" element={<TermsAndConditionPage />} />
+                <Route path="/legal/privacy-policy" element={<PrivacyPolicyPage />} />
+                <Route path="/legal/cookie-policy" element={<CookiePolicyPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AuthProvider>
+          </BrowserRouter>
+        </LanguageProvider>
       </TooltipProvider>
     </QueryClientProvider>
   </HelmetProvider>

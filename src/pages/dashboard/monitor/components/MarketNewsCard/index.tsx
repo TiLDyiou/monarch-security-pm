@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  ArrowRightIcon,
   RefreshCw,
   Search,
 } from 'lucide-react';
@@ -16,45 +15,46 @@ import {
   Tooltip,
 } from 'antd';
 import dayjs from 'dayjs';
-import { buttonVariants } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
 import {
   fetchMarketNews,
   type MarketNewsItem,
   POPULAR_TICKERS,
 } from '@/pages/dashboard/services/marketNewsService';
-
-function formatNewsTime(dateStr: string): string {
-  const d = dayjs(dateStr);
-  if (!d.isValid()) return dateStr;
-  const now = dayjs();
-  const diffMinutes = Math.max(0, now.diff(d, 'minute'));
-  if (diffMinutes < 1) return 'Vừa xong';
-  if (diffMinutes < 60) return `${diffMinutes} phút trước`;
-  const diffHours = now.diff(d, 'hour');
-  if (diffHours < 24) return `${diffHours} giờ trước`;
-  const diffDays = now.diff(d, 'day');
-  if (diffDays === 1) return 'Hôm qua';
-  if (diffDays < 7) return `${diffDays} ngày trước`;
-  return d.format('DD/MM/YYYY HH:mm');
-}
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const PAGE_SIZE = 5;
 
 const MarketNewsCard: React.FC = () => {
+  const { t } = useLanguage();
+  const newsTexts = t.dashboard.monitor.news;
+
   const [selectedTicker, setSelectedTicker] = useState<string>('ALL');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [news, setNews] = useState<MarketNewsItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  const formatNewsTime = (dateStr: string): string => {
+    const d = dayjs(dateStr);
+    if (!d.isValid()) return dateStr;
+    const now = dayjs();
+    const diffMinutes = Math.max(0, now.diff(d, 'minute'));
+    if (diffMinutes < 1) return newsTexts.justNow;
+    if (diffMinutes < 60) return `${diffMinutes} ${newsTexts.minutesAgo}`;
+    const diffHours = now.diff(d, 'hour');
+    if (diffHours < 24) return `${diffHours} ${newsTexts.hoursAgo}`;
+    const diffDays = now.diff(d, 'day');
+    if (diffDays === 1) return newsTexts.yesterday;
+    if (diffDays < 7) return `${diffDays} ${newsTexts.daysAgo}`;
+    return d.format('DD/MM/YYYY HH:mm');
+  };
 
   const loadData = async (ticker: string) => {
     setLoading(true);
@@ -102,7 +102,7 @@ const MarketNewsCard: React.FC = () => {
       <CardHeader className="border-b px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 space-y-0">
         <div>
           <CardTitle className="text-base font-semibold tracking-tight text-foreground">
-            Cập nhật tin tức thị trường
+            {newsTexts.title}
           </CardTitle>
         </div>
 
@@ -115,9 +115,9 @@ const MarketNewsCard: React.FC = () => {
             className="w-full sm:w-64"
             popupMatchSelectWidth={false}
             size="middle"
-            options={POPULAR_TICKERS.map((t) => ({
-              label: t.code === 'ALL' ? 'Thị trường chung' : `${t.code} - ${t.name}`,
-              value: t.code,
+            options={POPULAR_TICKERS.map((item) => ({
+              label: item.code === 'ALL' ? newsTexts.broadMarket : `${item.code} - ${item.name}`,
+              value: item.code,
             }))}
             showSearch
             filterOption={(input, option) =>
@@ -127,7 +127,7 @@ const MarketNewsCard: React.FC = () => {
 
           {/* Keyword Search */}
           <Input
-            placeholder="Tìm tin tức..."
+            placeholder={newsTexts.searchPlaceholder}
             prefix={<Search className="size-3.5 text-muted-foreground mr-1" />}
             value={searchKeyword}
             onChange={(e) => {
@@ -140,7 +140,7 @@ const MarketNewsCard: React.FC = () => {
           />
 
           {/* Refresh button */}
-          <Tooltip title="Làm mới tin tức">
+          <Tooltip title={newsTexts.refreshTooltip}>
             <Button
               icon={
                 <RefreshCw
@@ -167,7 +167,7 @@ const MarketNewsCard: React.FC = () => {
           </div>
         ) : paginatedNews.length === 0 ? (
           <div className="py-12">
-            <Empty description="Không tìm thấy bản tin phù hợp" />
+            <Empty description={newsTexts.emptyText} />
           </div>
         ) : (
           <ul className="divide-y divide-border/40 m-0 p-0 list-none">
@@ -200,12 +200,6 @@ const MarketNewsCard: React.FC = () => {
                     {item.description}
                   </p>
                 </div>
-
-                {/* Direct Action Link */}
-                {item.url && (
-                  <div className="pt-1 @lg:pt-0 shrink-0">
-                  </div>
-                )}
               </li>
             ))}
           </ul>

@@ -1,10 +1,10 @@
-"use client";
+import LanguageToggle from "@/components/ui/language-toggle";
 import Container from "@/components/container";
 import UserMenu from "@/components/sections/shared/user-menu";
 import { useAuth } from "@/hooks/use-auth";
 import { Link, useLocation } from "react-router-dom";
 
-// Minimal header: logo only. Section links live in the footer.
+// Minimal header: logo + language switcher. Section links live in the footer.
 const Navbar = () => {
   const { user, loading } = useAuth();
   const { pathname } = useLocation();
@@ -19,7 +19,10 @@ const Navbar = () => {
         <Link to="/" onClick={goHome} className="flex items-center w-fit">
           <img src="/images/common/logo.svg" alt="Monarch Securities" className="h-10 md:h-12 w-auto" />
         </Link>
-        {!loading && user && <UserMenu />}
+        <div className="flex items-center gap-3">
+          <LanguageToggle />
+          {!loading && user && <UserMenu />}
+        </div>
       </Container>
     </header>
   );

@@ -9,6 +9,7 @@ import {
 import { CardDescription } from '@/components/ui/card';
 import { formatNumber, formatPercent } from '@/utils/format';
 import { portfolio } from '../../mock/client';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const topColResponsiveProps = {
   xs: 24,
@@ -22,6 +23,9 @@ const topColResponsiveProps = {
 };
 
 const IntroduceRow = ({ loading }: { loading: boolean }) => {
+  const { t } = useLanguage();
+  const kpiTexts = t.dashboard.analysis.kpi;
+
   const premium = portfolio.expectedReturn - portfolio.riskFree;
   const vnIndexRisk = 18.08;
   const riskDiff = portfolio.risk - vnIndexRisk;
@@ -49,9 +53,9 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <CardDescription className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 tracking-wider uppercase">
-                  Tỷ suất sinh lợi kỳ vọng
+                  {kpiTexts.expectedReturn}
                 </CardDescription>
-                <Tooltip title="E(rc) của danh mục hoàn chỉnh OCP, tính theo năm">
+                <Tooltip title={kpiTexts.expectedReturnTooltip}>
                   <Info className="h-3.5 w-3.5 text-emerald-600/60 hover:text-emerald-700 cursor-pointer transition-colors" />
                 </Tooltip>
               </div>
@@ -65,7 +69,7 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
 
             <div className="mt-1">
               <KPIChange
-                comparison="vs lãi suất phi rủi ro"
+                comparison={kpiTexts.expectedReturnVsRiskFree}
                 previous={portfolio.riskFree}
                 value={portfolio.expectedReturn}
                 customDiff={premium}
@@ -75,7 +79,7 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
             </div>
 
             <div className="mt-3 pt-2 text-xs text-muted-foreground flex items-center justify-between">
-              <span>Theo tháng</span>
+              <span>{kpiTexts.expectedReturnMonthly}</span>
               <span className="font-semibold text-emerald-700 dark:text-emerald-400">
                 +{formatPercent(portfolio.expectedReturnMonthly, 4)}
               </span>
@@ -91,9 +95,9 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <CardDescription className="text-xs font-semibold text-indigo-700 dark:text-indigo-400 tracking-wider uppercase">
-                  Rủi ro danh mục
+                  {kpiTexts.risk}
                 </CardDescription>
-                <Tooltip title="Độ lệch chuẩn σc của danh mục hoàn chỉnh, tính theo năm">
+                <Tooltip title={kpiTexts.riskTooltip}>
                   <Info className="h-3.5 w-3.5 text-indigo-600/60 hover:text-indigo-700 cursor-pointer transition-colors" />
                 </Tooltip>
               </div>
@@ -107,7 +111,7 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
 
             <div className="mt-1">
               <KPIChange
-                comparison={`thấp hơn VN-Index ${formatPercent(vnIndexRisk)}`}
+                comparison={`${kpiTexts.riskVsVnIndex} ${formatPercent(vnIndexRisk)}`}
                 previous={vnIndexRisk}
                 value={portfolio.risk}
                 customDiff={riskDiff}
@@ -118,7 +122,7 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
             </div>
 
             <div className="mt-3 pt-2 text-xs text-muted-foreground flex items-center justify-between">
-              <span>Theo tháng</span>
+              <span>{kpiTexts.riskMonthly}</span>
               <span className="font-semibold text-indigo-700 dark:text-indigo-400">
                 {formatPercent(portfolio.riskMonthly, 4)}
               </span>
@@ -134,9 +138,9 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <CardDescription className="text-xs font-semibold text-blue-700 dark:text-blue-400 tracking-wider uppercase">
-                  Lãi suất phi rủi ro
+                  {kpiTexts.riskFree}
                 </CardDescription>
-                <Tooltip title="rf – Lãi suất Trái phiếu Chính phủ kỳ hạn 10 năm">
+                <Tooltip title={kpiTexts.riskFreeTooltip}>
                   <Info className="h-3.5 w-3.5 text-blue-600/60 hover:text-blue-700 cursor-pointer transition-colors" />
                 </Tooltip>
               </div>
@@ -150,7 +154,7 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
 
             <div className="mt-1">
               <KPIChange
-                comparison="TPCP kỳ hạn 10 năm"
+                comparison={kpiTexts.riskFreeTenYear}
                 previous={portfolio.riskFree}
                 value={portfolio.riskFree}
                 customDiff={portfolio.riskFree}
@@ -160,7 +164,7 @@ const IntroduceRow = ({ loading }: { loading: boolean }) => {
             </div>
 
             <div className="mt-3 pt-2 text-xs text-muted-foreground flex items-center justify-between">
-              <span>Chỉ số Sharpe OCP</span>
+              <span>{kpiTexts.sharpeRatio}</span>
               <span className="font-semibold text-blue-700 dark:text-blue-400">
                 {formatNumber(portfolio.sharpe, 4)}
               </span>

@@ -2,23 +2,8 @@ import Container from "@/components/container";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import SectionLink from "@/components/section-link";
 import { SECTIONS } from "@/lib/sections";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { Link } from "react-router-dom";
-
-const pageLinks = [
-  { title: "Dịch vụ tư vấn", section: SECTIONS.services },
-  { title: "Quy trình hoạch định", section: SECTIONS.process },
-  { title: "Câu hỏi thường gặp", section: SECTIONS.faq }
-];
-
-const innerLinks = [
-  { title: "Phân bổ tài sản mẫu", section: SECTIONS.allocation },
-  { title: "Tái cân bằng danh mục", section: SECTIONS.process }
-];
-
-const utilityLinks = [
-  { title: "Điều khoản dịch vụ", href: "/legal/terms-&-condition" },
-  { title: "Chính sách bảo mật", href: "/legal/privacy-policy" },
-];
 
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/", label: "Facebook" },
@@ -28,6 +13,24 @@ const socialLinks = [
 ];
 
 const Footer = () => {
+  const { t } = useLanguage();
+
+  const pageLinks = [
+    { title: t.landing.footer.serviceLinks.services, section: SECTIONS.services },
+    { title: t.landing.footer.serviceLinks.process, section: SECTIONS.process },
+    { title: t.landing.footer.serviceLinks.faq, section: SECTIONS.faq },
+  ];
+
+  const innerLinks = [
+    { title: t.landing.footer.methodLinks.allocation, section: SECTIONS.allocation },
+    { title: t.landing.footer.methodLinks.rebalance, section: SECTIONS.process },
+  ];
+
+  const utilityLinks = [
+    { title: t.landing.footer.legalLinks.terms, href: "/legal/terms-&-condition" },
+    { title: t.landing.footer.legalLinks.privacy, href: "/legal/privacy-policy" },
+  ];
+
   return (
     <footer id="lien-he" className="bg-slate-50 text-foreground pt-24 pb-12 border-t border-border">
       <Container>
@@ -42,14 +45,16 @@ const Footer = () => {
               />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Monarch Securities cung cấp giải pháp hoạch định tài chính và quản trị danh mục đầu tư độc lập, minh bạch và đồng hành dài hạn cùng gia đình bạn.
+              {t.landing.footer.brandDesc}
             </p>
           </div>
 
           {/* Right Column: Links */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 lg:gap-12">
             <div>
-              <h4 className="font-semibold text-primary mb-5 text-sm uppercase tracking-wider">Dịch vụ</h4>
+              <h4 className="font-semibold text-primary mb-5 text-sm uppercase tracking-wider">
+                {t.landing.footer.servicesHeading}
+              </h4>
               <ul className="space-y-3.5">
                 {pageLinks.map((link) => (
                   <li key={link.title}>
@@ -62,7 +67,9 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-primary mb-5 text-sm uppercase tracking-wider">Phương pháp</h4>
+              <h4 className="font-semibold text-primary mb-5 text-sm uppercase tracking-wider">
+                {t.landing.footer.methodsHeading}
+              </h4>
               <ul className="space-y-3.5">
                 {innerLinks.map((link) => (
                   <li key={link.title}>
@@ -75,7 +82,9 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-primary mb-5 text-sm uppercase tracking-wider">Pháp lý</h4>
+              <h4 className="font-semibold text-primary mb-5 text-sm uppercase tracking-wider">
+                {t.landing.footer.legalHeading}
+              </h4>
               <ul className="space-y-3.5">
                 {utilityLinks.map((link) => (
                   <li key={link.title}>
@@ -92,7 +101,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-muted-foreground text-xs md:text-sm text-center md:text-left">
-            © {new Date().getFullYear()} Monarch Securities. Dịch vụ tư vấn danh mục đầu tư tài chính cá nhân độc lập. Bảo lưu mọi quyền.
+            © {new Date().getFullYear()} {t.landing.footer.copyright}
           </p>
 
           <div className="flex items-center gap-3">
@@ -103,7 +112,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white border border-border flex items-center justify-center hover:bg-slate-100 hover:border-primary/60 transition-all text-muted-foreground hover:text-primary shadow-sm"
-                aria-label={social.label || "Liên kết mạng xã hội"}
+                aria-label={social.label || "Social link"}
               >
                 <social.icon className="w-4 h-4" />
               </a>

@@ -4,8 +4,9 @@ import {
   WomanOutlined,
 } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
-import { Card, Col, Row, Table, Tag } from 'antd';
+import { Card, Col, Row, Table } from 'antd';
 import type { FC } from 'react';
+import { useMemo } from 'react';
 import {
   PolarAngleAxis,
   PolarGrid,
@@ -25,137 +26,153 @@ import {
   surplus,
   totalAssets,
 } from '../mock/client';
-
-const benchmarkData = [
-  { metric: 'Lợi suất kỳ vọng', market: '8,23%', orp: '20,46%', ocp: '12,25%' },
-  { metric: 'Độ lệch chuẩn rủi ro σ', market: '18,08%', orp: '25,65%', ocp: '11,19%' },
-  { metric: 'Chỉ số Sharpe', market: '0,1291', orp: '0,5676', ocp: '0,5676' },
-  { metric: 'Độ thỏa dụng U', market: '-0,0006', orp: '0,0378', ocp: '0,0908' },
-];
-
-const benchmarkColumns = [
-  {
-    title: <span className="whitespace-nowrap font-semibold text-sm">Chỉ tiêu</span>,
-    dataIndex: 'metric',
-    key: 'metric',
-    className: 'whitespace-nowrap text-sm py-3 px-2 font-medium text-foreground',
-  },
-  {
-    title: <span className="whitespace-nowrap font-medium text-sm text-muted-foreground">VN-Index</span>,
-    dataIndex: 'market',
-    key: 'market',
-    align: 'right' as const,
-    className: 'whitespace-nowrap text-sm py-3 px-2 tabular-nums text-foreground/80',
-  },
-  {
-    title: <span className="whitespace-nowrap font-medium text-sm text-muted-foreground">ORP</span>,
-    dataIndex: 'orp',
-    key: 'orp',
-    align: 'right' as const,
-    className: 'whitespace-nowrap text-sm py-3 px-2 tabular-nums text-foreground/80',
-  },
-  {
-    title: <span className="whitespace-nowrap font-bold text-sm text-teal-600 dark:text-teal-400">OCP</span>,
-    dataIndex: 'ocp',
-    key: 'ocp',
-    align: 'right' as const,
-    className: 'whitespace-nowrap text-sm py-3 px-2 tabular-nums',
-    render: (v: string) => <strong className="text-teal-600 dark:text-teal-400 font-bold text-sm">{v}</strong>,
-  },
-];
-
-const performanceRadarData = [
-  {
-    subject: 'Sinh lời',
-    danhMuc: 85,
-    thiTruong: 65,
-    traiPhieu: 45,
-    danhMucVal: '12,25%',
-    thiTruongVal: '8,23%',
-    traiPhieuVal: '5,90%',
-  },
-  {
-    subject: 'Rủi ro',
-    danhMuc: 52,
-    thiTruong: 85,
-    traiPhieu: 15,
-    danhMucVal: '11,19%',
-    thiTruongVal: '18,08%',
-    traiPhieuVal: '1,50%',
-  },
-  {
-    subject: 'Tăng trưởng',
-    danhMuc: 88,
-    thiTruong: 68,
-    traiPhieu: 35,
-    danhMucVal: 'Tối ưu 10 năm',
-    thiTruongVal: 'Theo chu kỳ',
-    traiPhieuVal: 'Tuyến tính',
-  },
-  {
-    subject: 'Sharpe',
-    danhMuc: 95,
-    thiTruong: 35,
-    traiPhieu: 10,
-    danhMucVal: '0,5676',
-    thiTruongVal: '0,1291',
-    traiPhieuVal: '0,0000',
-  },
-  {
-    subject: 'Thỏa dụng',
-    danhMuc: 92,
-    thiTruong: 20,
-    traiPhieu: 50,
-    danhMucVal: '0,0908',
-    thiTruongVal: '-0,0006',
-    traiPhieuVal: '0,0500',
-  },
-];
-
-const clientProfiles = [
-  {
-    id: 'husband',
-    name: `${client.husband.name} · ${client.husband.birthYear}`,
-    tag: `${new Date().getFullYear() - client.husband.birthYear} tuổi · Chủ hộ`,
-    role: 'Trưởng phòng Kế toán',
-    org: 'Phòng giao dịch ngân hàng',
-    income: `Thu nhập: ${formatNumber(client.husband.income)} ₫/tháng`,
-    benefit: 'Có BHXH, BHYT đầy đủ',
-    icon: <ManOutlined className="text-base" />,
-    iconClass: 'bg-teal-50 dark:bg-teal-950/40 text-teal-600 dark:text-teal-400 border border-teal-200/50 dark:border-teal-800/40',
-  },
-  {
-    id: 'wife',
-    name: `${client.wife.name} · ${client.wife.birthYear}`,
-    tag: `${new Date().getFullYear() - client.wife.birthYear} tuổi · Vợ`,
-    role: 'Nhân viên Kế toán',
-    org: 'Cùng phòng giao dịch ngân hàng',
-    income: `Thu nhập: ${formatNumber(client.wife.income)} ₫/tháng`,
-    benefit: 'Có BHXH, BHYT đầy đủ',
-    icon: <WomanOutlined className="text-base" />,
-    iconClass: 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200/50 dark:border-rose-800/40',
-  },
-  {
-    id: 'child-0',
-    name: `${client.children[0].name} · ${client.children[0].birthYear}`,
-    tag: `${new Date().getFullYear() - client.children[0].birthYear} tuổi · Con cả`,
-    role: 'Học sinh Cấp 2',
-    org: client.children[0].school,
-    icon: <SmileOutlined className="text-base" />,
-    iconClass: 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200/50 dark:border-blue-800/40',
-  },
-  {
-    id: 'child-1',
-    name: `${client.children[1].name} · ${client.children[1].birthYear}`,
-    tag: `${new Date().getFullYear() - client.children[1].birthYear} tuổi · Con út`,
-    role: 'Học sinh Mầm non',
-    org: client.children[1].school,
-    icon: <SmileOutlined className="text-base" />,
-    iconClass: 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800/40',
-  },
-];
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const Workplace: FC = () => {
+  const { language, t } = useLanguage();
+  const wp = t.dashboard.workplace;
+
+  const benchmarkData = useMemo(
+    () => [
+      { metric: wp.benchmark.metrics.expectedReturn, market: '8,23%', orp: '20,46%', ocp: '12,25%' },
+      { metric: wp.benchmark.metrics.risk, market: '18,08%', orp: '25,65%', ocp: '11,19%' },
+      { metric: wp.benchmark.metrics.sharpe, market: '0,1291', orp: '0,5676', ocp: '0,5676' },
+      { metric: wp.benchmark.metrics.utility, market: '-0,0006', orp: '0,0378', ocp: '0,0908' },
+    ],
+    [wp],
+  );
+
+  const benchmarkColumns = useMemo(
+    () => [
+      {
+        title: <span className="whitespace-nowrap font-semibold text-sm">{wp.benchmark.metricCol}</span>,
+        dataIndex: 'metric',
+        key: 'metric',
+        className: 'whitespace-nowrap text-sm py-3 px-2 font-medium text-foreground',
+      },
+      {
+        title: <span className="whitespace-nowrap font-medium text-sm text-muted-foreground">VN-Index</span>,
+        dataIndex: 'market',
+        key: 'market',
+        align: 'right' as const,
+        className: 'whitespace-nowrap text-sm py-3 px-2 tabular-nums text-foreground/80',
+      },
+      {
+        title: <span className="whitespace-nowrap font-medium text-sm text-muted-foreground">ORP</span>,
+        dataIndex: 'orp',
+        key: 'orp',
+        align: 'right' as const,
+        className: 'whitespace-nowrap text-sm py-3 px-2 tabular-nums text-foreground/80',
+      },
+      {
+        title: <span className="whitespace-nowrap font-bold text-sm text-teal-600 dark:text-teal-400">OCP</span>,
+        dataIndex: 'ocp',
+        key: 'ocp',
+        align: 'right' as const,
+        className: 'whitespace-nowrap text-sm py-3 px-2 tabular-nums',
+        render: (v: string) => <strong className="text-teal-600 dark:text-teal-400 font-bold text-sm">{v}</strong>,
+      },
+    ],
+    [wp],
+  );
+
+  const performanceRadarData = useMemo(
+    () => [
+      {
+        subject: wp.radar.subjects.return,
+        danhMuc: 85,
+        thiTruong: 65,
+        traiPhieu: 45,
+        danhMucVal: '12,25%',
+        thiTruongVal: '8,23%',
+        traiPhieuVal: '5,90%',
+      },
+      {
+        subject: wp.radar.subjects.risk,
+        danhMuc: 52,
+        thiTruong: 85,
+        traiPhieu: 15,
+        danhMucVal: '11,19%',
+        thiTruongVal: '18,08%',
+        traiPhieuVal: '1,50%',
+      },
+      {
+        subject: wp.radar.subjects.growth,
+        danhMuc: 88,
+        thiTruong: 68,
+        traiPhieu: 35,
+        danhMucVal: wp.radar.values.growthOcp,
+        thiTruongVal: wp.radar.values.growthMarket,
+        traiPhieuVal: wp.radar.values.growthBonds,
+      },
+      {
+        subject: wp.radar.subjects.sharpe,
+        danhMuc: 95,
+        thiTruong: 35,
+        traiPhieu: 10,
+        danhMucVal: '0,5676',
+        thiTruongVal: '0,1291',
+        traiPhieuVal: '0,0000',
+      },
+      {
+        subject: wp.radar.subjects.utility,
+        danhMuc: 92,
+        thiTruong: 20,
+        traiPhieu: 50,
+        danhMucVal: '0,0908',
+        thiTruongVal: '-0,0006',
+        traiPhieuVal: '0,0500',
+      },
+    ],
+    [wp],
+  );
+
+  const clientProfiles = useMemo(
+    () => [
+      {
+        id: 'husband',
+        name: `${client.husband.name} · ${client.husband.birthYear}`,
+        tag: `${new Date().getFullYear() - client.husband.birthYear} ${language === 'en' ? 'yrs · ' : 'tuổi · '}${wp.profiles.husband.tag}`,
+        role: wp.profiles.husband.role,
+        org: wp.profiles.husband.org,
+        income: wp.profiles.husband.income,
+        benefit: wp.profiles.husband.benefit,
+        icon: <ManOutlined className="text-base" />,
+        iconClass: 'bg-teal-50 dark:bg-teal-950/40 text-teal-600 dark:text-teal-400 border border-teal-200/50 dark:border-teal-800/40',
+      },
+      {
+        id: 'wife',
+        name: `${client.wife.name} · ${client.wife.birthYear}`,
+        tag: `${new Date().getFullYear() - client.wife.birthYear} ${language === 'en' ? 'yrs · ' : 'tuổi · '}${wp.profiles.wife.tag}`,
+        role: wp.profiles.wife.role,
+        org: wp.profiles.wife.org,
+        income: wp.profiles.wife.income,
+        benefit: wp.profiles.wife.benefit,
+        icon: <WomanOutlined className="text-base" />,
+        iconClass: 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200/50 dark:border-rose-800/40',
+      },
+      {
+        id: 'child-0',
+        name: `${client.children[0].name} · ${client.children[0].birthYear}`,
+        tag: `${new Date().getFullYear() - client.children[0].birthYear} ${language === 'en' ? 'yrs · ' : 'tuổi · '}${wp.profiles.child1.tag}`,
+        role: wp.profiles.child1.role,
+        org: wp.profiles.child1.org,
+        icon: <SmileOutlined className="text-base" />,
+        iconClass: 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200/50 dark:border-blue-800/40',
+      },
+      {
+        id: 'child-1',
+        name: `${client.children[1].name} · ${client.children[1].birthYear}`,
+        tag: `${new Date().getFullYear() - client.children[1].birthYear} ${language === 'en' ? 'yrs · ' : 'tuổi · '}${wp.profiles.child2.tag}`,
+        role: wp.profiles.child2.role,
+        org: wp.profiles.child2.org,
+        icon: <SmileOutlined className="text-base" />,
+        iconClass: 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800/40',
+      },
+    ],
+    [wp, language],
+  );
+
   return (
     <PageContainer
       title={false}
@@ -166,18 +183,18 @@ const Workplace: FC = () => {
     >
       <Row gutter={24}>
         <Col xl={16} lg={24} md={24} sm={24} xs={24}>
-          {/* Thành viên gia đình & Năng lực tài chính */}
+          {/* Household Members & Financial Profile */}
           <div className="mb-6">
             <div className="mb-3.5 px-0.5">
               <h2 className="text-base font-semibold text-foreground tracking-tight">
-                Thành viên gia đình & Năng lực tài chính
+                {wp.header.title}
               </h2>
               <p className="text-xs text-muted-foreground font-normal mt-0.5">
-                Gia đình 4 thành viên · Thuê nhà tại đường Lương Đình Của, Quận 2
+                {wp.header.subtitle}
               </p>
             </div>
 
-            {/* Băng năng lực tài chính hộ gia đình */}
+            {/* Financial Capability Bar */}
             <div className="mb-4 rounded-xl border border-border/60 bg-card shadow-2xs overflow-hidden">
               <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border/50">
                 <div className="p-3.5 sm:p-4 flex items-center gap-3.5">
@@ -185,12 +202,12 @@ const Workplace: FC = () => {
                     <Landmark className="w-5 h-5" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs text-muted-foreground font-medium block">Tổng tài sản</span>
+                    <span className="text-xs text-muted-foreground font-medium block">{wp.stats.totalAssets}</span>
                     <div className="text-lg sm:text-xl font-bold tracking-tight text-foreground tabular-nums">
-                      {formatNumber(totalAssets)} tr ₫
+                      {formatNumber(totalAssets)} {t.common.millionVnd}
                     </div>
                     <span className="text-[11px] text-muted-foreground/80 block mt-0.5">
-                      Quy mô tài sản tích lũy
+                      {wp.stats.totalAssetsDesc}
                     </span>
                   </div>
                 </div>
@@ -200,12 +217,12 @@ const Workplace: FC = () => {
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs text-muted-foreground font-medium block">Tài sản ròng</span>
+                    <span className="text-xs text-muted-foreground font-medium block">{wp.stats.netWorth}</span>
                     <div className="text-lg sm:text-xl font-bold tracking-tight text-foreground tabular-nums">
-                      {formatNumber(netWorth)} tr ₫
+                      {formatNumber(netWorth)} {t.common.millionVnd}
                     </div>
                     <span className="text-[11px] text-muted-foreground/80 block mt-0.5">
-                      Vốn sở hữu sau khi trừ nợ
+                      {wp.stats.netWorthDesc}
                     </span>
                   </div>
                 </div>
@@ -215,12 +232,12 @@ const Workplace: FC = () => {
                     <TrendingUp className="w-5 h-5" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs text-muted-foreground font-medium block">Thặng dư tích lũy</span>
+                    <span className="text-xs text-muted-foreground font-medium block">{wp.stats.surplus}</span>
                     <div className="text-lg sm:text-xl font-bold tracking-tight text-teal-600 dark:text-teal-400 tabular-nums">
-                      +{formatNumber(surplus)} ₫/tháng
+                      +{formatNumber(surplus)} {t.common.vndPerMonth}
                     </div>
                     <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium block mt-0.5">
-                      Dòng tiền đầu tư đều đặn
+                      {wp.stats.surplusDesc}
                     </span>
                   </div>
                 </div>
@@ -299,7 +316,7 @@ const Workplace: FC = () => {
               marginBottom: 24,
             }}
             variant="borderless"
-            title="Số Liệu Chi Tiết"
+            title={wp.benchmark.title}
           >
             <Table
               size="middle"
@@ -317,7 +334,7 @@ const Workplace: FC = () => {
               },
             }}
             variant="borderless"
-            title="Hiệu Quả Đầu Tư"
+            title={wp.radar.title}
           >
             <div className="w-full h-[250px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -330,7 +347,7 @@ const Workplace: FC = () => {
                   />
                   <PolarRadiusAxis angle={90} domain={[0, 100]} tick={false} axisLine={false} />
                   <Radar
-                    name="Danh mục OCP"
+                    name={wp.radar.legends.ocp}
                     dataKey="danhMuc"
                     stroke="#00a0b0"
                     fill="#00a0b0"
@@ -338,7 +355,7 @@ const Workplace: FC = () => {
                     strokeWidth={2}
                   />
                   <Radar
-                    name="Thị trường VN-Index"
+                    name={wp.radar.legends.market}
                     dataKey="thiTruong"
                     stroke="#3b82f6"
                     fill="#3b82f6"
@@ -346,7 +363,7 @@ const Workplace: FC = () => {
                     strokeWidth={1.5}
                   />
                   <Radar
-                    name="Trái phiếu chính phủ"
+                    name={wp.radar.legends.bonds}
                     dataKey="traiPhieu"
                     stroke="#94a3b8"
                     fill="#94a3b8"
@@ -368,21 +385,21 @@ const Workplace: FC = () => {
                             <div className="flex items-center justify-between gap-3">
                               <span className="flex items-center gap-1.5 text-teal-600 dark:text-teal-400 font-medium">
                                 <span className="w-2 h-2 rounded-full bg-teal-500" />
-                                Danh mục OCP:
+                                {wp.radar.legends.ocp}:
                               </span>
                               <span className="font-semibold text-foreground">{item.danhMucVal}</span>
                             </div>
                             <div className="flex items-center justify-between gap-3">
                               <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-medium">
                                 <span className="w-2 h-2 rounded-full bg-blue-500" />
-                                VN-Index:
+                                {wp.radar.legends.market}:
                               </span>
                               <span className="text-muted-foreground">{item.thiTruongVal}</span>
                             </div>
                             <div className="flex items-center justify-between gap-3">
                               <span className="flex items-center gap-1.5 text-slate-500 font-medium">
                                 <span className="w-2 h-2 rounded-full bg-slate-400" />
-                                Trái phiếu CP:
+                                {wp.radar.legends.bonds}:
                               </span>
                               <span className="text-muted-foreground">{item.traiPhieuVal}</span>
                             </div>
@@ -398,15 +415,15 @@ const Workplace: FC = () => {
             <div className="flex items-center justify-center flex-wrap gap-x-3.5 gap-y-1 pt-2 border-t border-border/50 text-[11px]">
               <div className="flex items-center gap-1.5 font-medium text-foreground">
                 <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
-                <span>Danh mục OCP</span>
+                <span>{wp.radar.legends.ocp}</span>
               </div>
               <div className="flex items-center gap-1.5 text-muted-foreground">
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-                <span>Thị trường VN-Index</span>
+                <span>{wp.radar.legends.market}</span>
               </div>
               <div className="flex items-center gap-1.5 text-muted-foreground">
                 <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-                <span>Trái phiếu CP</span>
+                <span>{wp.radar.legends.bonds}</span>
               </div>
             </div>
           </Card>
@@ -415,4 +432,5 @@ const Workplace: FC = () => {
     </PageContainer>
   );
 };
+
 export default Workplace;

@@ -5,6 +5,7 @@ import { formatNumber } from '@/utils/format';
 import type { DataItem } from '../data.d';
 import useStyles from '../style.style';
 import { monthsInRange } from '../utils/utils';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export type TimeType = 'month' | 'quarter' | 'year';
 const { RangePicker } = DatePicker;
@@ -27,17 +28,31 @@ const SalesCard = ({
   selectDate: (key: TimeType) => void;
 }) => {
   const { styles } = useStyles();
+  const { language, t } = useLanguage();
+  const cardTexts = t.dashboard.analysis.salesCard;
+
   // Monthly figures (after optimization) scaled to the selected time range
   const months = monthsInRange(rangePickerValue);
   const scale = (data: DataItem[]) =>
     data.map((d) => ({ x: d.x, y: (d.y as number) * months }));
+
   const expenseData = scale(salesData);
   const flowData = scale(cashFlowData);
+
+  const getExpenseLabel = (key: string) => cardTexts.expenseItems[key] || key;
+  const getCashflowLabel = (key: string) => cardTexts.cashflowItems[key] || key;
+
   const rankingListData = [...expenseData]
     .sort((a, b) => b.y - a.y)
-    .map((d) => ({ title: d.x as string, total: d.y }));
+    .map((d) => ({
+      rawTitle: d.x as string,
+      title: getExpenseLabel(d.x as string),
+      total: d.y,
+    }));
+
   const totalExpense = expenseData.reduce((s, d) => s + d.y, 0);
-  const periodLabel = months === 1 ? '1 tháng' : `${months} tháng`;
+  const periodLabel = months === 1 ? t.common.month : `${months} ${t.common.months}`;
+  const millionUnit = language === 'en' ? 'M' : 'tr';
 
   return (
     <Card
@@ -59,21 +74,21 @@ const SalesCard = ({
                 className={isActive('month')}
                 onClick={() => selectDate('month')}
               >
-                Tháng này
+                {cardTexts.thisMonth}
               </Button>
               <Button
                 type="text"
                 className={isActive('quarter')}
                 onClick={() => selectDate('quarter')}
               >
-                Quý này
+                {cardTexts.thisQuarter}
               </Button>
               <Button
                 type="text"
                 className={isActive('year')}
                 onClick={() => selectDate('year')}
               >
-                Năm nay
+                {cardTexts.thisYear}
               </Button>
             </div>
             <RangePicker
@@ -94,14 +109,17 @@ const SalesCard = ({
         items={[
           {
             key: 'expenses',
-            label: 'Phân bổ chi tiêu',
+            label: cardTexts.expensesTab,
             children: (
               <Row>
                 <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                   <div className={styles.salesBar}>
                     <Column
                       height={300}
-                      data={expenseData}
+                      data={expenseData.map((d) => ({
+                        x: getExpenseLabel(d.x as string),
+                        y: d.y,
+                      }))}
                       xField="x"
                       yField="y"
                       paddingBottom={12}
@@ -113,16 +131,16 @@ const SalesCard = ({
                           title: false,
                           gridLineDash: null,
                           gridStroke: '#ccc',
-                          labelFormatter: (v: number) => `${formatNumber(v / 1_000_000)} tr`,
+                          labelFormatter: (v: number) => `${formatNumber(v / 1_000_000)} ${millionUnit}`,
                         },
                       }}
                       scale={{
                         x: { paddingInner: 0.4 },
                       }}
                       tooltip={{
-                        name: `Chi tiêu (${periodLabel})`,
+                        name: `${cardTexts.expensesTooltip} (${periodLabel})`,
                         channel: 'y',
-                        valueFormatter: (v: number) => `${formatNumber(v)} ₫`,
+                        valueFormatter: (v: number) => `${formatNumber(v)} ${t.common.vnd}`,
                       }}
                     />
                   </div>
@@ -131,7 +149,7 @@ const SalesCard = ({
                   <div className={styles.salesRank}>
                     <ul className={styles.rankingList}>
                       {rankingListData.map((item, i) => (
-                        <li key={item.title}>
+                        <li key={item.rawTitle}>
                           <span
                             className={`${styles.rankingItemNumber} ${
                               i < 3 ? styles.rankingItemNumberActive : ''
@@ -161,14 +179,17 @@ const SalesCard = ({
           },
           {
             key: 'cashflow',
-            label: 'Dòng tiền',
+            label: cardTexts.cashflowTab,
             children: (
               <Row>
                 <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                   <div className={styles.salesBar}>
                     <Column
                       height={300}
-                      data={flowData}
+                      data={flowData.map((d) => ({
+                        x: getCashflowLabel(d.x as string),
+                        y: d.y,
+                      }))}
                       xField="x"
                       yField="y"
                       paddingBottom={12}
@@ -178,23 +199,23 @@ const SalesCard = ({
                         },
                         y: {
                           title: false,
-                          labelFormatter: (v: number) => `${formatNumber(v / 1_000_000)} tr`,
+                          labelFormatter: (v: number) => `${formatNumber(v / 1_000_000)} ${millionUnit}`,
                         },
                       }}
                       scale={{
                         x: { paddingInner: 0.4 },
                       }}
                       tooltip={{
-                        name: `Số tiền (${periodLabel})`,
+                        name: `${cardTexts.cashflowTooltip} (${periodLabel})`,
                         channel: 'y',
-                        valueFormatter: (v: number) => `${formatNumber(v)} ₫`,
+                        valueFormatter: (v: number) => `${formatNumber(v)} ${t.common.vnd}`,
                       }}
                     />
                   </div>
                 </Col>
                 <Col xl={8} lg={12} md={12} sm={24} xs={24}>
                   <div className={styles.salesRank}>
-                    <h4 className={styles.rankingTitle}>Tổng hợp dòng tiền</h4>
+                    <h4 className={styles.rankingTitle}>{cardTexts.cashflowSummary}</h4>
                     <ul className={styles.rankingList}>
                       {flowData.map((item, i) => (
                         <li key={item.x as string}>
@@ -209,9 +230,9 @@ const SalesCard = ({
                           </span>
                           <span
                             className={styles.rankingItemTitle}
-                            title={item.x as string}
+                            title={getCashflowLabel(item.x as string)}
                           >
-                            {item.x}
+                            {getCashflowLabel(item.x as string)}
                           </span>
                           <span>{formatNumber(item.y)}</span>
                         </li>
@@ -227,4 +248,5 @@ const SalesCard = ({
     </Card>
   );
 };
+
 export default SalesCard;

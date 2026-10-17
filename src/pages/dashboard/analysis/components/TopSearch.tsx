@@ -30,6 +30,7 @@ import { STOCKS } from '@/pages/dashboard/mock/client';
 import { fetchStockHistory, generateFallbackData } from '@/pages/dashboard/services/stockService';
 import { formatNumber } from '@/utils/format';
 import type { SearchDataType } from '../data.d';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export interface WatchedMetric extends Metric {
   history: number[];
@@ -44,6 +45,9 @@ interface TopSearchProps {
 }
 
 const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
+  const { t } = useLanguage();
+  const topSearchTexts = t.dashboard.analysis.topSearch;
+
   const id = useId();
   const [selectedKey, setSelectedKey] = useState<string>('BID');
   const [stockHistories, setStockHistories] = useState<Record<string, { candles: { time: string; close: number }[] }>>(() => {
@@ -87,14 +91,16 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
       const highQuarter = history.length > 0 ? Math.max(...history) : value;
       const lowQuarter = history.length > 0 ? Math.min(...history) : value;
 
+      const desc = topSearchTexts.stockDescriptions[s.code];
+
       return {
         key: s.code,
         label: s.code,
         value,
         previous,
         format: 'vnd',
-        sector: s.sector,
-        role: s.role,
+        sector: desc?.sector || s.sector,
+        role: desc?.role || s.role,
         refPrice: s.ref,
         weightInP: s.weightInP,
         weightInC: s.weightInC,
@@ -107,7 +113,7 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
         lowQuarter,
       };
     });
-  }, [stockHistories]);
+  }, [stockHistories, topSearchTexts]);
 
   const activeMetric = useMemo(() => {
     return metrics.find((item) => item.key === selectedKey) || metrics[0];
@@ -125,16 +131,19 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
   const isUp = activeMetric.value >= (activeMetric.previous ?? activeMetric.value);
   const strokeColor = isUp ? '#089981' : '#f23645';
 
+  const getStockName = (code: string) =>
+    topSearchTexts.stockDescriptions[code]?.name || STOCKS.find((s) => s.code === code)?.name || code;
+
   return (
     <Card className="rounded-xl border-0 bg-card text-card-foreground shadow-sm gap-0 py-0 overflow-hidden">
       <CardHeader className="pt-5 pb-4 px-6 border-b border-border/40">
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="text-base font-semibold text-foreground">
-              Giá cổ phiếu trong danh mục
+              {topSearchTexts.title}
             </CardTitle>
             <CardDescription className="text-xs text-muted-foreground mt-0.5">
-              Theo dõi biến động so với quý trước
+              {topSearchTexts.subtitle}
             </CardDescription>
           </div>
         </div>
@@ -143,7 +152,7 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
       <div className="grid grid-cols-1 lg:grid-cols-[19.5rem_minmax(0,1fr)] xl:grid-cols-[21rem_minmax(0,1fr)]">
         {/* ── Left Master List: 4 Stocks ── */}
         <fieldset className="min-w-0 border-b lg:border-b-0 lg:border-r border-border/40">
-          <legend className="sr-only">Danh sách cổ phiếu trong danh mục</legend>
+          <legend className="sr-only">{topSearchTexts.srLegend}</legend>
           <ul className="divide-y divide-border/30">
             {metrics.map((item) => {
               const isSelected = item.key === activeMetric.key;
@@ -180,7 +189,7 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
                         {item.label}
                       </span>
                       <span className="text-xs text-muted-foreground truncate">
-                        {STOCKS.find((s) => s.code === item.key)?.name}
+                        {getStockName(item.key)}
                       </span>
                     </div>
 
@@ -197,7 +206,7 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
                       <span className="text-xs font-semibold tabular-nums text-foreground whitespace-nowrap">
                         {formatMetricValue(item, item.value)}
                       </span>
-                      <MetricChange metric={item} comparison="vs quý trước" />
+                      <MetricChange metric={item} comparison={topSearchTexts.vsLastQuarter} />
                     </span>
                   </label>
                 </li>
@@ -219,15 +228,15 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
                   {activeMetric.label}
                 </h3>
                 <span className="text-xs text-muted-foreground font-normal">
-                  — {STOCKS.find((s) => s.code === activeMetric.key)?.name}
+                  — {getStockName(activeMetric.key)}
                 </span>
               </div>
               <div className="flex items-center gap-2 text-xs">
                 <span className="rounded-md border border-border/40 bg-muted/40 px-2 py-1 font-medium text-foreground">
-                  ORP - Tối ưu rủi ro: <strong className="text-primary">{activeMetric.weightInP}%</strong>
+                  {topSearchTexts.orpLabel}: <strong className="text-primary">{activeMetric.weightInP}%</strong>
                 </span>
                 <span className="rounded-md border border-border/40 bg-muted/40 px-2 py-1 font-medium text-foreground">
-                  OCP - Tối ưu vốn: <strong className="text-foreground">{activeMetric.weightInC}%</strong>
+                  {topSearchTexts.ocpLabel}: <strong className="text-foreground">{activeMetric.weightInC}%</strong>
                 </span>
               </div>
             </div>
@@ -237,7 +246,7 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
                 {format(activeMetric.value)}
               </p>
               <div className="flex items-center gap-1.5 text-xs">
-                <MetricChange metric={activeMetric} />
+                <MetricChange metric={activeMetric} comparison={topSearchTexts.vsLastQuarter} />
               </div>
             </div>
           </div>
@@ -283,35 +292,35 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
           {/* Bottom Stock Metadata Strip */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-3.5 border-t border-border/30 text-center">
             <div className="py-1">
-              <div className="text-xs sm:text-sm font-medium text-muted-foreground">Chốt quý trước</div>
+              <div className="text-xs sm:text-sm font-medium text-muted-foreground">{topSearchTexts.priorQuarterClose}</div>
               <div className="text-lg sm:text-xl font-bold text-foreground tabular-nums mt-1">
                 {formatNumber(activeMetric.previous ?? activeMetric.refPrice ?? 0)}
               </div>
             </div>
             <div className="py-1">
-              <div className="text-xs sm:text-sm font-medium text-muted-foreground">Cao nhất quý</div>
+              <div className="text-xs sm:text-sm font-medium text-muted-foreground">{topSearchTexts.quarterHigh}</div>
               <div className="text-lg sm:text-xl font-bold text-emerald-600 tabular-nums mt-1">
                 {formatNumber(activeMetric.highQuarter)}
               </div>
             </div>
             <div className="py-1">
-              <div className="text-xs sm:text-sm font-medium text-muted-foreground">Thấp nhất quý</div>
+              <div className="text-xs sm:text-sm font-medium text-muted-foreground">{topSearchTexts.quarterLow}</div>
               <div className="text-lg sm:text-xl font-bold text-rose-600 tabular-nums mt-1">
                 {formatNumber(activeMetric.lowQuarter)}
               </div>
             </div>
             <div className="py-1">
-              <div className="text-xs sm:text-sm font-medium text-muted-foreground">Vốn đầu tư ban đầu</div>
+              <div className="text-xs sm:text-sm font-medium text-muted-foreground">{topSearchTexts.initialCapital}</div>
               <div className="text-lg sm:text-xl font-bold text-foreground tabular-nums mt-1">
-                {activeMetric.initialValue} tr ₫
+                {activeMetric.initialValue} {t.common.millionVnd}
               </div>
             </div>
           </div>
 
           <ChartPanelTable
-            caption={`Biến động giá ${activeMetric.label} so với quý trước`}
+            caption={`${topSearchTexts.tableCaption} ${activeMetric.label} ${topSearchTexts.vsLastQuarter}`}
             columns={[
-              { key: 'label', label: 'Ngày' },
+              { key: 'label', label: topSearchTexts.dateCol },
               { format, key: 'value', label: activeMetric.label },
             ]}
             rows={chartData}

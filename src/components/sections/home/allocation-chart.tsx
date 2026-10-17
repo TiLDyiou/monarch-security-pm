@@ -1,71 +1,68 @@
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Cell, Pie, PieChart, Sector } from "recharts";
 import type { PieSectorDataItem } from "recharts/types/polar/Pie";
 
-// Asset classes keep a fixed color across every portfolio (color follows the entity)
-const ASSETS = [
-  { key: "stocks", label: "Cổ phiếu", color: "#2a78d6" },
-  { key: "funds", label: "Quỹ mở / ETF", color: "#eb6834" },
-  { key: "bonds", label: "Trái phiếu", color: "#1baf7a" },
-  { key: "gold", label: "Vàng", color: "#eda100" },
-  { key: "cash", label: "Tiền gửi", color: "#e87ba4" },
-] as const;
-
-type AssetKey = (typeof ASSETS)[number]["key"];
-
-const PORTFOLIOS: {
-  id: string;
-  name: string;
-  tag: string;
-  allocation: Record<AssetKey, number>;
-  stats: { label: string; value: string }[];
-}[] = [
-  {
-    id: "growth",
-    name: "Tăng trưởng",
-    tag: "Tập trung sinh lời dài hạn, chấp nhận biến động cao",
-    allocation: { stocks: 60, funds: 20, bonds: 10, gold: 5, cash: 5 },
-    stats: [
-      { label: "Mức rủi ro", value: "Cao" },
-      { label: "Kỳ hạn gợi ý", value: "≥ 5 năm" },
-    ],
-  },
-  {
-    id: "balanced",
-    name: "Cân bằng",
-    tag: "Cân đối giữa tăng trưởng và thu nhập ổn định",
-    allocation: { stocks: 35, funds: 20, bonds: 30, gold: 10, cash: 5 },
-    stats: [
-      { label: "Mức rủi ro", value: "Trung bình" },
-      { label: "Kỳ hạn gợi ý", value: "3 – 5 năm" },
-    ],
-  },
-  {
-    id: "defensive",
-    name: "Bảo toàn",
-    tag: "Ưu tiên bảo vệ vốn và phòng hộ lạm phát",
-    allocation: { stocks: 10, funds: 10, bonds: 50, gold: 15, cash: 15 },
-    stats: [
-      { label: "Mức rủi ro", value: "Thấp" },
-      { label: "Kỳ hạn gợi ý", value: "1 – 3 năm" },
-    ],
-  },
-];
-
-const chartConfig = Object.fromEntries(
-  ASSETS.map((a) => [a.key, { label: a.label, color: a.color }]),
-) satisfies ChartConfig;
+type AssetKey = "stocks" | "funds" | "bonds" | "gold" | "cash";
 
 const ActiveSector = (props: PieSectorDataItem) => (
   <Sector {...props} outerRadius={(props.outerRadius ?? 0) + 8} />
 );
 
 const AllocationChart = () => {
-  const [activeId, setActiveId] = useState(PORTFOLIOS[0].id);
+  const { t } = useLanguage();
+  const [activeId, setActiveId] = useState("growth");
   const [hovered, setHovered] = useState<AssetKey | null>(null);
+
+  const ASSETS = useMemo(() => [
+    { key: "stocks" as const, label: t.landing.allocation.assets.stocks, color: "#2a78d6" },
+    { key: "funds" as const, label: t.landing.allocation.assets.funds, color: "#eb6834" },
+    { key: "bonds" as const, label: t.landing.allocation.assets.bonds, color: "#1baf7a" },
+    { key: "gold" as const, label: t.landing.allocation.assets.gold, color: "#eda100" },
+    { key: "cash" as const, label: t.landing.allocation.assets.cash, color: "#e87ba4" },
+  ], [t]);
+
+  const PORTFOLIOS = useMemo(() => [
+    {
+      id: "growth",
+      name: t.landing.allocation.portfolios.growth.name,
+      tag: t.landing.allocation.portfolios.growth.tag,
+      allocation: { stocks: 60, funds: 20, bonds: 10, gold: 5, cash: 5 },
+      stats: [
+        { label: t.landing.allocation.stats.riskLevel, value: t.landing.allocation.portfolios.growth.riskLevel },
+        { label: t.landing.allocation.stats.timeHorizon, value: t.landing.allocation.portfolios.growth.timeHorizon },
+      ],
+    },
+    {
+      id: "balanced",
+      name: t.landing.allocation.portfolios.balanced.name,
+      tag: t.landing.allocation.portfolios.balanced.tag,
+      allocation: { stocks: 35, funds: 20, bonds: 30, gold: 10, cash: 5 },
+      stats: [
+        { label: t.landing.allocation.stats.riskLevel, value: t.landing.allocation.portfolios.balanced.riskLevel },
+        { label: t.landing.allocation.stats.timeHorizon, value: t.landing.allocation.portfolios.balanced.timeHorizon },
+      ],
+    },
+    {
+      id: "defensive",
+      name: t.landing.allocation.portfolios.defensive.name,
+      tag: t.landing.allocation.portfolios.defensive.tag,
+      allocation: { stocks: 10, funds: 10, bonds: 50, gold: 15, cash: 15 },
+      stats: [
+        { label: t.landing.allocation.stats.riskLevel, value: t.landing.allocation.portfolios.defensive.riskLevel },
+        { label: t.landing.allocation.stats.timeHorizon, value: t.landing.allocation.portfolios.defensive.timeHorizon },
+      ],
+    },
+  ], [t]);
+
+  const chartConfig = useMemo(() => {
+    return Object.fromEntries(
+      ASSETS.map((a) => [a.key, { label: a.label, color: a.color }]),
+    ) as ChartConfig;
+  }, [ASSETS]);
 
   const portfolio = PORTFOLIOS.find((p) => p.id === activeId) ?? PORTFOLIOS[0];
   const data = ASSETS.map((a) => ({ key: a.key, label: a.label, value: portfolio.allocation[a.key], fill: a.color }));
@@ -76,8 +73,8 @@ const AllocationChart = () => {
     <div className="w-full rounded-3xl border border-slate-200/80 bg-white/85 backdrop-blur-md shadow-card p-5 md:p-8 text-left">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">Phân bổ tài sản mẫu</p>
-          <h3 className="text-lg md:text-xl font-semibold text-foreground">So sánh 3 chiến lược danh mục</h3>
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{t.landing.allocation.tag}</p>
+          <h3 className="text-lg md:text-xl font-semibold text-foreground">{t.landing.allocation.title}</h3>
         </div>
         <Tabs value={activeId} onValueChange={setActiveId}>
           <TabsList className="h-auto rounded-full bg-slate-100 p-1">
@@ -146,7 +143,7 @@ const AllocationChart = () => {
               </>
             ) : (
               <>
-                <span className="text-xs text-muted-foreground">Danh mục</span>
+                <span className="text-xs text-muted-foreground">{t.landing.allocation.portfolioLabel}</span>
                 <span className="text-lg md:text-xl font-bold text-foreground mt-0.5">{portfolio.name}</span>
               </>
             )}
@@ -220,7 +217,7 @@ const AllocationChart = () => {
           </button>
         ))}
         <p className="pt-1 text-[11px] text-muted-foreground">
-          Tỷ trọng mang tính minh họa. Danh mục thực tế được may đo theo mục tiêu và khẩu vị rủi ro của từng khách hàng.
+          {t.landing.allocation.note}
         </p>
       </div>
     </div>

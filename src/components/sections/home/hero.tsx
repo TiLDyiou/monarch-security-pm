@@ -3,9 +3,12 @@ import AllocationChart from "@/components/sections/home/allocation-chart";
 import { Button } from "@/components/ui/button";
 import { AnimateOnView } from "@/components/ui/motion/animate-on-view";
 import { StaggerContainer } from "@/components/ui/motion/stagger";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative flex items-center justify-center overflow-hidden hero-padding-top pb-14 md:pb-16 bg-[url(/images/home/hero-bg.webp)] bg-cover bg-center">
       {/* Background Interactive Gradient Waves */}
@@ -49,13 +52,13 @@ const Hero = () => {
           <StaggerContainer>
             <AnimateOnView blur>
               <h1 className="h1 text-foreground mb-5 tracking-tight font-extrabold leading-[1.15]">
-                Tối Ưu Danh Mục<br className="hidden sm:inline" /> Đầu Tư Chuẩn Khoa Học
+                {t.landing.hero.title1}<br className="hidden sm:inline" /> {t.landing.hero.title2}
               </h1>
             </AnimateOnView>
 
             <AnimateOnView blur delay={0.2}>
               <p className="text-body-md max-w-2xl mx-auto mb-8 text-muted-foreground leading-relaxed text-base md:text-lg">
-                Phân bổ tài sản theo Thuyết danh mục hiện đại, đồng hành tái cân bằng định kỳ và bảo vệ tài sản gia đình bạn trong mọi chu kỳ thị trường
+                {t.landing.hero.subtitle}
               </p>
             </AnimateOnView>
 
@@ -65,7 +68,7 @@ const Hero = () => {
             >
               <Button asChild size="lg" className="rounded-full px-8 py-6 text-base font-semibold shadow-lg shadow-primary/20 cursor-pointer">
                 <Link to="/dashboard">
-                  Bắt Đầu Ngay
+                  {t.landing.hero.cta}
                 </Link>
               </Button>
             </AnimateOnView>
