@@ -995,7 +995,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         title1: 'Scientifically Optimized',
         title2: 'Investment Portfolios',
         subtitle:
-          'Asset allocation grounded in Modern Portfolio Theory, periodic disciplined rebalancing, and long-term wealth preservation for your family across every market cycle.',
+          'Asset allocation built on Modern Portfolio Theory, disciplined periodic rebalancing, and protection for your family’s wealth through every market cycle.',
         cta: 'Get Started',
       },
       bento: {
@@ -1023,36 +1023,36 @@ export const translations: Record<Language, TranslationDictionary> = {
         },
       },
       features: {
-        sectionTitle: 'Every Investor Has Unique Goals & Financial Safety Margins',
+        sectionTitle: 'Every Investor Has Their Own Goals and Safety Threshold',
         sectionSubtitle:
-          'Instead of generic rules of thumb, we build a scientific, disciplined wealth roadmap tailored exclusively for your family.',
+          'Instead of generic advice, we build a science-based investment roadmap made for you.',
         cards: {
           card1: {
             title: 'Goal-Driven, Personalized Allocation',
             description:
-              'Based on your risk tolerance, savings rate, and retirement timeline, we allocate capital prudently across individual equities, ETFs, bonds, and defensive reserves.',
+              'Based on your risk tolerance, savings rate, and retirement timeline, we spread your capital sensibly across stocks, ETFs, bonds, and safe assets.',
             imageAlt: 'Personalized portfolio design',
             buttonText: 'Explore Methodology',
           },
           card2: {
             title: 'Optimized Return, Controlled Risk',
             description:
-              'We diversify to eliminate unsystematic risk using Harry Markowitz’s Modern Portfolio Theory, combined with Benjamin Graham’s margin-of-safety principles to ensure maximum risk-adjusted returns.',
+              'We diversify according to Harry Markowitz’s Modern Portfolio Theory and buy only when prices offer a margin of safety, as Benjamin Graham taught, so the portfolio earns the best return for the risk you accept.',
             imageAlt: 'MPT portfolio optimization',
             buttonText: 'Discover Strategy',
           },
           card3: {
-            title: 'Dedicated Advisory & Disciplined Rebalancing',
+            title: 'Dedicated Advisors, Periodic Rebalancing',
             description:
-              'Senior fiduciary wealth advisors actively oversee your assets, performing periodic rebalancing across macroeconomic cycles to lock in hard-earned gains.',
+              'Your advisor monitors the portfolio and rebalances it periodically as macroeconomic conditions shift, protecting your long-term gains.',
             imageAlt: 'Dedicated wealth advisory',
           },
         },
       },
       principles: {
-        title: 'The Constraints That Shape Every Portfolio',
+        title: 'Investing Within Your Family’s Limits',
         subtitle:
-          'Before optimizing returns, we set clear boundaries in the Investment Policy Statement so the portfolio always fits your family’s real circumstances.',
+          'Before looking at returns, we set out the constraints in your Investment Policy Statement so the portfolio fits your family’s real circumstances.',
         items: [
           {
             title: 'Liquidity',
@@ -1062,7 +1062,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             title: 'Time Horizon',
             description:
-              'Layer horizons by goal: near-term goals favor safety, long-term goals put the power of compounding to work.',
+              'Each goal has its own horizon: near-term goals favor safety, long-term goals let compounding do the work.',
           },
           {
             title: 'Taxes',
@@ -1085,22 +1085,22 @@ export const translations: Record<Language, TranslationDictionary> = {
         sectionTitle1: 'A Disciplined & Streamlined',
         sectionTitle2: 'Portfolio Planning Process',
         sectionSubtitle:
-          'Free yourself from market noise and emotional trading decisions. We help you build wealth with discipline, so it grows steadily while staying within your family’s safety threshold.',
+          'No more worrying about market swings or trading on emotion. We help you build wealth with discipline, so it grows steadily within your family’s safety threshold.',
         cards: {
           step1: {
-            title: 'Understand Risk Tolerance & Family Milestones',
+            title: 'Understand Your Family’s Goals and Safety Threshold',
             description:
-              'Assess risk tolerance through standardized psychometric profiling, streamline monthly cash flows, and build emergency reserves to secure homeownership, education, and retirement.',
+              'Measure risk tolerance with an internationally standardized questionnaire, rebalance income and spending, and build an emergency fund as the base for buying a home, your children’s education, and retirement.',
           },
           step2: {
-            title: 'Design & Mathematically Optimize Portfolios',
+            title: 'Design and Optimize the Portfolio',
             description:
-              'Synthesize top-tier defensive equities with risk-free government bonds via Markowitz quadratic optimization to deliver maximum expected return for target volatility.',
+              'Combine fundamentally strong industry leaders with government bonds using the Markowitz optimization model, for the highest expected return at a suitable level of volatility.',
           },
           step3: {
-            title: 'Continuous Tracking & Disciplined Rebalancing',
+            title: 'Track Weights and Rebalance Periodically',
             description:
-              'Never follow emotional crowd trends. We audit allocations periodically to maintain target equity/bond ratios, deploying recurring monthly savings to rebalance with minimal transaction fees.',
+              'We don’t follow the crowd. We review the portfolio periodically to keep stocks and bonds at their target weights, using monthly savings to rebalance so trading costs stay low.',
           },
         },
         illustrations: {
@@ -1143,7 +1143,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       testimonials: {
         title: 'The Ideas That Guide Us',
         subtitle:
-          'The guiding principles behind our scientific asset allocation methodology, risk management, and sustainable wealth growth.',
+          'The principles that shape how we allocate portfolios, manage risk, and grow wealth sustainably.',
         items: [
           {
             quote:
@@ -1186,25 +1186,25 @@ export const translations: Record<Language, TranslationDictionary> = {
       faq: {
         title: 'Frequently Asked Questions',
         subtitle:
-          'Everything you need to know about our fiduciary independence, asset custody security, and advisory roadmap.',
+          'What you need to know about our independent advice, the safety of your assets, and how we work with you.',
         items: [
           {
-            question: 'How does our personal financial & portfolio advisory service work?',
+            question: 'How does the portfolio advisory service work?',
             answer:
-              'We act as independent fiduciary financial advisors. We evaluate your household income, expenses, liabilities, and risk tolerance to design an individualized asset allocation across equities, ETFs, sovereign bonds, gold, and real estate. You retain full legal custody of your funds on your own brokerage and bank accounts while we provide ongoing strategic recommendations and periodic rebalancing.',
+              'We are an independent advisory firm that always puts clients’ interests first. We evaluate your household income, expenses, liabilities, and risk tolerance to design an individualized asset allocation across equities, ETFs, sovereign bonds, gold, and real estate. You retain full legal custody of your funds on your own brokerage and bank accounts while we provide ongoing strategic recommendations and periodic rebalancing.',
           },
           {
-            question: 'Do we ever take direct custody of your funds or investment assets?',
+            question: 'Does Monarch Securities hold my money or assets?',
             answer:
-              'Never! Your capital and portfolio holdings remain entirely deposited in your personal accounts at licensed banks, regulated securities firms, and fund management companies under your legal name. We provide strategic advisory recommendations only, while you retain complete control over your wealth.',
+              'No. Your money and holdings stay in brokerage, bank, or fund accounts in your own name at licensed institutions. We only recommend how to allocate them; every decision about your assets remains yours.',
           },
           {
-            question: 'What methodology guides our portfolio allocation strategies?',
+            question: 'Which methodology does the allocation strategy follow?',
             answer:
               'We apply Modern Portfolio Theory, established by Nobel Laureate Prof. Harry Markowitz, paired with the value investing and Margin of Safety principles of Benjamin Graham and Warren Buffett. This systematically diversifies away unsystematic risk while allocating capital to productive, cash-generating assets.',
           },
           {
-            question: 'What is the minimum capital required to begin advisory engagement?',
+            question: 'How much capital do I need to start?',
             answer:
               'We provide flexible advisory tiers: from young professionals starting their wealth accumulation journey with modest starting capital, to high-net-worth families requiring multi-asset estate planning, tax optimization, and wealth preservation.',
           },
@@ -1237,7 +1237,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       nav: {
         analysis: 'Analysis',
         monitor: 'Monitor',
-        workplace: 'Client Workplace',
+        workplace: 'Client Profile',
         homeTitle: 'Back to Home',
       },
       footer: {
@@ -1248,16 +1248,16 @@ export const translations: Record<Language, TranslationDictionary> = {
       analysis: {
         kpi: {
           expectedReturn: 'Expected Annual Return',
-          expectedReturnTooltip: 'Annualized E(rc) of the complete optimal portfolio (OCP)',
+          expectedReturnTooltip: 'Annualized expected return of the optimal complete portfolio, OCP',
           expectedReturnMonthly: 'Monthly',
           expectedReturnVsRiskFree: 'vs risk-free rate',
-          risk: 'Portfolio Volatility (Risk)',
+          risk: 'Portfolio Risk',
           riskTooltip: 'Annualized standard deviation σc of the complete portfolio',
           riskMonthly: 'Monthly',
           riskVsVnIndex: 'lower than VN-Index',
           riskFree: 'Risk-Free Rate',
-          riskFreeTooltip: 'rf – 10-year Sovereign Government Bond yield',
-          riskFreeTenYear: '10-Yr Gov Bond',
+          riskFreeTooltip: 'Risk-free rate rf: the 10-year government bond yield',
+          riskFreeTenYear: '10-year government bond',
           sharpeRatio: 'OCP Sharpe Ratio',
         },
         salesCard: {
@@ -1285,12 +1285,12 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
         },
         topSearch: {
-          title: 'Portfolio Stock Holdings',
-          subtitle: 'Quarterly price performance tracking',
+          title: 'Portfolio Stock Prices',
+          subtitle: 'Change versus the previous quarter',
           srLegend: 'List of stocks in the portfolio',
           vsLastQuarter: 'vs prior quarter',
-          orpLabel: 'ORP (Risk Optimal)',
-          ocpLabel: 'OCP (Capital Optimal)',
+          orpLabel: 'ORP weight',
+          ocpLabel: 'OCP weight',
           priorQuarterClose: 'Prior Quarter Close',
           quarterHigh: 'Quarter High',
           quarterLow: 'Quarter Low',
@@ -1299,24 +1299,24 @@ export const translations: Record<Language, TranslationDictionary> = {
           dateCol: 'Date',
           stockDescriptions: {
             BID: {
-              name: 'Bank for Investment and Development of Vietnam (BIDV)',
+              name: 'BIDV · Bank for Investment and Development of Vietnam',
               sector: 'Banking',
-              role: 'Pillar equity providing robust, consistent long-term cash flow',
+              role: 'Core holding with high, steady returns',
             },
             HAH: {
               name: 'Hai An Transport and Stevedoring JSC',
               sector: 'Shipping & Logistics',
-              role: 'Growth stock delivering superior risk-adjusted capital appreciation',
+              role: 'Growth stock with strong return potential',
             },
             SSI: {
               name: 'SSI Securities Corporation',
               sector: 'Financial Services',
-              role: 'Direct beneficiary of market liquidity and FTSE emerging market upgrade',
+              role: 'Benefits from market liquidity and the FTSE upgrade',
             },
             MSN: {
               name: 'Masan Group Corporation',
               sector: 'Consumer Goods & Retail',
-              role: 'Long-term compounding driven by nationwide essential consumer retail',
+              role: 'Long-term growth from essential consumer retail',
             },
           },
         },
@@ -1324,9 +1324,9 @@ export const translations: Record<Language, TranslationDictionary> = {
           title: 'Asset Allocation Breakdown',
           subtitles: {
             assets: 'Distribution across total owned assets',
-            capital: 'Net worth equity vs bank liabilities structure',
+            capital: 'Net worth versus bank debt',
             cash: 'Earmarked allocation of liquid cash reserves',
-            portfolio: 'Asset weights of the Optimal Complete Portfolio (OCP)',
+            portfolio: 'Asset weights of the optimal complete portfolio, OCP',
           },
           totalLabels: {
             assets: 'Total Assets',
@@ -1338,17 +1338,17 @@ export const translations: Record<Language, TranslationDictionary> = {
             assets: 'Assets',
             capital: 'Capital',
             cash: 'Cash Reserves',
-            portfolio: 'Portfolio OCP',
+            portfolio: 'OCP Portfolio',
           },
           labels: {
-            'Đất nền Bảo Lộc': 'Bao Loc Land Property',
+            'Đất nền Bảo Lộc': 'Bao Loc land plot',
             'Tiền mặt': 'Liquid Cash',
             'Cho bạn bè mượn': 'Personal Loan Receivable',
             'Giá trị tài sản ròng': 'Net Worth',
             'Nợ vay ngân hàng': 'Bank Liabilities',
             'Quỹ dự phòng': 'Emergency Fund',
             'Vốn đầu tư ban đầu': 'Initial Portfolio Capital',
-            'TPCP 10 năm': '10-Yr Gov Bonds',
+            'TPCP 10 năm': '10-year government bonds',
             BID: 'BID',
             HAH: 'HAH',
             SSI: 'SSI',
@@ -1365,11 +1365,11 @@ export const translations: Record<Language, TranslationDictionary> = {
             '1Y': '1Y',
             ALL: 'ALL',
           },
-          ma20Tooltip: 'MA20 Moving Average',
+          ma20Tooltip: '20-day moving average',
           volumeTooltip: 'Trading Volume',
           refreshTooltip: 'Refresh Latest Quote',
-          collapseTooltip: 'Collapse (480px)',
-          expandTooltip: 'Expand (800px)',
+          collapseTooltip: 'Collapse chart',
+          expandTooltip: 'Expand chart',
           fullscreenTooltip: 'Full Screen',
           exitFullscreenTooltip: 'Exit Full Screen',
         },
@@ -1389,22 +1389,22 @@ export const translations: Record<Language, TranslationDictionary> = {
       workplace: {
         header: {
           title: 'Household Members',
-          subtitle: '4-member family · Residing on Luong Dinh Cua St, District 2',
+          subtitle: 'Family of four · Renting on Luong Dinh Cua Street, District 2',
         },
         profiles: {
           husband: {
             tag: 'Head of Household',
-            role: 'Accounting Department Manager',
-            org: 'Commercial Bank Branch Office',
+            role: 'Head of Accounting',
+            org: 'Bank transaction office',
             income: 'Income: 45,000,000 VND/mo',
-            benefit: 'Full Social & Health Insurance',
+            benefit: 'Full social and health insurance',
           },
           wife: {
             tag: 'Spouse',
-            role: 'Senior Accountant',
-            org: 'Same Bank Branch Office',
+            role: 'Accountant',
+            org: 'Same bank transaction office',
             income: 'Income: 20,000,000 VND/mo',
-            benefit: 'Full Social & Health Insurance',
+            benefit: 'Full social and health insurance',
           },
           child1: {
             tag: 'Elder Child',
@@ -1418,17 +1418,17 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
         },
         benchmark: {
-          title: 'Key Portfolio Performance Metrics',
+          title: 'Detailed Metrics',
           metricCol: 'Metric',
           metrics: {
-            expectedReturn: 'Expected Return E(r)',
-            risk: 'Risk Volatility (σ)',
-            sharpe: 'Sharpe Ratio',
-            utility: 'Expected Utility U',
+            expectedReturn: 'Expected return',
+            risk: 'Standard deviation σ',
+            sharpe: 'Sharpe ratio',
+            utility: 'Utility U',
           },
         },
         radar: {
-          title: 'Investment Efficiency Comparison',
+          title: 'Investment Performance',
           subjects: {
             return: 'Return',
             risk: 'Risk',
@@ -1439,19 +1439,19 @@ export const translations: Record<Language, TranslationDictionary> = {
           legends: {
             ocp: 'OCP Portfolio',
             market: 'VN-Index Benchmark',
-            bonds: 'Gov Bonds',
+            bonds: 'Government bonds',
           },
           values: {
-            growthOcp: '10-Yr Optimal',
+            growthOcp: 'Optimized over 10 years',
             growthMarket: 'Cyclical',
             growthBonds: 'Linear',
           },
         },
         roadmap: {
-          title: 'Financial Milestones & Feasibility Analysis',
-          subtitle: 'Assumed benchmark inflation rate: 4.5%/year',
+          title: 'Financial Goals',
+          subtitle: 'Based on assumed inflation of 4.5% a year',
           tags: { car: 'Deferred', loanRecovery: 'Reinvested', house: 'Feasible' },
-          labels: { need: 'Need', fund: 'Fund' },
+          labels: { need: 'Needed', fund: 'Projected fund' },
           bannerTitle: 'Unified Compounding Mechanism:',
           bannerDesc:
             'The entire roadmap is powered by a continuous compounding growth portfolio. Electing not to withdraw capital prematurely preserves the exponential power of compounding to attain the major homeownership milestone.',
@@ -1467,8 +1467,8 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
           steps: {
             car: {
-              title: 'Family Vehicle Purchase',
-              duration: '3-Year Horizon',
+              title: 'Buy a Family Car',
+              duration: 'In 3 years',
               badge: 'Deferred · Capital Preservation Priority',
               description: 'For convenient school drop-offs and family weekend commuting.',
               needLabel: 'Inflation-Adjusted Capital Required',
@@ -1476,25 +1476,25 @@ export const translations: Record<Language, TranslationDictionary> = {
               needOriginal: 'base 800M VND',
               fundLabel: 'Projected Portfolio Value at Year 3',
               fundValue: '723.80M VND',
-              fundPercent: '79.3% Funded · Shortfall 189.13M VND',
+              fundPercent: '79.3% covered, 189.13M VND short',
               recommendationTitle: 'Strategic Advisory:',
               recommendationText:
-                'Temporarily postpone vehicle purchase to avoid withdrawing 723.80M VND from the fund, preserving the entire principal to compound toward the primary residence goal.',
+                'Keep the 723.80M VND in the fund so it keeps compounding toward the home purchase.',
             },
             loanRecovery: {
-              title: 'Personal Loan Recovery',
-              duration: '5-Year Horizon',
+              title: 'Recover the Personal Loan',
+              duration: 'In 5 years',
               badge: 'Cash Inflow · Reinvestment Capital',
               description:
-                'Recover full 100.00M VND principal on schedule at month 60 to expand investment portfolio scale.',
+                'Collect the full principal on schedule in month 60 and add all of it to the investment fund.',
               recoveredLabel: 'added to the OCP fund',
               recoveredValue: '+100.00M VND',
               detailsText:
                 'The full 100M VND is channeled directly into the OCP portfolio, expanding productive earning assets immediately ahead of the final 5-year compounding sprint.',
             },
             house: {
-              title: 'Home Purchase in District 2 / District 9 Area',
-              duration: '10-Year Horizon',
+              title: 'Buy a Home in District 2 or Former District 9',
+              duration: 'In 10 years',
               badge: 'Highly Feasible · 153% of Target Funded',
               description: 'Long-term residential milestone near parents’ workplace and children’s schools.',
               needLabel: 'Inflation-Adjusted Capital Required',
@@ -1502,12 +1502,12 @@ export const translations: Record<Language, TranslationDictionary> = {
               needOriginal: 'base 3,450M VND',
               fundLabel: 'Projected Portfolio Value at Year 10',
               fundValue: '8,199.80M VND',
-              fundPercent: '153.0% Funded · Substantial Capital Surplus',
+              fundPercent: '153.0% of the need covered',
               outcomeTitle: 'Planning Outcome:',
-              outcomeTextPrefix: 'Milestone exceeded with surplus equity of',
+              outcomeTextPrefix: 'Goal exceeded, with a surplus of',
               outcomeSurplus: '+2,842.10M VND',
               outcomeTextSuffix:
-                '. The family secures 100% debt-free homeownership while retaining a solid capital cushion for future needs.',
+                '. The family buys the home without borrowing and keeps a reserve for the future.',
             },
           },
         },

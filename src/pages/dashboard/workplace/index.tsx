@@ -21,18 +21,21 @@ import { useLanguage } from '@/i18n/LanguageContext';
 const childAvatar = (age: number) =>
   age < 3 ? '/images/avatars/baby.webp' : age < 14 ? '/images/avatars/child.webp' : '/images/avatars/teen.webp';
 
+// Figures are written with Vietnamese decimal commas; English readers expect decimal points
+const localizeDecimal = (value: string, language: string) => (language === 'en' ? value.replace(',', '.') : value);
+
 const Workplace: FC = () => {
   const { language, t } = useLanguage();
   const wp = t.dashboard.workplace;
 
   const benchmarkData = useMemo(
     () => [
-      { metric: wp.benchmark.metrics.expectedReturn, market: '8,23%', orp: '20,46%', ocp: '12,25%' },
-      { metric: wp.benchmark.metrics.risk, market: '18,08%', orp: '25,65%', ocp: '11,19%' },
-      { metric: wp.benchmark.metrics.sharpe, market: '0,1291', orp: '0,5676', ocp: '0,5676' },
-      { metric: wp.benchmark.metrics.utility, market: '-0,0006', orp: '0,0378', ocp: '0,0908' },
+      { metric: wp.benchmark.metrics.expectedReturn, market: localizeDecimal('8,23%', language), orp: localizeDecimal('20,46%', language), ocp: localizeDecimal('12,25%', language) },
+      { metric: wp.benchmark.metrics.risk, market: localizeDecimal('18,08%', language), orp: localizeDecimal('25,65%', language), ocp: localizeDecimal('11,19%', language) },
+      { metric: wp.benchmark.metrics.sharpe, market: localizeDecimal('0,1291', language), orp: localizeDecimal('0,5676', language), ocp: localizeDecimal('0,5676', language) },
+      { metric: wp.benchmark.metrics.utility, market: localizeDecimal('-0,0006', language), orp: localizeDecimal('0,0378', language), ocp: localizeDecimal('0,0908', language) },
     ],
-    [wp],
+    [wp, language],
   );
 
   const performanceRadarData = useMemo(
@@ -42,18 +45,18 @@ const Workplace: FC = () => {
         danhMuc: 85,
         thiTruong: 65,
         traiPhieu: 45,
-        danhMucVal: '12,25%',
-        thiTruongVal: '8,23%',
-        traiPhieuVal: '5,90%',
+        danhMucVal: localizeDecimal('12,25%', language),
+        thiTruongVal: localizeDecimal('8,23%', language),
+        traiPhieuVal: localizeDecimal('5,90%', language),
       },
       {
         subject: wp.radar.subjects.risk,
         danhMuc: 52,
         thiTruong: 85,
         traiPhieu: 15,
-        danhMucVal: '11,19%',
-        thiTruongVal: '18,08%',
-        traiPhieuVal: '1,50%',
+        danhMucVal: localizeDecimal('11,19%', language),
+        thiTruongVal: localizeDecimal('18,08%', language),
+        traiPhieuVal: localizeDecimal('1,50%', language),
       },
       {
         subject: wp.radar.subjects.growth,
@@ -69,21 +72,21 @@ const Workplace: FC = () => {
         danhMuc: 95,
         thiTruong: 35,
         traiPhieu: 10,
-        danhMucVal: '0,5676',
-        thiTruongVal: '0,1291',
-        traiPhieuVal: '0,0000',
+        danhMucVal: localizeDecimal('0,5676', language),
+        thiTruongVal: localizeDecimal('0,1291', language),
+        traiPhieuVal: localizeDecimal('0,0000', language),
       },
       {
         subject: wp.radar.subjects.utility,
         danhMuc: 92,
         thiTruong: 20,
         traiPhieu: 50,
-        danhMucVal: '0,0908',
-        thiTruongVal: '-0,0006',
-        traiPhieuVal: '0,0500',
+        danhMucVal: localizeDecimal('0,0908', language),
+        thiTruongVal: localizeDecimal('-0,0006', language),
+        traiPhieuVal: localizeDecimal('0,0500', language),
       },
     ],
-    [wp],
+    [wp, language],
   );
 
   const radarSeries = [
