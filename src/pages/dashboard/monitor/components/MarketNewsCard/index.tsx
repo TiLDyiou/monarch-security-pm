@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import {
   RefreshCw,
   Search,
@@ -22,9 +22,12 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import {
+  buildNewsIndex,
   fetchMarketNews,
   type MarketNewsItem,
+  normalizeText,
   POPULAR_TICKERS,
+  searchNews,
 } from '@/pages/dashboard/services/marketNewsService';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -56,17 +59,24 @@ const MarketNewsCard: React.FC = () => {
     return d.format('DD/MM/YYYY HH:mm');
   };
 
-  const loadData = async (ticker: string) => {
+  // Only the latest request may update the list, so a slow answer for a previous ticker never overwrites the current one
+  const requestId = useRef(0);
+
+  const loadData = async (ticker: string, force = false) => {
+    const id = ++requestId.current;
     setLoading(true);
     try {
-      const items = await fetchMarketNews(ticker);
+      const items = await fetchMarketNews(ticker, { force });
+      if (id !== requestId.current) return;
       setNews(items);
       setCurrentPage(1);
     } catch {
       // Handled via service fallback
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      if (id === requestId.current) {
+        setLoading(false);
+        setRefreshing(false);
+      }
     }
   };
 
@@ -76,20 +86,13 @@ const MarketNewsCard: React.FC = () => {
 
   const handleRefresh = () => {
     setRefreshing(true);
-    loadData(selectedTicker);
+    loadData(selectedTicker, true);
   };
 
-  const filteredNews = useMemo(() => {
-    if (!searchKeyword.trim()) return news;
-    const kw = searchKeyword.toLowerCase().trim();
-    return news.filter(
-      (item) =>
-        item.title.toLowerCase().includes(kw) ||
-        item.description.toLowerCase().includes(kw) ||
-        item.symbol?.toLowerCase().includes(kw) ||
-        item.source.toLowerCase().includes(kw),
-    );
-  }, [news, searchKeyword]);
+  // Fields are normalised once per result set; typing only runs the ranked match
+  const newsIndex = useMemo(() => buildNewsIndex(news), [news]);
+  const deferredKeyword = useDeferredValue(searchKeyword);
+  const filteredNews = useMemo(() => searchNews(newsIndex, deferredKeyword), [newsIndex, deferredKeyword]);
 
   const paginatedNews = useMemo(() => {
     const start = (currentPage - 1) * PAGE_SIZE;
@@ -121,7 +124,7 @@ const MarketNewsCard: React.FC = () => {
             }))}
             showSearch
             filterOption={(input, option) =>
-              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+              normalizeText(String(option?.label ?? '')).includes(normalizeText(input))
             }
           />
 

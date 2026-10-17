@@ -232,104 +232,228 @@ const FALLBACK_NEWS: MarketNewsItem[] = [
   },
 ];
 
-// In-memory cache to optimize performance
+/* ---------- Text normalisation and search ---------- */
+
+// Lowercase, strip Vietnamese diacritics (đ -> d) and collapse spaces, so "hoa phat" finds "Hòa Phát"
+export const normalizeText = (value: string): string =>
+  value
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+
+export interface NewsIndexEntry {
+  item: MarketNewsItem;
+  title: string;
+  description: string;
+  symbol: string;
+  source: string;
+  time: number;
+}
+
+// Normalise every searchable field once per result set instead of on every keystroke
+export const buildNewsIndex = (items: MarketNewsItem[]): NewsIndexEntry[] =>
+  items.map((item) => ({
+    item,
+    title: normalizeText(item.title),
+    description: normalizeText(item.description),
+    symbol: normalizeText(item.symbol ?? ''),
+    source: normalizeText(item.source),
+    time: dayjs(item.publishDate).valueOf() || 0,
+  }));
+
+const startsWord = (text: string, token: string) => text.startsWith(token) || text.includes(` ${token}`);
+
+/**
+ * Every word of the query must appear somewhere (title, summary, ticker or source), in any order.
+ * Matches are ranked: exact ticker > title (word start first) > source > summary, then newest first.
+ */
+export const searchNews = (index: NewsIndexEntry[], query: string): MarketNewsItem[] => {
+  const tokens = normalizeText(query).split(' ').filter(Boolean);
+  if (tokens.length === 0) return index.map((entry) => entry.item);
+
+  const scored: { entry: NewsIndexEntry; score: number }[] = [];
+  for (const entry of index) {
+    let score = 0;
+    let matchedAll = true;
+    for (const token of tokens) {
+      let best = 0;
+      if (entry.symbol === token) best = 6;
+      else if (entry.title.includes(token)) best = startsWord(entry.title, token) ? 4 : 3;
+      else if (entry.symbol.includes(token)) best = 3;
+      else if (entry.source.includes(token)) best = 2;
+      else if (entry.description.includes(token)) best = startsWord(entry.description, token) ? 1.5 : 1;
+      if (best === 0) {
+        matchedAll = false;
+        break;
+      }
+      score += best;
+    }
+    if (matchedAll) scored.push({ entry, score });
+  }
+
+  return scored
+    .sort((a, b) => b.score - a.score || b.entry.time - a.entry.time)
+    .map(({ entry }) => entry.item);
+};
+
+/* ---------- Fetching ---------- */
+
+type RawNews = Record<string, unknown>;
+
+interface NewsSource {
+  name: string;
+  url: (key: string) => string;
+  list: (json: unknown) => RawNews[];
+  map: (raw: RawNews, key: string) => MarketNewsItem;
+}
+
+const isTicker = (key: string) => key !== 'ALL';
+const str = (value: unknown) => (typeof value === 'string' ? value : '');
+const toDate = (value: unknown) => {
+  const d = dayjs(str(value) || undefined);
+  return (d.isValid() ? d : dayjs()).format('YYYY-MM-DD HH:mm');
+};
+
+const SOURCES: NewsSource[] = [
+  {
+    name: 'VNDIRECT',
+    url: (key) =>
+      isTicker(key)
+        ? `https://finfo-api.vndirect.com.vn/v4/news?q=code:${key}&sort=newsDate:desc&size=20`
+        : 'https://finfo-api.vndirect.com.vn/v4/news?sort=newsDate:desc&size=25',
+    list: (json) => ((json as { data?: RawNews[] })?.data ?? []),
+    map: (raw, key) => ({
+      id: str(raw.id) || str(raw.newsUrl) || str(raw.newsTitle),
+      title: str(raw.newsTitle) || str(raw.title),
+      description: str(raw.newsDescription) || str(raw.description) || str(raw.newsTitle),
+      publishDate: toDate(raw.newsDate),
+      source: str(raw.newsSource) || 'VNDIRECT',
+      symbol: str(raw.code) || (isTicker(key) ? key : 'VN-INDEX'),
+      category: isTicker(key) ? 'Doanh nghiệp' : 'Thị trường',
+      url: str(raw.newsUrl) || 'https://vndirect.com.vn',
+    }),
+  },
+  {
+    name: 'TCBS',
+    url: (key) =>
+      isTicker(key)
+        ? `https://apipubaws.tcbs.com.vn/tcanalysis/v1/ticker/${key}/news?page=0&size=15`
+        : 'https://apipubaws.tcbs.com.vn/tcanalysis/v1/news?page=0&size=20',
+    list: (json) => {
+      const data = (json as { data?: RawNews[] })?.data;
+      return data ?? (Array.isArray(json) ? (json as RawNews[]) : []);
+    },
+    map: (raw, key) => ({
+      id: str(raw.id) || str(raw.url) || str(raw.title),
+      title: str(raw.title),
+      description: str(raw.description) || str(raw.title),
+      publishDate: toDate(raw.publishDate),
+      source: str(raw.source) || 'TCBS',
+      symbol: str(raw.ticker) || (isTicker(key) ? key : 'VN-INDEX'),
+      category: isTicker(key) ? 'Doanh nghiệp' : 'Thị trường',
+      url: str(raw.url) || 'https://tcbs.com.vn',
+    }),
+  },
+];
+
+const CACHE_TTL_MS = 5 * 60 * 1000; // results stay fresh for 5 minutes; Refresh bypasses it
+const LIVE_TIMEOUT_MS = 2500; // budget for the live sources, raced in parallel
+const SOURCE_COOLDOWN_MS = 2 * 60 * 1000; // skip a source that just failed instead of waiting on it again
+
 const newsCache = new Map<string, { data: MarketNewsItem[]; timestamp: number }>();
-const CACHE_TTL_MS = 60 * 1000; // 1 minute
+const inFlight = new Map<string, Promise<MarketNewsItem[]>>();
+const sourceDownUntil = new Map<string, number>();
 
-export async function fetchMarketNews(symbol?: string): Promise<MarketNewsItem[]> {
-  const cacheKey = symbol && symbol !== 'ALL' ? symbol.toUpperCase() : 'ALL';
-  const cached = newsCache.get(cacheKey);
-  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
-    return cached.data;
+// Drop items without a title, merge duplicates reported by several sources, newest first
+const tidy = (items: MarketNewsItem[]): MarketNewsItem[] => {
+  const seen = new Set<string>();
+  const unique: MarketNewsItem[] = [];
+  for (const item of items) {
+    const key = normalizeText(item.title);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    unique.push({ ...item, id: item.id || key });
   }
+  return unique.sort((a, b) => dayjs(b.publishDate).valueOf() - dayjs(a.publishDate).valueOf());
+};
 
-  // Attempt live fetch from VNDirect finfo-api
+// `race.won` is set once a source has answered, so cancelling the slower ones is not counted as their failure;
+// a source that times out or errors is put on cooldown
+const fetchSource = async (source: NewsSource, key: string, signal: AbortSignal, race: { won: boolean }) => {
   try {
-    const isTicker = cacheKey !== 'ALL';
-    const url = isTicker
-      ? `https://finfo-api.vndirect.com.vn/v4/news?q=code:${cacheKey}&sort=newsDate:desc&size=20`
-      : `https://finfo-api.vndirect.com.vn/v4/news?sort=newsDate:desc&size=25`;
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3500);
-
-    const res = await fetch(url, { signal: controller.signal });
-    clearTimeout(timeoutId);
-
-    if (res.ok) {
-      const json = await res.json();
-      const list = json.data || [];
-      if (Array.isArray(list) && list.length > 0) {
-        const liveItems: MarketNewsItem[] = list.map((item: any) => ({
-          id: item.id || Math.random().toString(36).slice(2),
-          title: item.newsTitle || item.title || '',
-          description: item.newsDescription || item.description || item.newsTitle || '',
-          publishDate: item.newsDate
-            ? dayjs(item.newsDate).format('YYYY-MM-DD HH:mm')
-            : dayjs().format('YYYY-MM-DD HH:mm'),
-          source: item.newsSource || 'VNDIRECT',
-          symbol: item.code || (isTicker ? cacheKey : 'VN-INDEX'),
-          category: isTicker ? 'Doanh nghiệp' : 'Thị trường',
-          url: item.newsUrl || 'https://vndirect.com.vn',
-          sentiment: 'positive',
-        }));
-
-        newsCache.set(cacheKey, { data: liveItems, timestamp: Date.now() });
-        return liveItems;
-      }
-    }
-  } catch {
-    // If live API is blocked by CORS/network in client or sandbox, fallback to curated dataset
+    const res = await fetch(source.url(key), { signal });
+    if (!res.ok) throw new Error(`${source.name} ${res.status}`);
+    const items = source.list(await res.json()).map((raw) => source.map(raw, key));
+    if (items.length === 0) throw new Error(`${source.name} empty`);
+    return items;
+  } catch (error) {
+    if (!race.won) sourceDownUntil.set(source.name, Date.now() + SOURCE_COOLDOWN_MS);
+    throw error;
   }
+};
 
-  // Attempt live fetch from TCBS public API as secondary source
+// Resolves with the first promise that succeeds, rejects only when all of them fail (Promise.any without ES2021)
+const firstSuccess = <T,>(promises: Promise<T>[]) =>
+  new Promise<T>((resolve, reject) => {
+    let failed = 0;
+    promises.forEach((promise) =>
+      promise.then(resolve, () => {
+        failed += 1;
+        if (failed === promises.length) reject(new Error('All sources failed'));
+      }),
+    );
+  });
+
+const fetchLive = async (key: string): Promise<MarketNewsItem[] | null> => {
+  const sources = SOURCES.filter((source) => (sourceDownUntil.get(source.name) ?? 0) < Date.now());
+  if (sources.length === 0) return null;
+
+  const controller = new AbortController();
+  const race = { won: false };
+  const timer = setTimeout(() => controller.abort(), LIVE_TIMEOUT_MS);
   try {
-    const isTicker = cacheKey !== 'ALL';
-    const tcbsUrl = isTicker
-      ? `https://apipubaws.tcbs.com.vn/tcanalysis/v1/ticker/${cacheKey}/news?page=0&size=15`
-      : `https://apipubaws.tcbs.com.vn/tcanalysis/v1/news?page=0&size=20`;
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3500);
-
-    const res = await fetch(tcbsUrl, { signal: controller.signal });
-    clearTimeout(timeoutId);
-
-    if (res.ok) {
-      const json = await res.json();
-      const list = json.data || (Array.isArray(json) ? json : []);
-      if (Array.isArray(list) && list.length > 0) {
-        const liveItems: MarketNewsItem[] = list.map((item: any) => ({
-          id: item.id || Math.random().toString(36).slice(2),
-          title: item.title || '',
-          description: item.description || item.title || '',
-          publishDate: item.publishDate
-            ? dayjs(item.publishDate).format('YYYY-MM-DD HH:mm')
-            : dayjs().format('YYYY-MM-DD HH:mm'),
-          source: item.source || 'TCBS',
-          symbol: item.ticker || (isTicker ? cacheKey : 'VN-INDEX'),
-          category: isTicker ? 'Doanh nghiệp' : 'Thị trường',
-          url: item.url || 'https://tcbs.com.vn',
-          sentiment: 'positive',
-        }));
-
-        newsCache.set(cacheKey, { data: liveItems, timestamp: Date.now() });
-        return liveItems;
-      }
-    }
+    // First source to answer with news wins; the slower requests are cancelled
+    const items = await firstSuccess(sources.map((source) => fetchSource(source, key, controller.signal, race)));
+    race.won = true;
+    return items;
   } catch {
-    // Fall through to curated fallback dataset
+    return null;
+  } finally {
+    clearTimeout(timer);
+    controller.abort();
   }
+};
 
-  // Curated deterministic fallback
-  const result =
-    cacheKey === 'ALL'
-      ? FALLBACK_NEWS
-      : FALLBACK_NEWS.filter(
-          (n) => n.symbol?.toUpperCase() === cacheKey || n.symbol === 'VN-INDEX',
-        );
+// Ticker views only show news for that ticker; market-wide items are no longer mixed in
+const fallbackFor = (key: string) =>
+  isTicker(key) ? FALLBACK_NEWS.filter((item) => item.symbol?.toUpperCase() === key) : FALLBACK_NEWS;
 
-  const finalData = result.length > 0 ? result : FALLBACK_NEWS;
-  newsCache.set(cacheKey, { data: finalData, timestamp: Date.now() });
-  return finalData;
+export async function fetchMarketNews(
+  symbol?: string,
+  options: { force?: boolean } = {},
+): Promise<MarketNewsItem[]> {
+  const key = symbol && symbol !== 'ALL' ? symbol.toUpperCase() : 'ALL';
+
+  const cached = newsCache.get(key);
+  if (!options.force && cached && Date.now() - cached.timestamp < CACHE_TTL_MS) return cached.data;
+
+  // Reuse a request that is already on its way for the same ticker
+  const pending = inFlight.get(key);
+  if (pending) return pending;
+
+  if (options.force) SOURCES.forEach((source) => sourceDownUntil.delete(source.name));
+
+  const request = (async () => {
+    const live = await fetchLive(key);
+    const data = tidy(live ?? fallbackFor(key));
+    newsCache.set(key, { data, timestamp: Date.now() });
+    return data;
+  })().finally(() => inFlight.delete(key));
+
+  inFlight.set(key, request);
+  return request;
 }
