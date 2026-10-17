@@ -1,4 +1,3 @@
-import { ManOutlined, SmileOutlined, WomanOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { Col, Row } from 'antd';
 import type { FC } from 'react';
@@ -102,7 +101,7 @@ const Workplace: FC = () => {
         org: wp.profiles.husband.org,
         income: wp.profiles.husband.income,
         benefit: wp.profiles.husband.benefit,
-        icon: ManOutlined,
+        avatar: '/images/avatars/man.webp',
       },
       {
         id: 'wife',
@@ -113,7 +112,7 @@ const Workplace: FC = () => {
         org: wp.profiles.wife.org,
         income: wp.profiles.wife.income,
         benefit: wp.profiles.wife.benefit,
-        icon: WomanOutlined,
+        avatar: '/images/avatars/woman.webp',
       },
       {
         id: 'child-0',
@@ -122,7 +121,7 @@ const Workplace: FC = () => {
         tag: `${age(client.children[0].birthYear)} · ${wp.profiles.child1.tag}`,
         role: wp.profiles.child1.role,
         org: wp.profiles.child1.org,
-        icon: SmileOutlined,
+        avatar: '/images/avatars/child.webp',
       },
       {
         id: 'child-1',
@@ -131,7 +130,7 @@ const Workplace: FC = () => {
         tag: `${age(client.children[1].birthYear)} · ${wp.profiles.child2.tag}`,
         role: wp.profiles.child2.role,
         org: wp.profiles.child2.org,
-        icon: SmileOutlined,
+        avatar: '/images/avatars/baby.webp',
       },
     ];
   }, [wp, language]);
@@ -153,9 +152,15 @@ const Workplace: FC = () => {
                       i % 2 === 0 && 'sm:border-r',
                     )}
                   >
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                      <p.icon className="text-sm" />
-                    </span>
+                    {/* Fluent Emoji 3D figures (MIT, Microsoft); the children's genders are not recorded, so neutral child and baby */}
+                    <img
+                      src={p.avatar}
+                      alt=""
+                      width={40}
+                      height={40}
+                      loading="lazy"
+                      className="h-10 w-10 shrink-0 rounded-full bg-muted/60 p-0.5"
+                    />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-sm font-semibold text-foreground truncate">
