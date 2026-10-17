@@ -245,7 +245,6 @@ export interface TranslationDictionary {
           '3M': string;
           '6M': string;
           '1Y': string;
-          ALL: string;
         };
         ma20Tooltip: string;
         volumeTooltip: string;
@@ -806,7 +805,6 @@ export const translations: Record<Language, TranslationDictionary> = {
             '3M': '3T',
             '6M': '6T',
             '1Y': '1N',
-            ALL: 'Tất cả',
           },
           ma20Tooltip: 'Đường trung bình MA20',
           volumeTooltip: 'Khối lượng Vol',
@@ -1363,7 +1361,6 @@ export const translations: Record<Language, TranslationDictionary> = {
             '3M': '3M',
             '6M': '6M',
             '1Y': '1Y',
-            ALL: 'ALL',
           },
           ma20Tooltip: '20-day moving average',
           volumeTooltip: 'Trading Volume',

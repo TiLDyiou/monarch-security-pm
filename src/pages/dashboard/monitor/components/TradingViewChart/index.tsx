@@ -203,10 +203,6 @@ export default function LightweightChart() {
       if (!chart || candles.length === 0) return;
 
       const timeScale = chart.timeScale();
-      if (range === 'ALL') {
-        timeScale.fitContent();
-        return;
-      }
 
       const daysMap: Record<string, number> = {
         '1M': 22,
@@ -533,7 +529,6 @@ export default function LightweightChart() {
               { label: chartTexts.timeframes['3M'], value: '3M' },
               { label: chartTexts.timeframes['6M'], value: '6M' },
               { label: chartTexts.timeframes['1Y'], value: '1Y' },
-              { label: chartTexts.timeframes.ALL, value: 'ALL' },
             ]}
             size="middle"
           />
