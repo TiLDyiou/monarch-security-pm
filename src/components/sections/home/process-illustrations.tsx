@@ -20,7 +20,7 @@ const useLive = () => {
 const Stage = ({ children, className }: { children: ReactNode; className?: string }) => (
   <div
     className={cn(
-      "relative h-full w-full overflow-hidden rounded-[24px] border border-slate-200/70 bg-gradient-to-br from-[#eef9fb] via-white to-[#eef2ff]",
+      "relative h-full w-full overflow-hidden border-b border-slate-200/70 bg-gradient-to-br from-[#eef9fb] via-white to-[#eef2ff]",
       className,
     )}
   >
@@ -75,7 +75,7 @@ export const RiskProfileIllustration = () => {
             <circle cx="100" cy="100" r="9" fill="#0f172a" />
             <circle cx="100" cy="100" r="3.5" fill="#fff" />
           </svg>
-          <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">{t.landing.process.illustrations.riskGauge.label}</p>
+          <p className="mt-1 text-center text-balance text-[11px] uppercase leading-snug tracking-wider text-muted-foreground">{t.landing.process.illustrations.riskGauge.label}</p>
           <motion.p
             className="text-base md:text-lg font-bold text-foreground"
             initial={false}
@@ -90,7 +90,7 @@ export const RiskProfileIllustration = () => {
           {goals.map((g, i) => (
             <motion.li
               key={g.label}
-              className={cn("rounded-xl border border-slate-200/80 bg-white/90 px-3 py-2 shadow-sm", i === goals.length - 1 && "max-sm:hidden")}
+              className={cn("py-1.5", i === goals.length - 1 && "max-sm:hidden")}
               initial={reduce ? false : { opacity: 0, x: 16 }}
               animate={live || reduce ? { opacity: 1, x: 0 } : undefined}
               transition={{ delay: 0.15 + i * 0.12, duration: 0.45 }}
@@ -100,7 +100,7 @@ export const RiskProfileIllustration = () => {
                 <span className="truncate text-[11px] md:text-xs font-medium text-foreground">{g.label}</span>
                 {g.value === 100 && <Check className="ml-auto h-3.5 w-3.5 text-primary" aria-label={t.landing.process.illustrations.riskGauge.completed} />}
               </div>
-              <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-100">
+              <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-200/70">
                 <motion.div
                   className="h-full rounded-full"
                   style={{ background: `linear-gradient(90deg, #5cc4cf, ${TEAL})` }}
@@ -269,7 +269,7 @@ export const RebalanceIllustration = () => {
         </ol>
 
         {/* Weights */}
-        <div className="rounded-2xl border border-slate-200/80 bg-white/90 p-4 md:p-5 shadow-sm">
+        <div>
           <div className="mb-4 flex items-center justify-between gap-3">
             <p className="text-xs md:text-sm font-semibold text-foreground">
               {t.landing.process.illustrations.rebalance.title} <span className="font-normal text-muted-foreground md:hidden">· {current.step}</span>
@@ -300,7 +300,7 @@ export const RebalanceIllustration = () => {
                     {r.value > r.target ? status.over : r.value < r.target ? status.under : status.onTarget}
                   </span>
                 </div>
-                <div className="relative h-3 rounded-full bg-slate-100">
+                <div className="relative h-3 rounded-full bg-slate-200/70">
                   <motion.div
                     className="h-full rounded-full"
                     style={{ background: r.color }}
