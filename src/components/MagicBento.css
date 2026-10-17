@@ -357,14 +357,13 @@
   }
 }
 
-/* News feed */
+/* News feed: drawn straight on the card surface, no inner panel */
 .magic-bento__feed {
   position: relative;
   display: flex;
   min-height: 0;
   flex-direction: column;
   overflow: hidden;
-  padding: 16px 16px 22px;
 }
 
 .magic-bento__doc-title {

@@ -168,7 +168,7 @@ const FEED_LINES = [
 ];
 
 const FeedVisual = ({ heading }: { heading: string }) => (
-  <div className="magic-bento__feed magic-bento__well">
+  <div className="magic-bento__feed">
     <span className="magic-bento__doc-title">{heading}</span>
     <div className="magic-bento__lines">
       {FEED_LINES.map((line, index) => (
