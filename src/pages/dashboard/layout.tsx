@@ -73,6 +73,13 @@ const DashboardLayout = () => {
             location={{ pathname: location.pathname }}
             collapsed={collapsed}
             onCollapse={setCollapsed}
+            // ProLayout keeps the menu it built on first render; rename the items from the current language every time
+            menuDataRender={(items) =>
+              items.map((item) => ({
+                ...item,
+                name: route.routes.find((r) => r.path === item.path)?.name ?? item.name,
+              }))
+            }
             menuItemRender={(item, dom) => (item.path ? <Link to={item.path}>{dom}</Link> : dom)}
             onMenuHeaderClick={() => navigate('/dashboard/analysis')}
             actionsRender={() => [
