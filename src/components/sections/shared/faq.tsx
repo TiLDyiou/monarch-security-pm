@@ -1,4 +1,5 @@
 import Container from "@/components/container";
+import HoloCard from "@/components/HoloCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AnimateOnView } from "@/components/ui/motion/animate-on-view";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -23,14 +24,25 @@ const FAQ = () => {
         </AnimateOnView>
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center justify-center">
-          <AnimateOnView once className="max-w-[480px] w-full">
-            <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-card border border-border shadow-card p-6 flex items-center justify-center">
-              <img
-                src="/images/common/logo.svg"
-                alt="Monarch Securities"
-                className="w-4/5 h-auto object-contain"
-              />
-            </div>
+          <AnimateOnView once className="max-w-[480px] w-full flex justify-center">
+            {/* Holographic foil card: tilts toward the cursor and drifts gently when idle */}
+            <HoloCard
+              image="/images/home/logo-card.webp"
+              alt="Monarch Securities"
+              preset="bursts"
+              foilColor="#e2e6ec"
+              intensity={0.4}
+              scale={1}
+              edgeSparkle={0.8}
+              frame={4}
+              glare={0.35}
+              tiltMax={14}
+              hoverScale={1.04}
+              radius={24}
+              width={480}
+              idle
+              shadow
+            />
           </AnimateOnView>
 
           <div className="max-w-[560px] w-full">
