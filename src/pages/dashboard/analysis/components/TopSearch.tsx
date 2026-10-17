@@ -228,7 +228,7 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
                   {activeMetric.label}
                 </h3>
                 <span className="text-xs text-muted-foreground font-normal">
-                  — {getStockName(activeMetric.key)}
+                  · {getStockName(activeMetric.key)}
                 </span>
               </div>
               <div className="flex items-center gap-2 text-xs">

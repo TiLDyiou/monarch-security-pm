@@ -487,7 +487,7 @@ export default function LightweightChart() {
               {activeStock.change >= 0 ? '+' : ''}{activeStock.change}%
             </span>
             <span className="text-xs text-muted-foreground hidden sm:inline">
-              — {activeStock.name}
+              · {activeStock.name}
             </span>
           </div>
 

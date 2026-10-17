@@ -584,37 +584,37 @@ export const translations: Record<Language, TranslationDictionary> = {
         items: [
           {
             quote:
-              'Quy tắc số 1: Không bao giờ để mất tiền. Quy tắc số 2: Không bao giờ quên quy tắc số 1. Cơ hội tuyệt vời nhất đến khi người khác hoảng loạn, và sự kiên định kỷ luật là vũ khí tối thượng của mọi nhà đầu tư lớn.',
+              'Quy tắc số 1: Không bao giờ để mất tiền. Quy tắc số 2: Không bao giờ quên quy tắc số 1. Hãy sợ hãi khi người khác tham lam, và hãy tham lam khi người khác sợ hãi.',
             author: 'Warren Buffett',
-            role: 'Huyền thoại Đầu tư & Chủ tịch kiêm CEO Berkshire Hathaway',
+            role: 'Huyền thoại Đầu tư, Chủ tịch kiêm CEO Berkshire Hathaway',
           },
           {
             quote:
-              'Đảo ngược, hãy luôn đảo ngược: Thay vì cố gắng tìm cách thành công phi thường, hãy tránh phạm phải những sai lầm ngớ ngẩn mà hầu hết mọi người đều mắc phải. Người kiên nhẫn và lý trí luôn làm chủ cuộc chơi tài chính.',
+              'Đảo ngược, hãy luôn đảo ngược: Hãy nhìn nhận mọi vấn đề theo chiều ngược lại. Thật đáng kinh ngạc khi thấy chúng tôi gặt hái được bao nhiêu lợi thế dài hạn chỉ bằng cách kiên trì không làm điều ngu ngốc, thay vì cố gắng tỏ ra quá thông minh.',
             author: 'Charlie Munger',
-            role: 'Bậc thầy Đa ngành & Cố Phó Chủ tịch Berkshire Hathaway',
+            role: 'Bậc thầy Đa ngành, Cố Phó Chủ tịch Berkshire Hathaway',
           },
           {
             quote:
-              'Đa dạng hóa là bữa trưa miễn phí duy nhất trong đầu tư. Bằng cách kết hợp các tài sản không biến động hoàn toàn cùng chiều, bạn có thể giảm thiểu tối đa rủi ro mà không phải đánh đổi tỷ suất sinh lời kỳ vọng.',
+              'Đa dạng hóa là bữa trưa miễn phí duy nhất trong tài chính. Một danh mục đầu tư tốt không chỉ là danh sách dài các cổ phiếu và trái phiếu tốt; đó là một tổng thể cân bằng mang lại sự bảo vệ và cơ hội trước mọi biến cố bất ngờ.',
             author: 'Harry Markowitz',
             role: 'Giải Nobel Kinh tế 1990, Cha đẻ Thuyết Danh mục Hiện đại MPT',
           },
           {
             quote:
-              'Trong ngắn hạn, thị trường là một chiếc máy bỏ phiếu cảm xúc; nhưng trong dài hạn, nó là một chiếc bàn cân đo lường giá trị thực. Cốt lõi của mọi quyết định tài chính bền vững chỉ gói gọn trong 3 từ: Biên An Toàn.',
+              'Trong ngắn hạn, thị trường là một chiếc máy bỏ phiếu; nhưng trong dài hạn, nó là một chiếc bàn cân. Đứng trước thử thách đúc kết bí quyết đầu tư đúng đắn trong ba từ, chúng tôi đưa ra phương châm: Biên An Toàn.',
             author: 'Benjamin Graham',
             role: "Cha đẻ của Đầu tư Giá trị, Tác giả 'Nhà đầu tư Thông minh'",
           },
           {
             quote:
-              'Thị trường có thể duy trì trạng thái phi lý trí lâu hơn khoảng thời gian bạn có thể duy trì khả năng thanh toán. Khó khăn lớn nhất trong quản trị tài chính không nằm ở việc nảy sinh ý tưởng mới, mà là thoát khỏi những thói quen cũ.',
+              'Thị trường có thể duy trì trạng thái phi lý trí lâu hơn khoảng thời gian bạn có thể duy trì khả năng thanh toán. Khó khăn lớn nhất không nằm ở việc nảy sinh ý tưởng mới, mà là thoát khỏi những thói quen cũ.',
             author: 'John Maynard Keynes',
-            role: 'Nhà Kinh tế học Lỗi lạc Thế kỷ 20, Nhà kiến tạo Kinh tế học Vĩ mô',
+            role: 'Nhà Kinh tế học Lỗi lạc, Nhà kiến tạo Kinh tế học Vĩ mô',
           },
           {
             quote:
-              'Không phải từ lòng nhân từ của người bán thịt, người nấu bia hay người làm bánh mì mà chúng ta có bữa tối, mà là từ sự theo đuổi lợi ích chính đáng của chính họ. Khi mỗi cá nhân tự do phát triển, toàn bộ nền kinh tế sẽ phồn vinh.',
+              'Không phải từ lòng nhân từ của người bán thịt, người nấu bia hay người làm bánh mì mà chúng ta có bữa tối, mà là từ sự theo đuổi lợi ích chính đáng của chính họ. Khi mưu cầu lợi ích riêng, cá nhân thường đóng góp hiệu quả hơn cho sự phồn vinh của toàn xã hội.',
             author: 'Adam Smith',
             role: "Cha đẻ Kinh tế học Hiện đại, Tác giả 'Của cải của các Quốc gia'",
           },
@@ -639,7 +639,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             question: 'Chiến lược phân bổ danh mục của chúng tôi dựa trên phương pháp luận nào?',
             answer:
-              'Chúng tôi ứng dụng Thuyết danh mục hiện đại Modern Portfolio Theory của GS. Harry Markowitz - Nobel Kinh tế 1990 - kết hợp với triết lý đầu tư giá trị và Biên an toàn của Benjamin Graham & Warren Buffett: Đa dạng hóa để triệt tiêu tối đa rủi ro phi hệ thống và tập trung vào các tài sản tạo dòng tiền thực chất.',
+              'Chúng tôi ứng dụng Thuyết danh mục hiện đại Modern Portfolio Theory của GS. Harry Markowitz (Nobel Kinh tế 1990), kết hợp với triết lý đầu tư giá trị và Biên an toàn của Benjamin Graham & Warren Buffett: Đa dạng hóa để triệt tiêu tối đa rủi ro phi hệ thống và tập trung vào các tài sản tạo dòng tiền thực chất.',
           },
           {
             question: 'Tôi cần có số vốn tối thiểu bao nhiêu để bắt đầu nhận tư vấn?',
@@ -726,8 +726,8 @@ export const translations: Record<Language, TranslationDictionary> = {
           subtitle: 'Theo dõi biến động so với quý trước',
           srLegend: 'Danh sách cổ phiếu trong danh mục',
           vsLastQuarter: 'vs quý trước',
-          orpLabel: 'ORP - Tối ưu rủi ro',
-          ocpLabel: 'OCP - Tối ưu vốn',
+          orpLabel: 'ORP (Tối ưu rủi ro)',
+          ocpLabel: 'OCP (Tối ưu vốn)',
           priorQuarterClose: 'Chốt quý trước',
           quarterHigh: 'Cao nhất quý',
           quarterLow: 'Thấp nhất quý',
@@ -1038,7 +1038,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       features: {
         sectionTitle: 'Every Investor Has Unique Goals & Financial Safety Margins',
         sectionSubtitle:
-          'We avoid generic rules of thumb — we build a scientific, disciplined wealth roadmap tailored exclusively for your family.',
+          'Instead of generic rules of thumb, we build a scientific, disciplined wealth roadmap tailored exclusively for your family.',
         cards: {
           card1: {
             title: 'Goal-Driven, Personalized Allocation',
@@ -1124,25 +1124,25 @@ export const translations: Record<Language, TranslationDictionary> = {
         items: [
           {
             quote:
-              'Rule No. 1: Never lose money. Rule No. 2: Never forget rule No. 1. The best opportunities arrive when others panic, and disciplined consistency is the ultimate weapon of every great investor.',
+              'Rule No. 1: Never lose money. Rule No. 2: Never forget rule No. 1. Be fearful when others are greedy, and greedy when others are fearful.',
             author: 'Warren Buffett',
-            role: 'Legendary Investor, Chairman & CEO of Berkshire Hathaway',
+            role: 'Chairman & CEO, Berkshire Hathaway',
           },
           {
             quote:
-              'Invert, always invert: Instead of trying to be brilliantly successful, avoid making the standard stupid mistakes that most people make. The patient and rational always master the financial game.',
+              'Invert, always invert: Turn a situation or problem upside down. It is remarkable how much long-term advantage people like us have gotten by trying to be consistently not stupid, instead of trying to be very intelligent.',
             author: 'Charlie Munger',
-            role: 'Polymath & Late Vice Chairman of Berkshire Hathaway',
+            role: 'Vice Chairman, Berkshire Hathaway',
           },
           {
             quote:
-              'Diversification is the only free lunch in investing. By combining assets that are not perfectly correlated, you can minimize risk without sacrificing your expected return.',
+              'Diversification is the only free lunch in finance. A good portfolio is more than a long list of good stocks and bonds; it is a balanced whole providing protections and opportunities across a wide range of contingencies.',
             author: 'Harry Markowitz',
-            role: '1990 Nobel Laureate in Economics, Father of Modern Portfolio Theory',
+            role: 'Nobel Laureate in Economics, Father of Modern Portfolio Theory',
           },
           {
             quote:
-              'In the short run, the market is a voting machine; but in the long run, it is a weighing machine. The essence of sustainable investment management comes down to three words: Margin of Safety.',
+              'In the short run, the market is a voting machine, but in the long run, it is a weighing machine. Confronted with a challenge to distill the secret of sound investment into three words, we venture the motto: Margin of Safety.',
             author: 'Benjamin Graham',
             role: "Father of Value Investing, Author of 'The Intelligent Investor'",
           },
@@ -1150,11 +1150,11 @@ export const translations: Record<Language, TranslationDictionary> = {
             quote:
               'Markets can remain irrational longer than you can remain solvent. The difficulty lies not so much in developing new ideas as in escaping from old ones.',
             author: 'John Maynard Keynes',
-            role: 'Preeminent 20th-Century Economist, Pioneer of Modern Macroeconomics',
+            role: 'Pioneer of Modern Macroeconomics',
           },
           {
             quote:
-              'It is not from the benevolence of the butcher, the brewer, or the baker that we expect our dinner, but from their regard to their own interest. When individuals freely pursue enterprise, society prospers.',
+              'It is not from the benevolence of the butcher, the brewer, or the baker that we expect our dinner, but from their regard to their own interest. By pursuing his own interest, he frequently promotes that of the society more effectually than when he really intends to promote it.',
             author: 'Adam Smith',
             role: "Father of Modern Economics, Author of 'The Wealth of Nations'",
           },
@@ -1174,7 +1174,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           {
             question: 'Do we ever take direct custody of your funds or investment assets?',
             answer:
-              'Never! Your capital and portfolio holdings remain 100% deposited in your personal accounts at licensed banks, regulated securities firms, and fund management companies under your legal name. We provide strategic advisory recommendations only — you retain complete control over your wealth.',
+              'Never! Your capital and portfolio holdings remain 100% deposited in your personal accounts at licensed banks, regulated securities firms, and fund management companies under your legal name. We provide strategic advisory recommendations only, while you retain complete control over your wealth.',
           },
           {
             question: 'What methodology guides our portfolio allocation strategies?',
@@ -1266,8 +1266,8 @@ export const translations: Record<Language, TranslationDictionary> = {
           subtitle: 'Quarterly price performance tracking',
           srLegend: 'List of stocks in the portfolio',
           vsLastQuarter: 'vs prior quarter',
-          orpLabel: 'ORP - Risk Optimal',
-          ocpLabel: 'OCP - Capital Optimal',
+          orpLabel: 'ORP (Risk Optimal)',
+          ocpLabel: 'OCP (Capital Optimal)',
           priorQuarterClose: 'Prior Quarter Close',
           quarterHigh: 'Quarter High',
           quarterLow: 'Quarter Low',
@@ -1509,3 +1509,4 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
   },
 };
+
