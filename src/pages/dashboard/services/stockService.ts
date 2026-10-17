@@ -63,17 +63,33 @@ function computeMA(candles: StockCandle[], period = 20): StockMA[] {
   return ma;
 }
 
+// A request that never answers must not hold the chart hostage: give each source a time budget
+async function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Entrade has no CORS headers, so it is reached through the same-origin /api/entrade proxy
+// (Vite dev server and vercel.json rewrites)
+const ENTRADE_BASE = '/api/entrade';
+
 // Fetch historical 1D candles from Entrade
 async function fetchFromEntrade(symbol: string): Promise<StockHistoryData> {
   const now = Math.floor(Date.now() / 1000);
   const from = now - 365 * 24 * 3600; // 1 year
-  const url = `https://services.entrade.com.vn/chart-api/v2/ohlcs/stock?from=${from}&to=${now}&symbol=${symbol}&resolution=1D`;
+  const url = `${ENTRADE_BASE}/chart-api/v2/ohlcs/stock?from=${from}&to=${now}&symbol=${symbol}&resolution=1D`;
 
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url, 6000);
   if (!res.ok) throw new Error(`Entrade error status ${res.status}`);
   const data = await res.json();
 
   const timestamps: number[] = data.t || [];
+  if (timestamps.length === 0) throw new Error(`Entrade returned no candles for ${symbol}`);
   const opens: number[] = data.o || [];
   const highs: number[] = data.h || [];
   const lows: number[] = data.l || [];
@@ -128,7 +144,7 @@ async function fetchFromEntrade(symbol: string): Promise<StockHistoryData> {
 // Fallback: Fetch historical daily prices from VNDirect finfo-api
 async function fetchFromVNDirect(symbol: string): Promise<StockHistoryData> {
   const url = `https://finfo-api.vndirect.com.vn/v4/stock_prices?sort=date:asc&q=code:${symbol}&size=260`;
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url, 3000);
   if (!res.ok) throw new Error(`VNDirect error status ${res.status}`);
   const json = await res.json();
   const list = json.data || [];
@@ -268,7 +284,18 @@ export function generateFallbackData(symbol: string): StockHistoryData {
   };
 }
 
-export async function fetchStockHistory(symbol: string): Promise<StockHistoryData> {
+// Polling and quick ticker switches share one request per symbol instead of stacking new ones
+const inFlight = new Map<string, Promise<StockHistoryData>>();
+
+export function fetchStockHistory(symbol: string): Promise<StockHistoryData> {
+  const pending = inFlight.get(symbol);
+  if (pending) return pending;
+  const request = loadStockHistory(symbol).finally(() => inFlight.delete(symbol));
+  inFlight.set(symbol, request);
+  return request;
+}
+
+async function loadStockHistory(symbol: string): Promise<StockHistoryData> {
   try {
     const data = await fetchFromEntrade(symbol);
     historyCache.set(symbol, data);

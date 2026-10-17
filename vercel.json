@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/entrade/:path*",
+      "destination": "https://services.entrade.com.vn/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
