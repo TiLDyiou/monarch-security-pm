@@ -29,48 +29,13 @@ export interface TranslationDictionary {
       subtitle: string;
       cta: string;
     };
-    allocation: {
-      tag: string;
-      title: string;
-      portfolioLabel: string;
-      weights: {
-        core: string;
-        significant: string;
-        moderate: string;
-        supporting: string;
-      };
-      assets: {
-        stocks: string;
-        funds: string;
-        bonds: string;
-        gold: string;
-        cash: string;
-      };
-      portfolios: {
-        growth: {
-          name: string;
-          tag: string;
-          riskLevel: string;
-          timeHorizon: string;
-        };
-        balanced: {
-          name: string;
-          tag: string;
-          riskLevel: string;
-          timeHorizon: string;
-        };
-        defensive: {
-          name: string;
-          tag: string;
-          riskLevel: string;
-          timeHorizon: string;
-        };
-      };
-      stats: {
-        riskLevel: string;
-        timeHorizon: string;
-      };
-      note: string;
+    bento: {
+      price: { title: string; description: string };
+      flows: { title: string; description: string };
+      news: { title: string; description: string; heading: string };
+      goals: { title: string; description: string; heading: string; steps: string[] };
+      structure: { title: string; description: string };
+      metrics: { title: string; description: string; items: string[] };
     };
     features: {
       sectionTitle: string;
@@ -477,48 +442,35 @@ export const translations: Record<Language, TranslationDictionary> = {
           'Phân bổ tài sản theo Lý thuyết danh mục hiện đại, tái cân bằng định kỳ và bảo vệ tài sản gia đình bạn qua mọi chu kỳ thị trường',
         cta: 'Bắt Đầu Ngay',
       },
-      allocation: {
-        tag: 'Phân bổ tài sản mẫu',
-        title: 'So sánh các chiến lược danh mục',
-        portfolioLabel: 'Danh mục',
-        weights: {
-          core: 'Chủ đạo',
-          significant: 'Đáng kể',
-          moderate: 'Vừa phải',
-          supporting: 'Bổ trợ',
+      bento: {
+        price: {
+          title: 'Biểu đồ giá cổ phiếu',
+          description: 'Giá từng mã theo khung thời gian, MA20 và khối lượng.',
         },
-        assets: {
-          stocks: 'Cổ phiếu',
-          funds: 'Quỹ mở / ETF',
-          bonds: 'Trái phiếu',
-          gold: 'Vàng',
-          cash: 'Tiền gửi',
+        flows: {
+          title: 'Chi tiêu và dòng tiền',
+          description: 'Chi tiêu và dòng tiền gia đình theo tháng, quý và năm.',
         },
-        portfolios: {
-          growth: {
-            name: 'Tăng trưởng',
-            tag: 'Tập trung sinh lời dài hạn, chấp nhận biến động cao',
-            riskLevel: 'Cao',
-            timeHorizon: 'Dài hạn',
-          },
-          balanced: {
-            name: 'Cân bằng',
-            tag: 'Cân đối giữa tăng trưởng và thu nhập ổn định',
-            riskLevel: 'Trung bình',
-            timeHorizon: 'Trung hạn',
-          },
-          defensive: {
-            name: 'Bảo toàn',
-            tag: 'Ưu tiên bảo toàn vốn và hạn chế tác động của lạm phát',
-            riskLevel: 'Thấp',
-            timeHorizon: 'Ngắn hạn',
-          },
+        news: {
+          title: 'Tin tức thị trường',
+          description: 'Cập nhật tin tức theo từng mã trong danh mục hoặc thị trường chung, có tìm kiếm nhanh.',
+          heading: 'Thị trường chung',
         },
-        stats: {
-          riskLevel: 'Mức rủi ro',
-          timeHorizon: 'Thời gian đầu tư',
+        goals: {
+          title: 'Mục tiêu tài chính',
+          description: 'Đánh giá tính khả thi của từng mục tiêu và theo dõi lộ trình thực hiện.',
+          heading: 'Lộ trình tài chính',
+          steps: ['Mua xe hơi', 'Thu hồi khoản cho vay', 'Mua nhà'],
         },
-        note: 'Tỷ trọng chỉ mang tính minh họa. Danh mục thực tế được xây dựng riêng theo mục tiêu và ngưỡng chấp nhận rủi ro của bạn.',
+        structure: {
+          title: 'Cơ cấu tài sản',
+          description: 'Tài sản, nguồn vốn, tiền mặt và danh mục đầu tư.',
+        },
+        metrics: {
+          title: 'Chỉ số hiệu quả',
+          description: 'Lợi suất kỳ vọng, rủi ro, lãi suất phi rủi ro và Sharpe.',
+          items: ['Lợi suất kỳ vọng', 'Chỉ số Sharpe'],
+        },
       },
       features: {
         sectionTitle: 'Mỗi nhà đầu tư có mục tiêu và ngưỡng an toàn tài chính riêng',
@@ -721,7 +673,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           faq: 'Câu hỏi thường gặp',
         },
         methodLinks: {
-          allocation: 'Phân bổ tài sản mẫu',
+          allocation: 'Công cụ theo dõi danh mục',
           constraints: 'Ràng buộc đầu tư',
           rebalance: 'Tái cân bằng danh mục',
         },
@@ -1060,48 +1012,35 @@ export const translations: Record<Language, TranslationDictionary> = {
           'Asset allocation grounded in Modern Portfolio Theory, periodic disciplined rebalancing, and long-term wealth preservation for your family across every market cycle.',
         cta: 'Get Started',
       },
-      allocation: {
-        tag: 'Sample Asset Allocation',
-        title: 'Compare Portfolio Strategies',
-        portfolioLabel: 'Portfolio',
-        weights: {
-          core: 'Core',
-          significant: 'Significant',
-          moderate: 'Moderate',
-          supporting: 'Supporting',
+      bento: {
+        price: {
+          title: 'Stock Price Chart',
+          description: 'Each holding by timeframe, with MA20 and volume.',
         },
-        assets: {
-          stocks: 'Equities',
-          funds: 'Mutual Funds / ETFs',
-          bonds: 'Bonds',
-          gold: 'Gold',
-          cash: 'Cash & Deposits',
+        flows: {
+          title: 'Spending & Cash Flow',
+          description: 'Family spending and cash flow by month, quarter, and year.',
         },
-        portfolios: {
-          growth: {
-            name: 'Growth',
-            tag: 'Focuses on long-term capital appreciation; higher volatility tolerance',
-            riskLevel: 'High',
-            timeHorizon: 'Long term',
-          },
-          balanced: {
-            name: 'Balanced',
-            tag: 'Balanced blend of capital growth and steady income generation',
-            riskLevel: 'Moderate',
-            timeHorizon: 'Medium term',
-          },
-          defensive: {
-            name: 'Defensive',
-            tag: 'Prioritizes capital preservation and inflation protection',
-            riskLevel: 'Low',
-            timeHorizon: 'Short term',
-          },
+        news: {
+          title: 'Market News',
+          description: 'News for each stock in the portfolio or the broad market, with quick search.',
+          heading: 'Broad market',
         },
-        stats: {
-          riskLevel: 'Risk Level',
-          timeHorizon: 'Suggested Horizon',
+        goals: {
+          title: 'Financial Goals',
+          description: 'Assess the feasibility of each goal and track the roadmap toward it.',
+          heading: 'Financial roadmap',
+          steps: ['Buy a car', 'Recover a personal loan', 'Buy a home'],
         },
-        note: 'Illustrative allocation only. Actual portfolios are tailored to each client’s individual financial goals and risk tolerance.',
+        structure: {
+          title: 'Asset Structure',
+          description: 'Assets, funding sources, cash, and the portfolio.',
+        },
+        metrics: {
+          title: 'Performance Metrics',
+          description: 'Expected return, risk, risk-free rate, and Sharpe.',
+          items: ['Expected return', 'Sharpe ratio'],
+        },
       },
       features: {
         sectionTitle: 'Every Investor Has Unique Goals & Financial Safety Margins',
@@ -1304,7 +1243,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           faq: 'Frequently Asked Questions',
         },
         methodLinks: {
-          allocation: 'Sample Asset Allocation',
+          allocation: 'Portfolio Tools',
           constraints: 'Investment Constraints',
           rebalance: 'Portfolio Rebalancing',
         },
