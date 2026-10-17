@@ -30,6 +30,8 @@ import { STOCKS } from '@/pages/dashboard/mock/client';
 import {
   fetchStockHistory,
   generateFallbackData,
+  peekStockHistory,
+  prefetchStockHistory,
   type StockHistoryData,
 } from '@/pages/dashboard/services/stockService';
 import { formatNumber } from '@/utils/format';
@@ -76,7 +78,9 @@ export default function LightweightChart() {
   const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
 
   // Live stock data states
-  const [historyData, setHistoryData] = useState<StockHistoryData>(() => generateFallbackData('BID'));
+  const [historyData, setHistoryData] = useState<StockHistoryData>(
+    () => peekStockHistory('BID') ?? generateFallbackData('BID'),
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [realtimeQuotes, setRealtimeQuotes] = useState<Record<string, { price: number; change: number }>>({});
 
@@ -87,11 +91,18 @@ export default function LightweightChart() {
   const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
   const maSeriesRef = useRef<ISeriesApi<'Line'> | null>(null);
 
-  // Load real historical data for the selected stock
-  const loadStockData = useCallback(async (code: string) => {
-    setLoading(true);
+  // The ticker currently on screen; answers for a ticker the user already left are ignored
+  const selectedRef = useRef(selectedCode);
+  selectedRef.current = selectedCode;
+
+  // Show whatever is cached for the ticker straight away, then refresh it in the background if it is stale
+  const loadStockData = useCallback(async (code: string, maxAgeMs?: number) => {
+    const cached = peekStockHistory(code);
+    if (cached) setHistoryData(cached);
+    else setLoading(true);
     try {
-      const data = await fetchStockHistory(code);
+      const data = await fetchStockHistory(code, maxAgeMs);
+      if (selectedRef.current !== code) return;
       setHistoryData(data);
       setRealtimeQuotes((prev) => ({
         ...prev,
@@ -104,6 +115,11 @@ export default function LightweightChart() {
     }
   }, []);
 
+  // Warm every portfolio ticker once, so switching between them does not wait on the network
+  useEffect(() => {
+    prefetchStockHistory(STOCKS.map((s) => s.code));
+  }, []);
+
   // Fetch on stock selection change
   useEffect(() => {
     loadStockData(selectedCode);
@@ -112,7 +128,7 @@ export default function LightweightChart() {
   // Periodic polling for real-time price updates (every 25 seconds)
   useEffect(() => {
     const pollInterval = setInterval(() => {
-      loadStockData(selectedCode);
+      loadStockData(selectedCode, 25000);
     }, 25000);
     return () => clearInterval(pollInterval);
   }, [selectedCode, loadStockData]);

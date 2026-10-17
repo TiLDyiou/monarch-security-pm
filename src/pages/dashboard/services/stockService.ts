@@ -80,9 +80,10 @@ const ENTRADE_BASE = '/api/entrade';
 
 // Fetch historical 1D candles from Entrade
 async function fetchFromEntrade(symbol: string): Promise<StockHistoryData> {
-  const now = Math.floor(Date.now() / 1000);
-  const from = now - 365 * 24 * 3600; // 1 year
-  const url = `${ENTRADE_BASE}/chart-api/v2/ohlcs/stock?from=${from}&to=${now}&symbol=${symbol}&resolution=1D`;
+  // Round the window to 5-minute steps so the URL stays identical for a while and browser/CDN caches can answer
+  const to = Math.ceil(Date.now() / 1000 / 300) * 300;
+  const from = to - 365 * 24 * 3600; // 1 year
+  const url = `${ENTRADE_BASE}/chart-api/v2/ohlcs/stock?from=${from}&to=${to}&symbol=${symbol}&resolution=1D`;
 
   const res = await fetchWithTimeout(url, 6000);
   if (!res.ok) throw new Error(`Entrade error status ${res.status}`);
@@ -191,8 +192,14 @@ async function fetchFromVNDirect(symbol: string): Promise<StockHistoryData> {
   };
 }
 
-// In-memory cache for fast switching and offline resilience
-const historyCache = new Map<string, StockHistoryData>();
+// In-memory cache for instant ticker switches and offline resilience
+const historyCache = new Map<string, { data: StockHistoryData; at: number }>();
+const FRESH_MS = 60 * 1000;
+
+/** Last loaded history for a ticker, if any, so the chart can show it before a refresh completes */
+export function peekStockHistory(symbol: string): StockHistoryData | undefined {
+  return historyCache.get(symbol)?.data;
+}
 
 // Deterministic realistic fallback data if both live APIs are unreachable
 const STOCK_REFS: Record<string, { ref: number; price: number; step: number }> = {
@@ -287,7 +294,9 @@ export function generateFallbackData(symbol: string): StockHistoryData {
 // Polling and quick ticker switches share one request per symbol instead of stacking new ones
 const inFlight = new Map<string, Promise<StockHistoryData>>();
 
-export function fetchStockHistory(symbol: string): Promise<StockHistoryData> {
+export function fetchStockHistory(symbol: string, maxAgeMs = FRESH_MS): Promise<StockHistoryData> {
+  const cached = historyCache.get(symbol);
+  if (cached && Date.now() - cached.at < maxAgeMs) return Promise.resolve(cached.data);
   const pending = inFlight.get(symbol);
   if (pending) return pending;
   const request = loadStockHistory(symbol).finally(() => inFlight.delete(symbol));
@@ -295,22 +304,29 @@ export function fetchStockHistory(symbol: string): Promise<StockHistoryData> {
   return request;
 }
 
+/** Warm the cache for several tickers at once so later switches are instant */
+export function prefetchStockHistory(symbols: string[]): void {
+  symbols.forEach((symbol) => {
+    void fetchStockHistory(symbol);
+  });
+}
+
 async function loadStockHistory(symbol: string): Promise<StockHistoryData> {
-  try {
-    const data = await fetchFromEntrade(symbol);
-    historyCache.set(symbol, data);
+  const remember = (data: StockHistoryData) => {
+    historyCache.set(symbol, { data, at: Date.now() });
     return data;
+  };
+  try {
+    return remember(await fetchFromEntrade(symbol));
   } catch {
     try {
-      const data = await fetchFromVNDirect(symbol);
-      historyCache.set(symbol, data);
-      return data;
+      return remember(await fetchFromVNDirect(symbol));
     } catch {
-      if (historyCache.has(symbol)) {
-        return historyCache.get(symbol)!;
-      }
+      const cached = historyCache.get(symbol);
+      if (cached) return cached.data;
+      // Placeholder only; stamped as stale so the next request tries the live sources again
       const fallback = generateFallbackData(symbol);
-      historyCache.set(symbol, fallback);
+      historyCache.set(symbol, { data: fallback, at: 0 });
       return fallback;
     }
   }
