@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { CheckCircle2 } from "lucide-react";
 import * as React from "react";
 import { toast } from "sonner";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export interface NewsletterProps extends React.FormHTMLAttributes<HTMLFormElement> {
   placeholder?: string;
@@ -10,7 +11,9 @@ export interface NewsletterProps extends React.FormHTMLAttributes<HTMLFormElemen
 }
 
 const Newsletter = React.forwardRef<HTMLFormElement, NewsletterProps>(
-  ({ placeholder = "Nhập email của bạn...", className, ...props }, ref) => {
+  ({ placeholder, className, ...props }, ref) => {
+    const { t } = useLanguage();
+    const texts = t.newsletter;
     const [contact, setContact] = React.useState("");
     const [submitted, setSubmitted] = React.useState(false);
 
@@ -18,8 +21,8 @@ const Newsletter = React.forwardRef<HTMLFormElement, NewsletterProps>(
       e.preventDefault();
       if (!contact.trim()) return;
       setSubmitted(true);
-      toast.success("Đăng ký nhận bản tin thành công!", {
-        description: "Bạn sẽ nhận được báo cáo phân tích danh mục và kinh tế vĩ mô định kỳ qua email.",
+      toast.success(texts.successTitle, {
+        description: texts.successDescription,
       });
     };
 
@@ -36,7 +39,7 @@ const Newsletter = React.forwardRef<HTMLFormElement, NewsletterProps>(
           )}
         >
           <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true" />
-          <span className="text-[15px]">Cảm ơn bạn đã đăng ký nhận bản tin!</span>
+          <span className="text-[15px]">{texts.thanks}</span>
         </div>
       );
     }
@@ -61,7 +64,7 @@ const Newsletter = React.forwardRef<HTMLFormElement, NewsletterProps>(
           required
           value={contact}
           onChange={(e) => setContact(e.target.value)}
-          placeholder={placeholder}
+          placeholder={placeholder ?? texts.placeholder}
           className={cn(
             "flex-1 h-full w-full bg-transparent border-0 outline-none",
             "text-foreground placeholder:text-muted-foreground",
@@ -77,7 +80,7 @@ const Newsletter = React.forwardRef<HTMLFormElement, NewsletterProps>(
           variant="form"
           className="flex-shrink-0 cursor-pointer font-semibold px-5 text-sm"
         >
-          Đăng ký
+          {texts.submit}
         </Button>
       </form>
     );

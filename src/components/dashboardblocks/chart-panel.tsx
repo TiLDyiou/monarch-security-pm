@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { formatNumber, getFormatLanguage } from '@/utils/format';
 
 export const chartAxisProps = {
   axisLine: false,
@@ -15,12 +16,13 @@ export const chartGridProps = {
 
 export type ChartValueFormatter = (value: number) => string;
 
+// Values are in millions of VND
 export const formatCompact = (val: number): string => {
+  const en = getFormatLanguage() === 'en';
   if (Math.abs(val) >= 1_000) {
-    const b = val / 1000;
-    return `${b % 1 === 0 ? b : Number(b.toFixed(2))} tỷ`;
+    return en ? `${formatNumber(val / 1000, 2)}B` : `${formatNumber(val / 1000, 2)} tỷ`;
   }
-  return `${val.toLocaleString('vi-VN')} tr`;
+  return en ? `${formatNumber(val)}M` : `${formatNumber(val)} tr`;
 };
 
 export const ChartPanelKey: React.FC<{ color: string; className?: string }> = ({

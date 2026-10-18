@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import 'dayjs/locale/en';
+import { setFormatLanguage } from '@/utils/format';
 import { type Language, type TranslationDictionary, translations } from './translations';
 
 interface LanguageContextType {
@@ -25,6 +26,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
     return 'vi';
   });
+
+  // Synced during render, not in an effect, so number formatting already matches on the render that switches language
+  setFormatLanguage(language);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

@@ -28,7 +28,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 import { cn } from '@/lib/utils';
 import { STOCKS } from '@/pages/dashboard/mock/client';
 import { fetchStockHistory, generateFallbackData } from '@/pages/dashboard/services/stockService';
-import { formatNumber } from '@/utils/format';
+import { formatMillionVnd, formatNumber } from '@/utils/format';
 import type { SearchDataType } from '../data.d';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -312,7 +312,7 @@ const TopSearch: React.FC<TopSearchProps> = ({ loading = false }) => {
             <div className="py-1">
               <div className="text-xs sm:text-sm font-medium text-muted-foreground">{topSearchTexts.initialCapital}</div>
               <div className="text-lg sm:text-xl font-bold text-foreground tabular-nums mt-1">
-                {activeMetric.initialValue} {t.common.millionVnd}
+                {formatMillionVnd(activeMetric.initialValue ?? 0)}
               </div>
             </div>
           </div>

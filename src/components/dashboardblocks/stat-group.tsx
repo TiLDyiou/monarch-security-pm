@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { formatNumber } from '@/utils/format';
 
 export interface StatMetric {
   key: string;
@@ -74,7 +75,7 @@ export const StatValue: React.FC<StatValueProps> = ({
     displayValue = metric.formatter
       ? metric.formatter(metric.value)
       : typeof metric.value === 'number'
-        ? metric.value.toLocaleString('vi-VN')
+        ? formatNumber(metric.value)
         : String(metric.value);
   }
 

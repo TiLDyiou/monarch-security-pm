@@ -16,6 +16,13 @@ export interface TranslationDictionary {
     year: string;
     years: string;
   };
+  newsletter: {
+    placeholder: string;
+    submit: string;
+    successTitle: string;
+    successDescription: string;
+    thanks: string;
+  };
   landing: {
     nav: {
       getStarted: string;
@@ -425,6 +432,13 @@ export const translations: Record<Language, TranslationDictionary> = {
       months: 'tháng',
       year: 'năm',
       years: 'năm',
+    },
+    newsletter: {
+      placeholder: 'Nhập email của bạn...',
+      submit: 'Đăng ký',
+      successTitle: 'Đăng ký nhận bản tin thành công!',
+      successDescription: 'Bạn sẽ nhận được báo cáo phân tích danh mục và kinh tế vĩ mô định kỳ qua email.',
+      thanks: 'Cảm ơn bạn đã đăng ký nhận bản tin!',
     },
     landing: {
       nav: {
@@ -939,14 +953,14 @@ export const translations: Record<Language, TranslationDictionary> = {
               badge: 'Khả thi vượt trội · Vượt 153% nhu cầu',
               description: 'Mục tiêu an cư dài hạn gần chỗ làm của hai vợ chồng và trường học của hai con.',
               needLabel: 'Nhu cầu vốn điều chỉnh lạm phát',
-              needAdjusted: '5.357,74 triệu ₫',
-              needOriginal: 'gốc 3.450 triệu ₫',
+              needAdjusted: '5,36 tỷ ₫',
+              needOriginal: 'gốc 3,45 tỷ ₫',
               fundLabel: 'Giá trị quỹ dự phóng tại năm thứ 10',
-              fundValue: '8.199,80 triệu ₫',
+              fundValue: '8,20 tỷ ₫',
               fundPercent: 'Đáp ứng 153,0% nhu cầu',
               outcomeTitle: 'Kết quả hoạch định:',
               outcomeTextPrefix: 'Vượt mục tiêu, còn dư',
-              outcomeSurplus: '+2.842,10 triệu ₫',
+              outcomeSurplus: '+2,84 tỷ ₫',
               outcomeTextSuffix:
                 '. Gia đình mua được nhà mà không cần vay, vẫn giữ lại một khoản dự phòng cho tương lai.',
             },
@@ -981,6 +995,13 @@ export const translations: Record<Language, TranslationDictionary> = {
       months: 'months',
       year: 'year',
       years: 'years',
+    },
+    newsletter: {
+      placeholder: 'Enter your email...',
+      submit: 'Subscribe',
+      successTitle: 'You are subscribed!',
+      successDescription: 'You will receive regular portfolio analysis and macroeconomic reports by email.',
+      thanks: 'Thanks for subscribing to our newsletter!',
     },
     landing: {
       nav: {
@@ -1495,14 +1516,14 @@ export const translations: Record<Language, TranslationDictionary> = {
               badge: 'Highly Feasible · 153% of Target Funded',
               description: 'Long-term residential milestone near parents’ workplace and children’s schools.',
               needLabel: 'Inflation-Adjusted Capital Required',
-              needAdjusted: '5,357.74M VND',
-              needOriginal: 'base 3,450M VND',
+              needAdjusted: '5.36B VND',
+              needOriginal: 'base 3.45B VND',
               fundLabel: 'Projected Portfolio Value at Year 10',
-              fundValue: '8,199.80M VND',
+              fundValue: '8.20B VND',
               fundPercent: '153.0% of the need covered',
               outcomeTitle: 'Planning Outcome:',
               outcomeTextPrefix: 'Goal exceeded, with a surplus of',
-              outcomeSurplus: '+2,842.10M VND',
+              outcomeSurplus: '+2.84B VND',
               outcomeTextSuffix:
                 '. The family buys the home without borrowing and keeps a reserve for the future.',
             },

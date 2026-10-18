@@ -16,7 +16,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { PALETTE } from '@/constants/palette';
-import { formatNumber } from '@/utils/format';
+import { formatMillionVnd } from '@/utils/format';
 import type { DataItem } from '../data.d';
 import type { SalesType } from '../index';
 import { useLanguage } from '@/i18n/LanguageContext';
@@ -106,7 +106,7 @@ const ProportionSales: React.FC<ProportionSalesProps> = ({
   );
 
   const percent = (val: number) => (total === 0 ? 0 : (val / total) * 100);
-  const formatter = (val: number) => `${formatNumber(val)} ${t.common.millionVnd}`;
+  const formatter = formatMillionVnd;
 
   if (loading) {
     return (

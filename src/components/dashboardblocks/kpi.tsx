@@ -3,6 +3,8 @@ import { ArrowDownRight, ArrowUpRight, Minus } from 'lucide-react';
 import CountUp from 'react-countup';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/i18n/LanguageContext';
+import { formatNumber } from '@/utils/format';
 
 export type KPIFormat = 'currency' | 'percent' | 'number';
 
@@ -53,6 +55,7 @@ export const KPIValue: React.FC<KPIValueProps> = ({
   className,
   ...props
 }) => {
+  const { language, t } = useLanguage();
   let activeDecimals = decimals;
   let activeSuffix = suffix;
   let activePrefix = prefix;
@@ -62,7 +65,7 @@ export const KPIValue: React.FC<KPIValueProps> = ({
     activeDecimals = activeDecimals ?? 2;
   } else if (format === 'currency') {
     activePrefix = activePrefix || '';
-    activeSuffix = activeSuffix || ' ₫';
+    activeSuffix = activeSuffix || ` ${t.common.vnd}`;
     activeDecimals = activeDecimals ?? 0;
   }
 
@@ -76,17 +79,19 @@ export const KPIValue: React.FC<KPIValueProps> = ({
     >
       {animated ? (
         <CountUp
+          // CountUp only picks up a new separator on remount
+          key={language}
           start={0}
           end={value}
           duration={1.2}
-          separator="."
-          decimal=","
+          separator={language === 'en' ? ',' : '.'}
+          decimal={language === 'en' ? '.' : ','}
           decimals={activeDecimals ?? (value % 1 === 0 ? 0 : 2)}
           prefix={activePrefix}
           suffix={activeSuffix}
         />
       ) : (
-        `${activePrefix}${value.toLocaleString('vi-VN')}${activeSuffix}`
+        `${activePrefix}${formatNumber(value)}${activeSuffix}`
       )}
     </div>
   );

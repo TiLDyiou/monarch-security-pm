@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ArrowDownRight, ArrowUpRight, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { formatNumber } from '@/utils/format';
+import { formatNumber, formatVND, getFormatLanguage } from '@/utils/format';
 
 export interface Metric {
   key: string;
@@ -21,41 +21,46 @@ export interface Metric {
   riskAnnual?: number;
 }
 
+const formatCurrencyCompact = (val: number) => {
+  if (val < 1_000_000) return formatVND(val);
+  const millions = formatNumber(val / 1_000_000, 1);
+  return getFormatLanguage() === 'en' ? `${millions}M VND` : `${millions} tr ₫`;
+};
+
 export function formatMetricValue(metric: Metric, value: number): string {
   const format = metric.format ?? 'vnd';
   if (format === 'vnd' || format === 'currency') {
-    return `${formatNumber(value)} ₫`;
+    return formatVND(value);
   }
   if (format === 'percent') {
-    return `${value.toFixed(2)}%`;
+    return `${formatNumber(value, 2)}%`;
   }
   if (format === 'currency-compact') {
-    return value >= 1_000_000 ? `${(value / 1_000_000).toFixed(1)} tr` : `${formatNumber(value)} ₫`;
+    return formatCurrencyCompact(value);
   }
   if (format === 'compact') {
-    return value >= 1_000 ? `${(value / 1_000).toFixed(1)}k` : `${value}`;
+    return value >= 1_000 ? `${formatNumber(value / 1_000, 1)}k` : formatNumber(value);
   }
   return formatNumber(value);
 }
 
 export function getMetricFormatter(format?: string): (value: number) => string {
   if (format === 'percent') {
-    return (val: number) => `${val.toFixed(2)}%`;
-  }
-  if (format === 'vnd' || format === 'currency') {
-    return (val: number) => `${formatNumber(val)} ₫`;
+    return (val: number) => `${formatNumber(val, 2)}%`;
   }
   if (format === 'currency-compact') {
-    return (val: number) => (val >= 1_000_000 ? `${(val / 1_000_000).toFixed(1)} tr` : `${formatNumber(val)} ₫`);
+    return formatCurrencyCompact;
   }
   if (format === 'compact') {
-    return (val: number) => (val >= 1_000 ? `${(val / 1_000).toFixed(1)}k` : `${val}`);
+    return (val: number) => (val >= 1_000 ? `${formatNumber(val / 1_000, 1)}k` : formatNumber(val));
   }
-  return (val: number) => `${formatNumber(val)} ₫`;
+  return formatVND;
 }
 
 export function describeHistory(metric: Metric): string {
-  return `Biểu đồ biến động giá của ${metric.label}`;
+  return getFormatLanguage() === 'en'
+    ? `Price history chart for ${metric.label}`
+    : `Biểu đồ biến động giá của ${metric.label}`;
 }
 
 export interface MetricSparklineProps {
