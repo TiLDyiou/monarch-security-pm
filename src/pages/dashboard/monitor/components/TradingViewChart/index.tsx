@@ -9,7 +9,6 @@ import {
   ReloadOutlined,
 } from '@ant-design/icons';
 import { Button, Segmented, Space, Tag, Tooltip, Typography } from 'antd';
-import dayjs from 'dayjs';
 import {
   type CandlestickData,
   CandlestickSeries,
@@ -35,7 +34,6 @@ import {
   prefetchStockHistory,
   type StockHistoryData,
 } from '@/pages/dashboard/services/stockService';
-import { formatNumber } from '@/utils/format';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -81,7 +79,7 @@ const sameHistory = (a: StockHistoryData, b: StockHistoryData) => {
 };
 
 export default function LightweightChart() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const chartTexts = t.dashboard.monitor.chart;
 
   const [selectedCode, setSelectedCode] = useState<string>('BID');
@@ -487,18 +485,29 @@ export default function LightweightChart() {
     };
   }, [heightMode]);
 
-  // Current active OHLCV metrics (hovered or latest)
+  // Current active OHLCV metrics (hovered session or latest). While hovering, Vol and MA20 come from that
+  // session only: a session without an MA20 yet must not borrow the latest session's value
   const currentO = hoverInfo?.open ?? lastCandle?.open ?? activeStock.price;
   const currentH = hoverInfo?.high ?? lastCandle?.high ?? activeStock.price;
   const currentL = hoverInfo?.low ?? lastCandle?.low ?? activeStock.price;
   const currentC = hoverInfo?.close ?? lastCandle?.close ?? activeStock.price;
-  const currentVol = hoverInfo?.volume ?? lastVolume?.value ?? 0;
-  const currentMA = hoverInfo?.ma20 ?? lastMA?.value;
-  const currentTime = hoverInfo?.time ?? (lastCandle?.time as string) ?? dayjs().format('YYYY-MM-DD');
+  const currentVol = hoverInfo ? (hoverInfo.volume ?? 0) : (lastVolume?.value ?? 0);
+  const currentMA = hoverInfo ? hoverInfo.ma20 : lastMA?.value;
 
-  const diff = currentC - currentO;
-  const diffPercent = currentO > 0 ? Math.round((diff / currentO) * 10000) / 100 : 0;
-  const isUp = diff >= 0;
+  // Reference price of the session on screen = previous session's close, as on Vietnamese price boards:
+  // above it green, below it red, equal to it amber
+  const shownIndex = hoverInfo ? candles.findIndex((c) => String(c.time) === hoverInfo.time) : candles.length - 1;
+  const refPrice = shownIndex > 0 ? candles[shownIndex - 1].close : currentO;
+  const priceTone = (value: number) =>
+    value > refPrice ? 'text-emerald-600' : value < refPrice ? 'text-rose-600' : 'text-amber-500';
+  const changeTone =
+    activeStock.change > 0 ? 'text-emerald-600' : activeStock.change < 0 ? 'text-rose-600' : 'text-amber-500';
+
+  // Numbers follow the interface language: 33.950 and 2,26% in Vietnamese, 33,950 and 2.26% in English
+  const locale = language === 'en' ? 'en-US' : 'vi-VN';
+  const formatPrice = (value: number) => new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(value);
+  const formatChange = (value: number) =>
+    `${value > 0 ? '+' : ''}${new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value)}%`;
 
   // Compute calculated height based on height mode
   const getContainerMinHeight = () => {
@@ -556,15 +565,15 @@ export default function LightweightChart() {
                 priceFlash === 'down' && 'bg-rose-100',
               )}
             >
-              {formatNumber(activeStock.price)}
+              {formatPrice(activeStock.price)}
             </span>
             <span
               className={cn(
                 'text-xs font-semibold tabular-nums',
-                activeStock.change >= 0 ? 'text-emerald-600' : 'text-rose-600',
+                changeTone,
               )}
             >
-              {activeStock.change >= 0 ? '+' : ''}{activeStock.change}%
+              {formatChange(activeStock.change)}
             </span>
             <span className="text-xs text-muted-foreground hidden sm:inline">
               · {activeStock.name}
@@ -651,18 +660,18 @@ export default function LightweightChart() {
       {/* Live hover OHLC readout: always its own row under the controls. Vol and MA20 keep their slot when
           toggled off (invisible, not removed), so switching them never shifts the layout */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pb-2 mb-2 border-b border-border/30 text-xs tabular-nums text-muted-foreground">
-        <span>O <strong className="text-foreground font-semibold">{formatNumber(currentO)}</strong></span>
-        <span>H <strong className="text-emerald-600 font-semibold">{formatNumber(currentH)}</strong></span>
-        <span>L <strong className="text-rose-600 font-semibold">{formatNumber(currentL)}</strong></span>
-        <span>C <strong className={cn('font-semibold', isUp ? 'text-emerald-600' : 'text-rose-600')}>{formatNumber(currentC)}</strong></span>
+        <span>O <strong className={cn('font-semibold', priceTone(currentO))}>{formatPrice(currentO)}</strong></span>
+        <span>H <strong className={cn('font-semibold', priceTone(currentH))}>{formatPrice(currentH)}</strong></span>
+        <span>L <strong className={cn('font-semibold', priceTone(currentL))}>{formatPrice(currentL)}</strong></span>
+        <span>C <strong className={cn('font-semibold', priceTone(currentC))}>{formatPrice(currentC)}</strong></span>
         <span className={cn(!(showVolume && currentVol > 0) && 'invisible')} aria-hidden={!(showVolume && currentVol > 0)}>
-          Vol <strong className="text-foreground font-semibold">{formatNumber(currentVol)}</strong>
+          Vol <strong className="text-foreground font-semibold">{formatPrice(currentVol)}</strong>
         </span>
         <span
           className={cn('text-blue-600 font-semibold', !(showMA && currentMA !== undefined) && 'invisible')}
           aria-hidden={!(showMA && currentMA !== undefined)}
         >
-          MA20 {currentMA !== undefined ? formatNumber(currentMA) : ''}
+          MA20 {currentMA !== undefined ? formatPrice(currentMA) : ''}
         </span>
       </div>
 
