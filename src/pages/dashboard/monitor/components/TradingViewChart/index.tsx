@@ -471,8 +471,8 @@ export default function LightweightChart() {
       }}
     >
       {/* ── Single Minimalist Control & Information Bar ── */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-2.5 border-b border-border/30 mb-2">
-        {/* Left: Ticker Switcher + Active Price + Live OHLC Readout */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-2.5">
+        {/* Left: Ticker Switcher + Active Price */}
         <div className="flex items-center flex-wrap gap-x-4 gap-y-2">
           {/* Ticker Segmented Control */}
           <Segmented
@@ -501,20 +501,6 @@ export default function LightweightChart() {
             <span className="text-xs text-muted-foreground hidden sm:inline">
               · {activeStock.name}
             </span>
-          </div>
-
-          {/* Live Hover OHLC Readout */}
-          <div className="flex items-center gap-3 text-xs tabular-nums text-muted-foreground">
-            <span>O <strong className="text-foreground font-semibold">{formatNumber(currentO)}</strong></span>
-            <span>H <strong className="text-emerald-600 font-semibold">{formatNumber(currentH)}</strong></span>
-            <span>L <strong className="text-rose-600 font-semibold">{formatNumber(currentL)}</strong></span>
-            <span>C <strong className={cn('font-semibold', isUp ? 'text-emerald-600' : 'text-rose-600')}>{formatNumber(currentC)}</strong></span>
-            {showVolume && currentVol > 0 && (
-              <span className="hidden xl:inline">Vol <strong className="text-foreground font-semibold">{formatNumber(currentVol)}</strong></span>
-            )}
-            {showMA && currentMA !== undefined && (
-              <span className="hidden xl:inline text-blue-600 font-semibold">MA20 {formatNumber(currentMA)}</span>
-            )}
           </div>
         </div>
 
@@ -592,6 +578,24 @@ export default function LightweightChart() {
             />
           </Tooltip>
         </div>
+      </div>
+
+      {/* Live hover OHLC readout: always its own row under the controls. Vol and MA20 keep their slot when
+          toggled off (invisible, not removed), so switching them never shifts the layout */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pb-2 mb-2 border-b border-border/30 text-xs tabular-nums text-muted-foreground">
+        <span>O <strong className="text-foreground font-semibold">{formatNumber(currentO)}</strong></span>
+        <span>H <strong className="text-emerald-600 font-semibold">{formatNumber(currentH)}</strong></span>
+        <span>L <strong className="text-rose-600 font-semibold">{formatNumber(currentL)}</strong></span>
+        <span>C <strong className={cn('font-semibold', isUp ? 'text-emerald-600' : 'text-rose-600')}>{formatNumber(currentC)}</strong></span>
+        <span className={cn(!(showVolume && currentVol > 0) && 'invisible')} aria-hidden={!(showVolume && currentVol > 0)}>
+          Vol <strong className="text-foreground font-semibold">{formatNumber(currentVol)}</strong>
+        </span>
+        <span
+          className={cn('text-blue-600 font-semibold', !(showMA && currentMA !== undefined) && 'invisible')}
+          aria-hidden={!(showMA && currentMA !== undefined)}
+        >
+          MA20 {currentMA !== undefined ? formatNumber(currentMA) : ''}
+        </span>
       </div>
 
       {/* ── Lightweight Chart Canvas Container ── */}
