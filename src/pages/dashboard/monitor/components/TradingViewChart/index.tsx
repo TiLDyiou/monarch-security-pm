@@ -20,6 +20,7 @@ import {
   HistogramSeries,
   type IChartApi,
   type ISeriesApi,
+  LastPriceAnimationMode,
   type LineData,
   LineSeries,
   LineStyle,
@@ -66,6 +67,19 @@ interface HoverInfo {
   ma20?: number;
 }
 
+// Two loads describe the same picture when the ticker, bar count and latest bar all match
+const sameHistory = (a: StockHistoryData, b: StockHistoryData) => {
+  if (a === b) return true;
+  if (a.symbol !== b.symbol || a.candles.length !== b.candles.length) return false;
+  const x = a.candles[a.candles.length - 1];
+  const y = b.candles[b.candles.length - 1];
+  const vx = a.volumes[a.volumes.length - 1]?.value;
+  const vy = b.volumes[b.volumes.length - 1]?.value;
+  return (
+    x?.time === y?.time && x?.open === y?.open && x?.high === y?.high && x?.low === y?.low && x?.close === y?.close && vx === vy
+  );
+};
+
 export default function LightweightChart() {
   const { t } = useLanguage();
   const chartTexts = t.dashboard.monitor.chart;
@@ -82,6 +96,8 @@ export default function LightweightChart() {
     () => peekStockHistory('BID') ?? generateFallbackData('BID'),
   );
   const [loading, setLoading] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [priceFlash, setPriceFlash] = useState<'up' | 'down' | null>(null);
   const [realtimeQuotes, setRealtimeQuotes] = useState<Record<string, { price: number; change: number }>>({});
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -95,23 +111,28 @@ export default function LightweightChart() {
   const selectedRef = useRef(selectedCode);
   selectedRef.current = selectedCode;
 
-  // Show whatever is cached for the ticker straight away, then refresh it in the background if it is stale
+  // Show whatever is cached for the ticker straight away, then refresh it in the background if it is stale.
+  // A refresh that brings nothing new leaves state untouched, so the chart is not redrawn at all.
   const loadStockData = useCallback(async (code: string, maxAgeMs?: number) => {
     const cached = peekStockHistory(code);
-    if (cached) setHistoryData(cached);
-    else setLoading(true);
+    if (cached) {
+      setHistoryData((prev) => (sameHistory(prev, cached) ? prev : cached));
+      setRefreshing(true);
+    } else setLoading(true);
     try {
       const data = await fetchStockHistory(code, maxAgeMs);
       if (selectedRef.current !== code) return;
-      setHistoryData(data);
-      setRealtimeQuotes((prev) => ({
-        ...prev,
-        [code]: { price: data.latestPrice, change: data.changePercent },
-      }));
+      setHistoryData((prev) => (sameHistory(prev, data) ? prev : data));
+      setRealtimeQuotes((prev) =>
+        prev[code]?.price === data.latestPrice && prev[code]?.change === data.changePercent
+          ? prev
+          : { ...prev, [code]: { price: data.latestPrice, change: data.changePercent } },
+      );
     } catch {
       // Fallback already in historyData
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   }, []);
 
@@ -127,8 +148,10 @@ export default function LightweightChart() {
 
   // Periodic polling for real-time price updates (every 25 seconds)
   useEffect(() => {
+    // Data counts as stale a little before the next tick, otherwise a cache filled a few hundred ms
+    // after the timer started would look fresh and the refresh would slip to every other tick
     const pollInterval = setInterval(() => {
-      loadStockData(selectedCode, 25000);
+      loadStockData(selectedCode, 20000);
     }, 25000);
     return () => clearInterval(pollInterval);
   }, [selectedCode, loadStockData]);
@@ -161,6 +184,17 @@ export default function LightweightChart() {
     () => stockList.find((s) => s.code === selectedCode) || stockList[0],
     [stockList, selectedCode],
   );
+
+  // Briefly tint the price green or red when a refresh moves it (not when switching tickers)
+  const lastQuoteRef = useRef<{ code: string; price: number } | null>(null);
+  useEffect(() => {
+    const prev = lastQuoteRef.current;
+    lastQuoteRef.current = { code: selectedCode, price: activeStock.price };
+    if (!prev || prev.code !== selectedCode || prev.price === activeStock.price || prev.price <= 0) return;
+    setPriceFlash(activeStock.price > prev.price ? 'up' : 'down');
+    const timer = window.setTimeout(() => setPriceFlash(null), 900);
+    return () => window.clearTimeout(timer);
+  }, [activeStock.price, selectedCode]);
 
   // Convert loaded historyData to Lightweight Charts series format
   const candles = useMemo<CandlestickData<Time>[]>(() => {
@@ -313,6 +347,8 @@ export default function LightweightChart() {
       priceScaleId: 'right',
       title: 'MA20',
       crosshairMarkerVisible: true,
+      // A soft pulse on the latest point each time fresh data lands
+      lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
     });
     maSeriesRef.current = maSeries;
 
@@ -367,24 +403,50 @@ export default function LightweightChart() {
     };
   }, []);
 
-  // Update chart data when active stock changes
+  // What is currently drawn, to tell a live refresh of the same series from a new ticker
+  const drawnRef = useRef<{ symbol: string; count: number; firstTime: string } | null>(null);
+
+  // A new ticker gets a full redraw and the selected range; a live refresh of the same ticker only
+  // updates the latest bars in place, so the user's zoom, scroll and hover readout stay put
   useEffect(() => {
-    if (!chartRef.current || !candleSeriesRef.current) return;
+    const candleSeries = candleSeriesRef.current;
+    if (!chartRef.current || !candleSeries) return;
 
-    candleSeriesRef.current.setData(candles);
-
-    if (volumeSeriesRef.current) {
-      volumeSeriesRef.current.setData(volumes);
+    if (candles.length === 0) {
+      candleSeries.setData([]);
+      volumeSeriesRef.current?.setData([]);
+      maSeriesRef.current?.setData([]);
+      drawnRef.current = null;
+      return;
     }
 
-    if (maSeriesRef.current) {
-      maSeriesRef.current.setData(ma20);
+    const prev = drawnRef.current;
+    const firstTime = String(candles[0].time);
+    const liveRefresh =
+      prev !== null &&
+      prev.symbol === selectedCode &&
+      prev.firstTime === firstTime &&
+      (candles.length === prev.count || candles.length === prev.count + 1);
+
+    if (liveRefresh) {
+      // Re-send the previously last bar (its close may have moved) plus any newly opened bar
+      const from = Math.max(0, prev.count - 1);
+      for (let i = from; i < candles.length; i++) {
+        candleSeries.update(candles[i]);
+        if (volumes[i]) volumeSeriesRef.current?.update(volumes[i]);
+      }
+      const maFrom = Math.max(0, ma20.length - (candles.length - from));
+      for (let i = maFrom; i < ma20.length; i++) maSeriesRef.current?.update(ma20[i]);
+    } else {
+      candleSeries.setData(candles);
+      volumeSeriesRef.current?.setData(volumes);
+      maSeriesRef.current?.setData(ma20);
+      applyTimeRange(selectedRange);
+      setHoverInfo(null);
     }
 
-    // Default to selected range
-    applyTimeRange(selectedRange);
-    setHoverInfo(null);
-  }, [candles, volumes, ma20, selectedRange, applyTimeRange]);
+    drawnRef.current = { symbol: selectedCode, count: candles.length, firstTime };
+  }, [candles, volumes, ma20, selectedCode, selectedRange, applyTimeRange]);
 
   // Toggle Series Visibility
   useEffect(() => {
@@ -487,7 +549,13 @@ export default function LightweightChart() {
 
           {/* Current Market Price & Daily Change */}
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold tracking-tight tabular-nums text-foreground">
+            <span
+              className={cn(
+                'text-xl font-bold tracking-tight tabular-nums text-foreground rounded-md px-1 -mx-1 transition-colors duration-700',
+                priceFlash === 'up' && 'bg-emerald-100',
+                priceFlash === 'down' && 'bg-rose-100',
+              )}
+            >
               {formatNumber(activeStock.price)}
             </span>
             <span
@@ -551,7 +619,7 @@ export default function LightweightChart() {
           <Tooltip title={chartTexts.refreshTooltip}>
             <Button
               type="text"
-              icon={<ReloadOutlined spin={loading} style={{ fontSize: 13 }} />}
+              icon={<ReloadOutlined spin={loading || refreshing} style={{ fontSize: 13 }} />}
               onClick={() => {
                 loadStockData(selectedCode);
                 chartRef.current?.timeScale().fitContent();
