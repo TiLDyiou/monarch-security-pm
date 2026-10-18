@@ -527,7 +527,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         sectionTitle1: 'Quy Trình Hoạch Định Danh Mục',
         sectionTitle2: 'Bài Bản & Tinh Gọn',
         sectionSubtitle:
-          'Không còn lo lắng trước biến động thị trường hay mua bán theo cảm tính. Chúng tôi giúp bạn tích lũy có kỷ luật, để tài sản tăng trưởng bền vững trong ngưỡng an toàn của gia đình.',
+          'Không còn lo lắng trước biến động thị trường hay mua bán theo cảm tính. Chúng tôi giúp bạn tích lũy đều đặn, để tài sản tăng trưởng bền vững trong ngưỡng an toàn của gia đình.',
         cards: {
           step1: {
             title: 'Hiểu Rõ Mục Tiêu & Ngưỡng An Toàn Của Gia Đình',
