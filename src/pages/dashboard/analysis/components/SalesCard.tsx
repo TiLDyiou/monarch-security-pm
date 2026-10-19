@@ -1,7 +1,7 @@
 import { Column } from '@ant-design/plots';
 import { Button, Card, Col, DatePicker, Row, Tabs } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
-import { formatNumber } from '@/utils/format';
+import { formatMillionVnd, formatNumber } from '@/utils/format';
 import type { DataItem } from '../data.d';
 import useStyles from '../style.style';
 import { monthsInRange } from '../utils/utils';
@@ -164,7 +164,7 @@ const SalesCard = ({
                             {item.title}
                           </span>
                           <span>
-                            {formatNumber(item.total)}
+                            {formatMillionVnd(item.total / 1_000_000)}
                             <span style={{ marginLeft: 8, opacity: 0.55 }}>
                               {formatNumber(Math.round((item.total / totalExpense) * 1000) / 10)}%
                             </span>
@@ -234,7 +234,7 @@ const SalesCard = ({
                           >
                             {getCashflowLabel(item.x as string)}
                           </span>
-                          <span>{formatNumber(item.y)}</span>
+                          <span>{formatMillionVnd(item.y / 1_000_000)}</span>
                         </li>
                       ))}
                     </ul>
