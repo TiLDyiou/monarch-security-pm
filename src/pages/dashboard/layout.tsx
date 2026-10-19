@@ -81,7 +81,7 @@ const DashboardLayout = () => {
               }))
             }
             menuItemRender={(item, dom) => (item.path ? <Link to={item.path}>{dom}</Link> : dom)}
-            onMenuHeaderClick={() => navigate('/dashboard/analysis')}
+            onMenuHeaderClick={() => navigate('/')}
             actionsRender={() => [
               <LanguageToggle key="lang" variant="pill" />,
               <Link key="home" to="/" title={t.dashboard.nav.homeTitle} style={{ color: 'inherit', display: 'flex', alignItems: 'center' }}>
