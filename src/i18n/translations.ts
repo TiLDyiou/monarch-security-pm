@@ -567,8 +567,8 @@ export const translations: Record<Language, TranslationDictionary> = {
             feasible: 'Danh mục khả thi',
             optimal: 'Tối ưu',
             optimalTag: 'Danh mục tối ưu',
-            riskAxis: 'Rủi ro →',
-            returnAxis: '↑ Lợi nhuận kỳ vọng',
+            riskAxis: 'Rủi ro',
+            returnAxis: 'Lợi nhuận kỳ vọng',
           },
           rebalance: {
             phases: {
@@ -1122,8 +1122,8 @@ export const translations: Record<Language, TranslationDictionary> = {
             feasible: 'Feasible Portfolios',
             optimal: 'Optimal',
             optimalTag: 'Optimal Portfolio',
-            riskAxis: 'Risk →',
-            returnAxis: '↑ Expected Return',
+            riskAxis: 'Risk',
+            returnAxis: 'Expected Return',
           },
           rebalance: {
             phases: {

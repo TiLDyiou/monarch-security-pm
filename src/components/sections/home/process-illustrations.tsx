@@ -158,8 +158,9 @@ export const FrontierIllustration = () => {
           ))}
           <line x1="40" y1="200" x2="370" y2="200" stroke="#cbd5e1" />
           <line x1="40" y1="20" x2="40" y2="200" stroke="#cbd5e1" />
+          <path d="M 365 196 L 370 200 L 365 204 M 36 25 L 40 20 L 44 25" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           <text x="370" y="216" textAnchor="end" fontSize="10" fill="#64748b">{t.landing.process.illustrations.frontier.riskAxis}</text>
-          <text x="46" y="16" fontSize="10" fill="#64748b">{t.landing.process.illustrations.frontier.returnAxis}</text>
+          <text x="48" y="16" fontSize="10" fill="#64748b">{t.landing.process.illustrations.frontier.returnAxis}</text>
 
           {DOTS.map(([x, y], i) => (
             <motion.circle
