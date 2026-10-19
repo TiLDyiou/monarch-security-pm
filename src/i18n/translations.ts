@@ -256,8 +256,6 @@ export interface TranslationDictionary {
         ma20Tooltip: string;
         volumeTooltip: string;
         refreshTooltip: string;
-        collapseTooltip: string;
-        expandTooltip: string;
         fullscreenTooltip: string;
         exitFullscreenTooltip: string;
       };
@@ -823,8 +821,6 @@ export const translations: Record<Language, TranslationDictionary> = {
           ma20Tooltip: 'Đường trung bình MA20',
           volumeTooltip: 'Khối lượng Vol',
           refreshTooltip: 'Cập nhật giá mới nhất',
-          collapseTooltip: 'Thu gọn (480px)',
-          expandTooltip: 'Mở rộng (800px)',
           fullscreenTooltip: 'Toàn màn hình',
           exitFullscreenTooltip: 'Thoát toàn màn hình',
         },
@@ -1386,8 +1382,6 @@ export const translations: Record<Language, TranslationDictionary> = {
           ma20Tooltip: '20-day moving average',
           volumeTooltip: 'Trading Volume',
           refreshTooltip: 'Refresh Latest Quote',
-          collapseTooltip: 'Collapse chart',
-          expandTooltip: 'Expand chart',
           fullscreenTooltip: 'Full Screen',
           exitFullscreenTooltip: 'Exit Full Screen',
         },

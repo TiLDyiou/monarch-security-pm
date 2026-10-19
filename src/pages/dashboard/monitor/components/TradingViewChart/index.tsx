@@ -1,8 +1,6 @@
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
-  CompressOutlined,
-  ExpandOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined,
   LineChartOutlined,
@@ -86,7 +84,7 @@ export default function LightweightChart() {
   const [selectedRange, setSelectedRange] = useState<string>('6M');
   const [showMA, setShowMA] = useState<boolean>(true);
   const [showVolume, setShowVolume] = useState<boolean>(true);
-  const [heightMode, setHeightMode] = useState<'standard' | 'expanded' | 'fullscreen'>('standard');
+  const [heightMode, setHeightMode] = useState<'standard' | 'fullscreen'>('standard');
   const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
 
   // Live stock data states
@@ -512,7 +510,6 @@ export default function LightweightChart() {
   // Compute calculated height based on height mode
   const getContainerMinHeight = () => {
     if (heightMode === 'fullscreen') return 'calc(100vh - 120px)';
-    if (heightMode === 'expanded') return 800;
     return 480; // optimized standard vertical height
   };
 
@@ -633,15 +630,6 @@ export default function LightweightChart() {
                 loadStockData(selectedCode);
                 chartRef.current?.timeScale().fitContent();
               }}
-              size="middle"
-            />
-          </Tooltip>
-
-          <Tooltip title={heightMode === 'expanded' ? chartTexts.collapseTooltip : chartTexts.expandTooltip}>
-            <Button
-              type="text"
-              icon={heightMode === 'expanded' ? <CompressOutlined style={{ fontSize: 13 }} /> : <ExpandOutlined style={{ fontSize: 13 }} />}
-              onClick={() => setHeightMode(heightMode === 'expanded' ? 'standard' : 'expanded')}
               size="middle"
             />
           </Tooltip>
