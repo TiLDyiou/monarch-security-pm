@@ -216,6 +216,8 @@ const MarketNewsCard: React.FC = () => {
               total={filteredNews.length}
               pageSize={PAGE_SIZE}
               onChange={(page) => setCurrentPage(page)}
+              // antd adds a page-size picker on its own past 50 items; the card keeps a fixed size
+              showSizeChanger={false}
               size="small"
             />
           </div>
