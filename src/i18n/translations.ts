@@ -613,7 +613,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           },
           {
             quote:
-              'Trong ngắn hạn, thị trường là một cỗ máy bỏ phiếu; về dài hạn, nó là một chiếc cân. Nếu phải gói gọn bí quyết đầu tư đúng đắn trong ba từ, chúng tôi chọn: Biên an toàn.',
+              'Trong ngắn hạn, thị trường là một cỗ máy bỏ phiếu, về dài hạn, nó là một chiếc cân. Nếu phải gói gọn bí quyết đầu tư đúng đắn trong ba từ, chúng tôi chọn: Biên an toàn.',
             author: 'Benjamin Graham',
             role: 'Cha đẻ trường phái đầu tư giá trị, tác giả cuốn Nhà đầu tư thông minh',
           },
@@ -1128,8 +1128,8 @@ export const translations: Record<Language, TranslationDictionary> = {
           rebalance: {
             phases: {
               p1: { step: 'Inception', note: 'Target allocation', chip: 'On Target' },
-              p2: { step: 'One Cycle Later', note: 'Market rallies; equities overweight', chip: 'Off Target' },
-              p3: { step: 'Rebalance', note: 'Trim equities; reallocate to bonds', chip: 'Rebalanced' },
+              p2: { step: 'One Cycle Later', note: 'Market rallies, equities overweight', chip: 'Off Target' },
+              p3: { step: 'Rebalance', note: 'Trim equities, reallocate to bonds', chip: 'Rebalanced' },
             },
             stocksLabel: 'Equities',
             bondsLabel: 'Government Bonds',
