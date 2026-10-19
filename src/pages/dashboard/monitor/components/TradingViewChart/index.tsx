@@ -181,16 +181,20 @@ export default function LightweightChart() {
     [stockList, selectedCode],
   );
 
-  // Briefly tint the price green or red when a refresh moves it (not when switching tickers)
+  // Briefly tint the price green or red when a refresh moves it (not when switching tickers).
+  // Only fetched quotes count: after a reload the price first shows placeholder data, and its
+  // replacement by the first real quote is not a market move
+  const livePrice = realtimeQuotes[selectedCode]?.price;
   const lastQuoteRef = useRef<{ code: string; price: number } | null>(null);
   useEffect(() => {
+    if (livePrice === undefined) return;
     const prev = lastQuoteRef.current;
-    lastQuoteRef.current = { code: selectedCode, price: activeStock.price };
-    if (!prev || prev.code !== selectedCode || prev.price === activeStock.price || prev.price <= 0) return;
-    setPriceFlash(activeStock.price > prev.price ? 'up' : 'down');
+    lastQuoteRef.current = { code: selectedCode, price: livePrice };
+    if (!prev || prev.code !== selectedCode || prev.price === livePrice || prev.price <= 0) return;
+    setPriceFlash(livePrice > prev.price ? 'up' : 'down');
     const timer = window.setTimeout(() => setPriceFlash(null), 900);
     return () => window.clearTimeout(timer);
-  }, [activeStock.price, selectedCode]);
+  }, [livePrice, selectedCode]);
 
   // Convert loaded historyData to Lightweight Charts series format
   const candles = useMemo<CandlestickData<Time>[]>(() => {
