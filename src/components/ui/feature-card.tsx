@@ -161,7 +161,8 @@ const FeatureCardImage = React.forwardRef<HTMLDivElement, FeatureCardImageProps>
         <img
           src={src}
           alt={alt}
-          className="w-full h-full object-cover"
+          // Round the image itself, not the box: overlays sit outside the box and overflow-hidden would clip them
+          className="w-full h-full object-cover rounded-[inherit]"
         />
         {children}
       </div>
