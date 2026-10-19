@@ -170,8 +170,9 @@ export const FrontierIllustration = () => {
             strokeWidth="3"
             strokeLinecap="round"
             initial={false}
-            animate={live ? { pathLength: [0, 0, 1, 1] } : { pathLength: 1 }}
-            transition={live ? { ...loop, times: [0, 0.3, 0.6, 1] } : { duration: 0 }}
+            // A round cap still paints a dot at pathLength 0, so the path stays hidden until it starts drawing
+            animate={live ? { pathLength: [0, 0, 1, 1], opacity: [0, 0, 1, 1] } : { pathLength: 1, opacity: 1 }}
+            transition={live ? { ...loop, times: [0, 0.3, 0.6, 1], opacity: { ...loop, ease: "linear", times: [0, 0.3, 0.305, 1] } } : { duration: 0 }}
           />
 
           <motion.circle
