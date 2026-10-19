@@ -198,8 +198,9 @@ export const FrontierIllustration = () => {
             animate={live ? { opacity: [0, 0, 1, 1], y: [6, 6, 0, 0] } : { opacity: 1, y: 0 }}
             transition={live ? { ...loop, times: [0, 0.7, 0.78, 1] } : { duration: 0 }}
           >
-            <rect x={OPTIMAL.x - 58} y={OPTIMAL.y + 14} width="116" height="24" rx="12" fill="#0f172a" />
-            <text x={OPTIMAL.x} y={OPTIMAL.y + 30} textAnchor="middle" fontSize="11" fontWeight="600" fill="#fff">
+            {/* Same look as the bg-primary/10 chips, but opaque so the dots behind don't show through */}
+            <rect x={OPTIMAL.x - 58} y={OPTIMAL.y + 14} width="116" height="24" rx="12" fill="#e6f6f7" stroke={TEAL} strokeOpacity="0.35" />
+            <text x={OPTIMAL.x} y={OPTIMAL.y + 30} textAnchor="middle" fontSize="11" fontWeight="600" fill={TEAL}>
               {t.landing.process.illustrations.frontier.optimalTag}
             </text>
           </motion.g>
