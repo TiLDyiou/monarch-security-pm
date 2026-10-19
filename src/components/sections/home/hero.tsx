@@ -37,7 +37,7 @@ const Hero = () => {
           opacity={0.85}
           grain={0.15}
           quality="medium"
-          intro
+          intro={false}
           parallaxStrength={0.5}
           mouseStrength={0.6}
           paused={false}

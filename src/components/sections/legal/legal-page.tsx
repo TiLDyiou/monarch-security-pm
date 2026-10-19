@@ -52,7 +52,7 @@ const LegalPage = ({ doc }: { doc: LegalDocKey }) => {
           opacity={0.85}
           grain={0.15}
           quality="medium"
-          intro
+          intro={false}
           mouseInteraction={false}
           className="w-full h-full"
         />

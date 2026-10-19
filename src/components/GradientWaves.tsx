@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, type CSSProperties } from 'react';
 import './GradientWaves.css';
 
 export interface GradientWavesProps {
@@ -364,7 +364,8 @@ export default function GradientWaves({
     wakeRef.current?.();
   });
 
-  useEffect(() => {
+  // Layout effect so the first frame is drawn before the browser paints, keeping the waves in step with the content
+  useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return undefined;
     const canvas = document.createElement('canvas');
@@ -654,6 +655,7 @@ export default function GradientWaves({
     const sizes = new ResizeObserver(measure);
     sizes.observe(container);
     measure();
+    render(prefersReduced());
     document.addEventListener('visibilitychange', wake);
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('pointerdown', onDown);
