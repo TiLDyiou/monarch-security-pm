@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { Check, GraduationCap, Home, Palmtree, ShieldCheck } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const TEAL = "#00a0b0";
@@ -119,6 +119,7 @@ export const RiskProfileIllustration = () => {
 
 const FRONTIER = "M 70 176 C 82 120, 120 78, 190 60 S 310 40, 360 34";
 const OPTIMAL = { x: 190, y: 60 };
+const TAG_PAD_X = 10;
 const DOTS = [
   [96, 170], [118, 150], [140, 162], [150, 128], [172, 140], [188, 112], [205, 150], [214, 96],
   [232, 124], [246, 84], [258, 140], [270, 104], [288, 72], [300, 118], [318, 92], [334, 60],
@@ -129,6 +130,18 @@ export const FrontierIllustration = () => {
   const { t } = useLanguage();
   const { ref, live } = useLive();
   const loop = { duration: 6, repeat: Infinity, repeatDelay: 1, ease: "easeInOut" as const };
+  const tagGradient = `frontier-tag${useId().replace(/:/g, "")}`;
+  const tagText = useRef<SVGTextElement>(null);
+  const [tagWidth, setTagWidth] = useState(104);
+
+  // Size the tag to its label so the padding stays tight in every language, and again once web fonts load
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (tagText.current) setTagWidth(tagText.current.getComputedTextLength() + TAG_PAD_X * 2);
+    };
+    measure();
+    document.fonts?.ready.then(measure);
+  }, [t]);
 
   return (
     <Stage>
@@ -198,9 +211,16 @@ export const FrontierIllustration = () => {
             animate={live ? { opacity: [0, 0, 1, 1], y: [6, 6, 0, 0] } : { opacity: 1, y: 0 }}
             transition={live ? { ...loop, times: [0, 0.7, 0.78, 1] } : { duration: 0 }}
           >
-            {/* Solid colors only; the darker teal keeps the small label readable on white */}
-            <rect x={OPTIMAL.x - 58} y={OPTIMAL.y + 14} width="116" height="24" rx="12" fill="#fff" stroke={TEAL} strokeWidth="1.5" />
-            <text x={OPTIMAL.x} y={OPTIMAL.y + 30} textAnchor="middle" fontSize="11" fontWeight="600" fill="#007f8c">
+            {/* Same gradient as the primary "Get started" button. It sits above-left of the optimal point,
+                where the frontier never runs, so it doesn't cover the curve */}
+            <defs>
+              <linearGradient id={tagGradient} x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0" stopColor="#00a0b0" />
+                <stop offset="1" stopColor="#008a99" />
+              </linearGradient>
+            </defs>
+            <rect x={OPTIMAL.x + 6 - tagWidth} y={OPTIMAL.y - 32} width={tagWidth} height="20" rx="10" fill={`url(#${tagGradient})`} />
+            <text ref={tagText} x={OPTIMAL.x + 6 - tagWidth / 2} y={OPTIMAL.y - 22} textAnchor="middle" dominantBaseline="central" fontSize="11" fontWeight="600" fill="#fff">
               {t.landing.process.illustrations.frontier.optimalTag}
             </text>
           </motion.g>
