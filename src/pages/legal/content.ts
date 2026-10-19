@@ -62,8 +62,8 @@ export const legalContent: Record<Language, LegalContent> = {
             bullets: [
               'Giá cổ phiếu: lấy theo phiên giao dịch ngày từ API công khai của DNSE (Entrade), thông qua máy chủ trung gian của website. Nếu DNSE không phản hồi, website chuyển sang nguồn dự phòng là VNDIRECT.',
               'Tần suất cập nhật: biểu đồ giá tự làm mới khoảng 25 giây một lần. Do dữ liệu được lưu đệm để tải nhanh hơn, giá hiển thị có thể chậm vài phút so với bảng giá của sàn.',
-              'Tin tức: lấy song song từ VNDIRECT và TCBS, nguồn nào phản hồi trước thì dùng nguồn đó. Bài viết thuộc bản quyền của trang nguồn, website chỉ hiển thị tiêu đề, tóm tắt và dẫn liên kết.',
-              'Khi tất cả các nguồn đều không phản hồi: biểu đồ hiển thị dữ liệu giá mô phỏng và mục tin tức hiển thị bộ tin mẫu do nhóm soạn sẵn. Dữ liệu này chỉ giúp giao diện tiếp tục hoạt động, không phản ánh diễn biến thị trường thật.',
+              'Tin tức: tổng hợp từ bộ dữ liệu tin tài chính hằng ngày của dự án mã nguồn mở news-crawler (nguồn tin mà thư viện vnstock-js sử dụng, gồm Vietstock, VnExpress, Tin Nhanh Chứng Khoán, Markettimes...) và từ RSS của CafeF. Khi xem theo mã cổ phiếu, website chỉ hiển thị các tin có nhắc đến mã hoặc tên doanh nghiệp đó trong 7 ngày gần nhất. Bài viết thuộc bản quyền của trang nguồn, website chỉ hiển thị tiêu đề, tóm tắt và dẫn liên kết tới bài gốc.',
+              'Khi tất cả các nguồn đều không phản hồi: biểu đồ hiển thị dữ liệu giá mô phỏng, còn mục tin tức báo không tìm thấy bản tin phù hợp. Dữ liệu giá mô phỏng chỉ giúp giao diện tiếp tục hoạt động, không phản ánh diễn biến thị trường thật.',
             ],
             paragraphs: ['Vì vậy, bạn không nên dùng dữ liệu trên website làm căn cứ để giao dịch.'],
           },
@@ -125,7 +125,7 @@ export const legalContent: Record<Language, LegalContent> = {
             bullets: [
               'Vercel: lưu trữ và phân phối website. Như mọi máy chủ web, Vercel có thể ghi nhật ký kỹ thuật như địa chỉ IP và loại trình duyệt.',
               'Google Fonts: cung cấp phông chữ, trình duyệt của bạn tải phông trực tiếp từ máy chủ của Google.',
-              'DNSE (Entrade), VNDIRECT, TCBS: cung cấp giá cổ phiếu và tin tức thị trường. Các yêu cầu gửi tới những nguồn này chỉ chứa mã cổ phiếu và khoảng thời gian cần lấy, ngoài các thông tin kỹ thuật mà trình duyệt luôn gửi kèm như địa chỉ IP.',
+              'DNSE (Entrade), VNDIRECT: cung cấp giá cổ phiếu. GitHub (dự án news-crawler) và CafeF: cung cấp tin tức thị trường. Các yêu cầu gửi tới những nguồn này chỉ chứa mã cổ phiếu, ngày hoặc khoảng thời gian cần lấy, ngoài các thông tin kỹ thuật mà trình duyệt luôn gửi kèm như địa chỉ IP.',
             ],
             paragraphs: ['Mỗi dịch vụ trên có chính sách bảo mật riêng.'],
           },
@@ -180,8 +180,8 @@ export const legalContent: Record<Language, LegalContent> = {
             bullets: [
               'Stock prices: daily session data from the public DNSE (Entrade) API, fetched through the website’s own proxy server. If DNSE does not respond, the website switches to VNDIRECT as a backup source.',
               'Update frequency: the price chart refreshes about every 25 seconds. Because data is cached to load faster, prices shown may lag the exchange’s price board by a few minutes.',
-              'News: requested from VNDIRECT and TCBS in parallel, and whichever answers first is used. Articles are copyrighted by their source sites, the website only shows the headline and summary and links to the original.',
-              'When every source fails: the chart shows simulated prices and the news section shows sample stories prepared by the team. This only keeps the interface working and does not reflect the real market.',
+              'News: gathered from the daily financial news dataset of the open-source news-crawler project (the news source used by the vnstock-js library, covering Vietstock, VnExpress, Tin Nhanh Chứng Khoán, Markettimes...) and from CafeF RSS. When viewing a single ticker, the website only shows stories from the last 7 days that mention the ticker or the company name. Articles are copyrighted by their source sites; the website only shows the headline and summary and links to the original article.',
+              'When every source fails: the chart shows simulated prices and the news section reports that no matching news was found. Simulated prices only keep the interface working and do not reflect the real market.',
             ],
             paragraphs: ['For these reasons, do not rely on the data on this website to trade.'],
           },
@@ -243,7 +243,7 @@ export const legalContent: Record<Language, LegalContent> = {
             bullets: [
               'Vercel: hosting and delivering the website. Like any web server, Vercel may keep technical logs such as IP address and browser type.',
               'Google Fonts: serves the typefaces, your browser downloads them directly from Google’s servers.',
-              'DNSE (Entrade), VNDIRECT, TCBS: supply stock prices and market news. Requests to these sources only carry the ticker and the date range needed, besides the technical details every browser sends, such as your IP address.',
+              'DNSE (Entrade), VNDIRECT: supply stock prices. GitHub (the news-crawler project) and CafeF: supply market news. Requests to these sources only carry the ticker, the day or the date range needed, besides the technical details every browser sends, such as your IP address.',
             ],
             paragraphs: ['Each of these services has its own privacy policy.'],
           },

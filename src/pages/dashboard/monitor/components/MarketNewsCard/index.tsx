@@ -71,7 +71,7 @@ const MarketNewsCard: React.FC = () => {
       setNews(items);
       setCurrentPage(1);
     } catch {
-      // Handled via service fallback
+      // fetchMarketNews does not throw: when every source fails it returns an empty list
     } finally {
       if (id === requestId.current) {
         setLoading(false);
@@ -183,7 +183,7 @@ const MarketNewsCard: React.FC = () => {
                   {/* Source and Time only */}
                   <p className="text-xs text-muted-foreground m-0">
                     <span className="font-semibold text-foreground">{item.source}</span>
-                    <span> · {formatNewsTime(item.publishDate)}</span>
+                    <span className="ml-2">{formatNewsTime(item.publishDate)}</span>
                   </p>
 
                   {/* News Title */}

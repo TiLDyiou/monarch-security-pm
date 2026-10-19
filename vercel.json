@@ -5,6 +5,10 @@
       "destination": "https://services.entrade.com.vn/:path*"
     },
     {
+      "source": "/api/cafef/:path*",
+      "destination": "https://cafef.vn/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
@@ -12,6 +16,15 @@
   "headers": [
     {
       "source": "/api/entrade/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+        }
+      ]
+    },
+    {
+      "source": "/api/cafef/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

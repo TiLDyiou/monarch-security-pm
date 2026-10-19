@@ -7,9 +7,7 @@ export interface MarketNewsItem {
   publishDate: string;
   source: string;
   symbol?: string;
-  category?: 'Thị trường' | 'Doanh nghiệp' | 'Vĩ mô' | 'Nhận định';
   url?: string;
-  sentiment?: 'positive' | 'neutral' | 'negative';
 }
 
 export const POPULAR_TICKERS = [
@@ -23,213 +21,6 @@ export const POPULAR_TICKERS = [
   { code: 'VNM', name: 'Sữa Vinamilk' },
   { code: 'HPG', name: 'Thép Hòa Phát' },
   { code: 'VCB', name: 'Vietcombank' },
-];
-
-const FALLBACK_NEWS: MarketNewsItem[] = [
-  // General Market / Macro
-  {
-    id: 'm1',
-    title: 'VN-Index duy trì đà tăng trưởng tích cực, dòng tiền lan tỏa mạnh mẽ nhóm vốn hóa lớn',
-    description: 'Thanh khoản toàn thị trường vượt 22.000 tỷ đồng, lực cầu gom hàng chủ động từ khối ngoại và nhà đầu tư cá nhân tập trung ở các nhóm ngành ngân hàng, công nghệ và xuất khẩu.',
-    publishDate: dayjs().subtract(15, 'minute').format('YYYY-MM-DD HH:mm'),
-    source: 'VNDIRECT',
-    symbol: 'VN-INDEX',
-    category: 'Thị trường',
-    sentiment: 'positive',
-    url: 'https://vndirect.com.vn',
-  },
-  {
-    id: 'm2',
-    title: 'Ngân hàng Nhà nước tiếp tục điều hành chính sách tiền tệ linh hoạt, hỗ trợ thanh khoản hệ thống',
-    description: 'Mặt bằng lãi suất liên ngân hàng duy trì ổn định, tạo điều kiện thuận lợi cho dòng vốn chảy vào hoạt động sản xuất kinh doanh và thị trường chứng khoán trong các tháng cuối năm.',
-    publishDate: dayjs().subtract(45, 'minute').format('YYYY-MM-DD HH:mm'),
-    source: 'CafeF',
-    symbol: 'VĨ MÔ',
-    category: 'Vĩ mô',
-    sentiment: 'positive',
-    url: 'https://cafef.vn',
-  },
-  {
-    id: 'm3',
-    title: 'Tiến trình nâng hạng thị trường chứng khoán Việt Nam theo chuẩn FTSE ghi nhận nhiều tín hiệu khả quan',
-    description: 'Ủy ban Chứng khoán Nhà nước tích cực hoàn thiện cơ chế giao dịch không ký quỹ trước tiền mặt (Non-prefunding) cho nhà đầu tư ngoại, mở đường đón dòng vốn tỷ USD.',
-    publishDate: dayjs().subtract(2, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'Đầu tư chứng khoán',
-    symbol: 'VN-INDEX',
-    category: 'Thị trường',
-    sentiment: 'positive',
-    url: 'https://tinnhanhchungkhoan.vn',
-  },
-  {
-    id: 'm4',
-    title: 'Khối ngoại quay lại mua ròng hơn 450 tỷ đồng trên sàn HOSE, tập trung bluechip',
-    description: 'Dòng vốn ngoại đảo chiều tích cực sau chuỗi phiên thăm dò, tâm điểm giải ngân rơi vào các mã đầu ngành ngân hàng và bán lẻ có nền tảng định giá hấp dẫn.',
-    publishDate: dayjs().subtract(4, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'Vietstock',
-    symbol: 'VN-INDEX',
-    category: 'Thị trường',
-    sentiment: 'positive',
-    url: 'https://vietstock.vn',
-  },
-  {
-    id: 'm5',
-    title: 'Nhận định thị trường: Xu hướng trung hạn củng cố, cơ hội tích lũy cổ phiếu giá trị',
-    description: 'Các chuyên gia phân tích đánh giá vùng rung lắc hiện tại là thời điểm thích hợp để cơ cấu danh mục tối ưu, ưu tiên các doanh nghiệp có tăng trưởng lợi nhuận quý ổn định.',
-    publishDate: dayjs().subtract(6, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'TCBS',
-    symbol: 'VN-INDEX',
-    category: 'Nhận định',
-    sentiment: 'neutral',
-    url: 'https://tcbs.com.vn',
-  },
-
-  // BID
-  {
-    id: 'b1',
-    title: 'BID: Tăng trưởng tín dụng vượt trội, chất lượng tài sản kiểm soát an toàn',
-    description: 'Ngân hàng TMCP Đầu tư và Phát triển Việt Nam ghi nhận lợi nhuận trước thuế tăng trưởng bền vững, tỷ lệ bao phủ nợ xấu duy trì trong nhóm dẫn đầu hệ thống ngân hàng.',
-    publishDate: dayjs().subtract(1, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'VNDIRECT',
-    symbol: 'BID',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://vndirect.com.vn',
-  },
-  {
-    id: 'b2',
-    title: 'BIDV đẩy mạnh số hóa dịch vụ tài chính, CASA bứt phá mạnh',
-    description: 'Ứng dụng ngân hàng số thế hệ mới giúp BIDV gia tăng tỷ lệ tiền gửi không kỳ hạn, tối ưu hóa chi phí vốn và biên lãi thuần NIM.',
-    publishDate: dayjs().subtract(5, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'CafeF',
-    symbol: 'BID',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://cafef.vn',
-  },
-
-  // HAH
-  {
-    id: 'h1',
-    title: 'HAH: Giá cước vận tải biển hồi phục, đội tàu container hoạt động tối đa công suất',
-    description: 'Công ty Cổ phần Vận tải và Xếp dỡ Hải An hưởng lợi lớn từ sự phục hồi của các tuyến nội Á và sản lượng hàng hóa thông qua cảng biển tăng trưởng ấn tượng.',
-    publishDate: dayjs().subtract(30, 'minute').format('YYYY-MM-DD HH:mm'),
-    source: 'Vietstock',
-    symbol: 'HAH',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://vietstock.vn',
-  },
-  {
-    id: 'h2',
-    title: 'Hải An tiếp nhận thêm tàu đóng mới trọng tải lớn, mở rộng mạng lưới liên minh vận tải',
-    description: 'Việc bổ sung thêm tàu mới giúp HAH củng cố vị thế dẫn đầu phân khúc vận tải container nội địa và đẩy mạnh liên doanh khai thác các tuyến quốc tế.',
-    publishDate: dayjs().subtract(3, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'Đầu tư chứng khoán',
-    symbol: 'HAH',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://tinnhanhchungkhoan.vn',
-  },
-
-  // SSI
-  {
-    id: 's1',
-    title: 'SSI: Doanh thu mảng môi giới và cho vay margin ghi nhận bứt phá theo thanh khoản thị trường',
-    description: 'Chứng khoán SSI tiếp tục giữ vững thị phần top đầu tại sàn HOSE, hưởng lợi trực tiếp từ sự gia tăng mạnh mẽ số lượng tài khoản mở mới của nhà đầu tư.',
-    publishDate: dayjs().subtract(2, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'CafeF',
-    symbol: 'SSI',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://cafef.vn',
-  },
-  {
-    id: 's2',
-    title: 'SSI hoàn tất kế hoạch tăng vốn điều lệ, củng cố năng lực tài chính phục vụ thị trường nâng hạng',
-    description: 'Quy mô vốn mới cho phép SSI mở rộng hạn mức cho vay giao dịch ký quỹ và đa dạng hóa các sản phẩm chứng quyền, trái phiếu doanh nghiệp chất lượng cao.',
-    publishDate: dayjs().subtract(7, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'VNDIRECT',
-    symbol: 'SSI',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://vndirect.com.vn',
-  },
-
-  // MSN
-  {
-    id: 'm_msn1',
-    title: 'MSN: Mảng bán lẻ WinCommerce duy trì chuỗi tăng trưởng lợi nhuận ròng dương',
-    description: 'Tập đoàn Masan tập trung tái cấu trúc danh mục kinh doanh cốt lõi, nâng cao hiệu quả chuỗi cung ứng hàng tiêu dùng thiết yếu và giảm chi phí đòn bẩy tài chính.',
-    publishDate: dayjs().subtract(1, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'Vietstock',
-    symbol: 'MSN',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://vietstock.vn',
-  },
-  {
-    id: 'm_msn2',
-    title: 'Masan Consumer mở rộng thị trường xuất khẩu, đón đầu mùa tiêu dùng cao điểm',
-    description: 'Các sản phẩm gia vị và thực phẩm tiện lợi của Masan ghi nhận doanh thu xuất khẩu tăng trưởng 2 chữ số tại các thị trường trọng điểm châu Á và Bắc Mỹ.',
-    publishDate: dayjs().subtract(8, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'TCBS',
-    symbol: 'MSN',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://tcbs.com.vn',
-  },
-
-  // FPT
-  {
-    id: 'f1',
-    title: 'FPT: Doanh thu dịch vụ CNTT nước ngoài vượt mốc 1 tỷ USD, đẩy mạnh hợp tác AI',
-    description: 'Khối công nghệ của FPT ghi nhận lượng hợp đồng ký mới tăng trưởng mạnh từ thị trường Nhật Bản và Mỹ, tiếp tục khẳng định vị thế trung tâm công nghệ bán dẫn và trí tuệ nhân tạo.',
-    publishDate: dayjs().subtract(40, 'minute').format('YYYY-MM-DD HH:mm'),
-    source: 'CafeF',
-    symbol: 'FPT',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://cafef.vn',
-  },
-
-  // VIC
-  {
-    id: 'v1',
-    title: 'VIC: Doanh số bàn giao bất động sản và xe điện VinFast tăng trưởng ấn tượng',
-    description: 'Tập đoàn Vingroup đẩy mạnh chiến lược phát triển hệ sinh thái xanh toàn diện, mở rộng mạng lưới trạm sạc và củng cố nguồn dòng tiền từ các dự án đại đô thị.',
-    publishDate: dayjs().subtract(3, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'Vietstock',
-    symbol: 'VIC',
-    category: 'Doanh nghiệp',
-    sentiment: 'neutral',
-    url: 'https://vietstock.vn',
-  },
-
-  // VNM
-  {
-    id: 'vnm1',
-    title: 'VNM: Biên lợi nhuận gộp phục hồi nhờ giá nguyên liệu sữa bột hạ nhiệt',
-    description: 'Vinamilk gia tăng thị phần sữa đặc và sữa tươi sau chiến dịch tái định vị thương hiệu, duy trì chính sách chi trả cổ tức tiền mặt đều đặn và hấp dẫn.',
-    publishDate: dayjs().subtract(5, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'Đầu tư chứng khoán',
-    symbol: 'VNM',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://tinnhanhchungkhoan.vn',
-  },
-
-  // HPG
-  {
-    id: 'hpg1',
-    title: 'HPG: Sản lượng tiêu thụ thép xây dựng và HRC tăng mạnh, đại dự án Dung Quất 2 sắp vận hành',
-    description: 'Tập đoàn Hòa Phát giữ vững vị thế số 1 thị phần thép tại Việt Nam, chuẩn bị đưa phân kỳ 1 dự án Dung Quất 2 vào sản xuất thương mại để gia tăng doanh thu.',
-    publishDate: dayjs().subtract(2, 'hour').format('YYYY-MM-DD HH:mm'),
-    source: 'VNDIRECT',
-    symbol: 'HPG',
-    category: 'Doanh nghiệp',
-    sentiment: 'positive',
-    url: 'https://vndirect.com.vn',
-  },
 ];
 
 /* ---------- Text normalisation and search ---------- */
@@ -302,71 +93,140 @@ export const searchNews = (index: NewsIndexEntry[], query: string): MarketNewsIt
 
 /* ---------- Fetching ---------- */
 
-type RawNews = Record<string, unknown>;
+// Daily files of the open-source ttqteo/news-crawler project, the news source behind vnstock-js (Vietstock, VnExpress,
+// Tin Nhanh Chứng Khoán, Markettimes, Người Quan Sát...). One file per Vietnam calendar day, served with CORS
+const CRAWLER_URL = 'https://raw.githubusercontent.com/ttqteo/news-crawler/master/docs/news';
+// CafeF RSS sends no CORS headers, so it goes through the same-origin /api/cafef proxy (vite.config.ts, vercel.json)
+const CAFEF_FEEDS = ['thi-truong-chung-khoan', 'doanh-nghiep', 'tai-chinh-ngan-hang'];
 
-interface NewsSource {
-  name: string;
-  url: (key: string) => string;
-  list: (json: unknown) => RawNews[];
-  map: (raw: RawNews, key: string) => MarketNewsItem;
-}
+const MARKET_DAYS = 2; // broad market: today and yesterday
+const TICKER_DAYS = 7; // a single ticker is rarely in the news, so look back a week
+const REQUEST_TIMEOUT_MS = 8000;
+const CACHE_TTL_MS = 5 * 60 * 1000; // today's file and CafeF stay fresh for 5 minutes; Refresh bypasses it
 
-const isTicker = (key: string) => key !== 'ALL';
-const str = (value: unknown) => (typeof value === 'string' ? value : '');
-const toDate = (value: unknown) => {
-  const d = dayjs(str(value) || undefined);
-  return (d.isValid() ? d : dayjs()).format('YYYY-MM-DD HH:mm');
+// Words that mark an article as being about a ticker, besides the ticker itself (diacritics-free, lowercase)
+const TICKER_NAMES: Record<string, string[]> = {
+  BID: ['bidv'],
+  HAH: ['van tai hai an'],
+  SSI: [],
+  MSN: ['masan'],
+  FPT: [],
+  VIC: ['vingroup'],
+  VNM: ['vinamilk'],
+  HPG: ['hoa phat'],
+  VCB: ['vietcombank'],
 };
 
-const SOURCES: NewsSource[] = [
-  {
-    name: 'VNDIRECT',
-    url: (key) =>
-      isTicker(key)
-        ? `https://finfo-api.vndirect.com.vn/v4/news?q=code:${key}&sort=newsDate:desc&size=20`
-        : 'https://finfo-api.vndirect.com.vn/v4/news?sort=newsDate:desc&size=25',
-    list: (json) => ((json as { data?: RawNews[] })?.data ?? []),
-    map: (raw, key) => ({
-      id: str(raw.id) || str(raw.newsUrl) || str(raw.newsTitle),
-      title: str(raw.newsTitle) || str(raw.title),
-      description: str(raw.newsDescription) || str(raw.description) || str(raw.newsTitle),
-      publishDate: toDate(raw.newsDate),
-      source: str(raw.newsSource) || 'VNDIRECT',
-      symbol: str(raw.code) || (isTicker(key) ? key : 'VN-INDEX'),
-      category: isTicker(key) ? 'Doanh nghiệp' : 'Thị trường',
-      url: str(raw.newsUrl) || 'https://vndirect.com.vn',
-    }),
-  },
-  {
-    name: 'TCBS',
-    url: (key) =>
-      isTicker(key)
-        ? `https://apipubaws.tcbs.com.vn/tcanalysis/v1/ticker/${key}/news?page=0&size=15`
-        : 'https://apipubaws.tcbs.com.vn/tcanalysis/v1/news?page=0&size=20',
-    list: (json) => {
-      const data = (json as { data?: RawNews[] })?.data;
-      return data ?? (Array.isArray(json) ? (json as RawNews[]) : []);
-    },
-    map: (raw, key) => ({
-      id: str(raw.id) || str(raw.url) || str(raw.title),
-      title: str(raw.title),
-      description: str(raw.description) || str(raw.title),
-      publishDate: toDate(raw.publishDate),
-      source: str(raw.source) || 'TCBS',
-      symbol: str(raw.ticker) || (isTicker(key) ? key : 'VN-INDEX'),
-      category: isTicker(key) ? 'Doanh nghiệp' : 'Thị trường',
-      url: str(raw.url) || 'https://tcbs.com.vn',
-    }),
-  },
-];
+const fetchWithTimeout = async (url: string) => {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  try {
+    return await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+};
 
-const CACHE_TTL_MS = 5 * 60 * 1000; // results stay fresh for 5 minutes; Refresh bypasses it
-const LIVE_TIMEOUT_MS = 2500; // budget for the live sources, raced in parallel
-const SOURCE_COOLDOWN_MS = 2 * 60 * 1000; // skip a source that just failed instead of waiting on it again
+const pad = (n: number) => String(n).padStart(2, '0');
 
-const newsCache = new Map<string, { data: MarketNewsItem[]; timestamp: number }>();
-const inFlight = new Map<string, Promise<MarketNewsItem[]>>();
-const sourceDownUntil = new Map<string, number>();
+// Files are named MM-DD-YYYY after the Vietnam (UTC+7) day, whatever the viewer's time zone
+const vnDayKey = (daysAgo: number) => {
+  const d = new Date(Date.now() + 7 * 3_600_000 - daysAgo * 86_400_000);
+  return `${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}-${d.getUTCFullYear()}`;
+};
+
+const toLocal = (date: dayjs.Dayjs) => (date.isValid() ? date : dayjs()).format('YYYY-MM-DD HH:mm');
+
+interface CrawlerItem {
+  item_id?: string;
+  source?: string;
+  title?: string;
+  summary?: string;
+  link?: string;
+  published?: string;
+}
+
+// null means the request failed (not cached, retried next time); [] means the source answered with nothing
+type SourceResult = MarketNewsItem[] | null;
+
+const loadCrawlerDay = async (key: string): Promise<SourceResult> => {
+  try {
+    const res = await fetchWithTimeout(`${CRAWLER_URL}/${key}.json`);
+    // Today's file only appears once the first story of the day is crawled
+    if (res.status === 404) return [];
+    if (!res.ok) return null;
+    const raw = (await res.json()) as Record<string, CrawlerItem>;
+    return Object.values(raw ?? {}).map((item) => ({
+      id: item.item_id || item.link || item.title || '',
+      title: (item.title ?? '').trim(),
+      description: (item.summary ?? '').trim(),
+      publishDate: toLocal(dayjs(item.published)),
+      source: item.source || 'News',
+      url: item.link || undefined,
+    }));
+  } catch {
+    return null;
+  }
+};
+
+const MONTHS: Record<string, string> = {
+  Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+  Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12',
+};
+
+// CafeF writes a two-digit year ("Mon, 19 Oct 26 18:28:00 +0700"), which Date parsing handles differently per browser
+const parseRssDate = (value: string) => {
+  const m = value.match(/(\d{1,2}) (\w{3}) (\d{2,4}) (\d{2}):(\d{2})(?::(\d{2}))? ([+-]\d{2})(\d{2})/);
+  if (!m || !MONTHS[m[2]]) return toLocal(dayjs(value));
+  const year = m[3].length === 2 ? `20${m[3]}` : m[3];
+  return toLocal(dayjs(`${year}-${MONTHS[m[2]]}-${pad(Number(m[1]))}T${m[4]}:${m[5]}:${m[6] ?? '00'}${m[7]}:${m[8]}`));
+};
+
+const htmlToText = (html: string) => new DOMParser().parseFromString(html, 'text/html').body.textContent?.trim() ?? '';
+
+const loadCafefFeed = async (feed: string): Promise<SourceResult> => {
+  try {
+    const res = await fetchWithTimeout(`/api/cafef/${feed}.rss`);
+    if (!res.ok) return null;
+    const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
+    // CafeF answers bots with an HTML "sorry" page instead of the feed
+    if (doc.querySelector('parsererror') || !doc.querySelector('rss')) return null;
+    return Array.from(doc.querySelectorAll('item')).map((item) => {
+      const field = (tag: string) => item.querySelector(tag)?.textContent?.trim() ?? '';
+      const link = field('link');
+      return {
+        id: link || field('title'),
+        title: field('title'),
+        description: htmlToText(field('description')),
+        publishDate: parseRssDate(field('pubDate')),
+        source: 'CafeF',
+        url: link || undefined,
+      };
+    });
+  } catch {
+    return null;
+  }
+};
+
+const loadCafef = async (): Promise<SourceResult> => {
+  const feeds = await Promise.all(CAFEF_FEEDS.map(loadCafefFeed));
+  return feeds.every((items) => items === null) ? null : feeds.flatMap((items) => items ?? []);
+};
+
+// Past days are final, so they are kept for the session; today's file keeps growing and expires after the TTL.
+// Promises are cached so concurrent views share one request; a failed one is dropped and retried next time
+const cache = new Map<string, { at: number; request: Promise<SourceResult> }>();
+
+const cached = (key: string, expires: boolean, load: () => Promise<SourceResult>) => {
+  const hit = cache.get(key);
+  if (hit && (!expires || Date.now() - hit.at < CACHE_TTL_MS)) return hit.request;
+  const request = load().then((result) => {
+    if (result === null) cache.delete(key);
+    return result;
+  });
+  cache.set(key, { at: Date.now(), request });
+  return request;
+};
 
 // Drop items without a title, merge duplicates reported by several sources, newest first
 const tidy = (items: MarketNewsItem[]): MarketNewsItem[] => {
@@ -381,79 +241,34 @@ const tidy = (items: MarketNewsItem[]): MarketNewsItem[] => {
   return unique.sort((a, b) => dayjs(b.publishDate).valueOf() - dayjs(a.publishDate).valueOf());
 };
 
-// `race.won` is set once a source has answered, so cancelling the slower ones is not counted as their failure;
-// a source that times out or errors is put on cooldown
-const fetchSource = async (source: NewsSource, key: string, signal: AbortSignal, race: { won: boolean }) => {
-  try {
-    const res = await fetch(source.url(key), { signal });
-    if (!res.ok) throw new Error(`${source.name} ${res.status}`);
-    const items = source.list(await res.json()).map((raw) => source.map(raw, key));
-    if (items.length === 0) throw new Error(`${source.name} empty`);
-    return items;
-  } catch (error) {
-    if (!race.won) sourceDownUntil.set(source.name, Date.now() + SOURCE_COOLDOWN_MS);
-    throw error;
-  }
+// The ticker as a word of its own ("BID", not the "BID" inside "BIDV"), or one of the company's names
+const mentions = (item: MarketNewsItem, ticker: string) => {
+  const text = `${item.title} ${item.description}`;
+  if (text.split(/[^\p{L}\p{N}]+/u).includes(ticker)) return true;
+  const words = ` ${normalizeText(text).replace(/[^a-z0-9]+/g, ' ')} `;
+  return (TICKER_NAMES[ticker] ?? []).some((name) => words.includes(` ${name} `));
 };
 
-// Resolves with the first promise that succeeds, rejects only when all of them fail (Promise.any without ES2021)
-const firstSuccess = <T,>(promises: Promise<T>[]) =>
-  new Promise<T>((resolve, reject) => {
-    let failed = 0;
-    promises.forEach((promise) =>
-      promise.then(resolve, () => {
-        failed += 1;
-        if (failed === promises.length) reject(new Error('All sources failed'));
-      }),
-    );
-  });
-
-const fetchLive = async (key: string): Promise<MarketNewsItem[] | null> => {
-  const sources = SOURCES.filter((source) => (sourceDownUntil.get(source.name) ?? 0) < Date.now());
-  if (sources.length === 0) return null;
-
-  const controller = new AbortController();
-  const race = { won: false };
-  const timer = setTimeout(() => controller.abort(), LIVE_TIMEOUT_MS);
-  try {
-    // First source to answer with news wins; the slower requests are cancelled
-    const items = await firstSuccess(sources.map((source) => fetchSource(source, key, controller.signal, race)));
-    race.won = true;
-    return items;
-  } catch {
-    return null;
-  } finally {
-    clearTimeout(timer);
-    controller.abort();
-  }
-};
-
-// Ticker views only show news for that ticker; market-wide items are no longer mixed in
-const fallbackFor = (key: string) =>
-  isTicker(key) ? FALLBACK_NEWS.filter((item) => item.symbol?.toUpperCase() === key) : FALLBACK_NEWS;
-
+/**
+ * Latest market news, or the news about one ticker. Never throws: when every source fails the list is empty,
+ * and the card shows its "no matching news" state rather than made-up stories.
+ */
 export async function fetchMarketNews(
   symbol?: string,
   options: { force?: boolean } = {},
 ): Promise<MarketNewsItem[]> {
-  const key = symbol && symbol !== 'ALL' ? symbol.toUpperCase() : 'ALL';
+  const ticker = symbol && symbol !== 'ALL' ? symbol.toUpperCase() : null;
+  if (options.force) {
+    cache.delete(`crawler:${vnDayKey(0)}`);
+    cache.delete('cafef');
+  }
 
-  const cached = newsCache.get(key);
-  if (!options.force && cached && Date.now() - cached.timestamp < CACHE_TTL_MS) return cached.data;
+  const days = Array.from({ length: ticker ? TICKER_DAYS : MARKET_DAYS }, (_, daysAgo) => {
+    const key = vnDayKey(daysAgo);
+    return cached(`crawler:${key}`, daysAgo === 0, () => loadCrawlerDay(key));
+  });
+  const results = await Promise.all([...days, cached('cafef', true, loadCafef)]);
 
-  // Reuse a request that is already on its way for the same ticker
-  const pending = inFlight.get(key);
-  if (pending) return pending;
-
-  if (options.force) SOURCES.forEach((source) => sourceDownUntil.delete(source.name));
-
-  const request = (async () => {
-    const live = await fetchLive(key);
-    const data = tidy(live ?? fallbackFor(key));
-    newsCache.set(key, { data, timestamp: Date.now() });
-    return data;
-  })().finally(() => inFlight.delete(key));
-
-  inFlight.set(key, request);
-  return request;
+  const items = tidy(results.flatMap((result) => result ?? []));
+  return ticker ? items.filter((item) => mentions(item, ticker)).map((item) => ({ ...item, symbol: ticker })) : items;
 }
