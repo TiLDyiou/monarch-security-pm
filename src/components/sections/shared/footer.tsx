@@ -4,6 +4,7 @@ import SectionLink from "@/components/section-link";
 import { SECTIONS } from "@/lib/sections";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Link } from "react-router-dom";
+import { LEGAL_PATHS } from "@/pages/legal/content";
 
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/", label: "Facebook" },
@@ -21,15 +22,9 @@ const Footer = () => {
     { title: t.landing.footer.serviceLinks.faq, section: SECTIONS.faq },
   ];
 
-  const innerLinks = [
-    { title: t.landing.footer.methodLinks.allocation, section: SECTIONS.allocation },
-    { title: t.landing.footer.methodLinks.constraints, section: SECTIONS.principles },
-    { title: t.landing.footer.methodLinks.rebalance, section: SECTIONS.process },
-  ];
-
   const utilityLinks = [
-    { title: t.landing.footer.legalLinks.terms, href: "/legal/terms-&-condition" },
-    { title: t.landing.footer.legalLinks.privacy, href: "/legal/privacy-policy" },
+    { title: t.landing.footer.legalLinks.terms, href: LEGAL_PATHS.terms },
+    { title: t.landing.footer.legalLinks.privacy, href: LEGAL_PATHS.privacy },
   ];
 
   return (
@@ -51,28 +46,13 @@ const Footer = () => {
           </div>
 
           {/* Right Column: Links */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-2 gap-8 lg:gap-12">
             <div>
               <h4 className="font-semibold text-primary mb-5 text-sm uppercase tracking-wider">
                 {t.landing.footer.servicesHeading}
               </h4>
               <ul className="space-y-3.5">
                 {pageLinks.map((link) => (
-                  <li key={link.title}>
-                    <SectionLink to={link.section} className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-                      {link.title}
-                    </SectionLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-primary mb-5 text-sm uppercase tracking-wider">
-                {t.landing.footer.methodsHeading}
-              </h4>
-              <ul className="space-y-3.5">
-                {innerLinks.map((link) => (
                   <li key={link.title}>
                     <SectionLink to={link.section} className="text-muted-foreground hover:text-foreground transition-colors text-sm">
                       {link.title}

@@ -12,7 +12,6 @@ import BlogEditor from "./pages/dashboard/blog/editor";
 import ProfilePage from "./pages/dashboard/profile";
 import EarlyAccess from "./pages/early-access";
 import Home from "./pages/home";
-import CookiePolicyPage from "./pages/legal/cookie-policy";
 import PrivacyPolicyPage from "./pages/legal/privacy-&-policy";
 import TermsAndConditionPage from "./pages/legal/terms-&-condition";
 import LoginPage from "./pages/login";
@@ -66,7 +65,8 @@ const App = () => (
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/legal/terms-&-condition" element={<TermsAndConditionPage />} />
                 <Route path="/legal/privacy-policy" element={<PrivacyPolicyPage />} />
-                <Route path="/legal/cookie-policy" element={<CookiePolicyPage />} />
+                {/* The cookie policy now lives inside the privacy policy */}
+                <Route path="/legal/cookie-policy" element={<Navigate to="/legal/privacy-policy" replace />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </AuthProvider>

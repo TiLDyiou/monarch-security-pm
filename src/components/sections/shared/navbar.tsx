@@ -9,6 +9,9 @@ const Navbar = () => {
   const { user, loading } = useAuth();
   const { pathname } = useLocation();
 
+  // Over the gradient waves behind the legal pages, a near-opaque white pill looks pasted on: let the waves show through
+  const onWaves = pathname.startsWith("/legal/");
+
   const goHome = () => {
     if (pathname === "/") window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -20,7 +23,7 @@ const Navbar = () => {
           <img src="/images/common/logo.svg" alt="Monarch Securities" className="h-10 md:h-12 w-auto" />
         </Link>
         <div className="flex items-center gap-3">
-          <LanguageToggle />
+          <LanguageToggle className={onWaves ? "bg-white/30 border-white/50" : undefined} />
           {!loading && user && <UserMenu />}
         </div>
       </Container>

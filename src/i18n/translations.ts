@@ -149,17 +149,11 @@ export interface TranslationDictionary {
     footer: {
       brandDesc: string;
       servicesHeading: string;
-      methodsHeading: string;
       legalHeading: string;
       serviceLinks: {
         services: string;
         process: string;
         faq: string;
-      };
-      methodLinks: {
-        allocation: string;
-        constraints: string;
-        rebalance: string;
       };
       legalLinks: {
         terms: string;
@@ -668,20 +662,14 @@ export const translations: Record<Language, TranslationDictionary> = {
         brandDesc:
           'Monarch Securities cung cấp dịch vụ hoạch định tài chính và quản lý danh mục đầu tư độc lập, minh bạch, đồng hành lâu dài cùng gia đình bạn.',
         servicesHeading: 'Dịch vụ',
-        methodsHeading: 'Phương pháp',
         legalHeading: 'Pháp lý',
         serviceLinks: {
           services: 'Dịch vụ tư vấn',
           process: 'Quy trình hoạch định',
           faq: 'Câu hỏi thường gặp',
         },
-        methodLinks: {
-          allocation: 'Công cụ theo dõi danh mục',
-          constraints: 'Ràng buộc đầu tư',
-          rebalance: 'Tái cân bằng danh mục',
-        },
         legalLinks: {
-          terms: 'Điều khoản dịch vụ',
+          terms: 'Điều khoản sử dụng',
           privacy: 'Chính sách bảo mật',
         },
         copyright: 'Monarch Securities. Tư vấn danh mục đầu tư cá nhân độc lập. Bảo lưu mọi quyền.',
@@ -1229,20 +1217,14 @@ export const translations: Record<Language, TranslationDictionary> = {
         brandDesc:
           'Monarch Securities provides independent, fiduciary financial planning and portfolio management, partnering long-term with your family.',
         servicesHeading: 'Services',
-        methodsHeading: 'Methodology',
         legalHeading: 'Legal',
         serviceLinks: {
           services: 'Advisory Services',
           process: 'Planning Process',
           faq: 'Frequently Asked Questions',
         },
-        methodLinks: {
-          allocation: 'Portfolio Tools',
-          constraints: 'Investment Constraints',
-          rebalance: 'Portfolio Rebalancing',
-        },
         legalLinks: {
-          terms: 'Terms of Service',
+          terms: 'Terms of Use',
           privacy: 'Privacy Policy',
         },
         copyright: 'Monarch Securities. Independent personal wealth and portfolio advisory. All rights reserved.',
