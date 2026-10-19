@@ -198,9 +198,9 @@ export const FrontierIllustration = () => {
             animate={live ? { opacity: [0, 0, 1, 1], y: [6, 6, 0, 0] } : { opacity: 1, y: 0 }}
             transition={live ? { ...loop, times: [0, 0.7, 0.78, 1] } : { duration: 0 }}
           >
-            {/* Same look as the bg-primary/10 chips, but opaque so the dots behind don't show through */}
-            <rect x={OPTIMAL.x - 58} y={OPTIMAL.y + 14} width="116" height="24" rx="12" fill="#e6f6f7" stroke={TEAL} strokeOpacity="0.35" />
-            <text x={OPTIMAL.x} y={OPTIMAL.y + 30} textAnchor="middle" fontSize="11" fontWeight="600" fill={TEAL}>
+            {/* Solid colors only; the darker teal keeps the small label readable on white */}
+            <rect x={OPTIMAL.x - 58} y={OPTIMAL.y + 14} width="116" height="24" rx="12" fill="#fff" stroke={TEAL} strokeWidth="1.5" />
+            <text x={OPTIMAL.x} y={OPTIMAL.y + 30} textAnchor="middle" fontSize="11" fontWeight="600" fill="#007f8c">
               {t.landing.process.illustrations.frontier.optimalTag}
             </text>
           </motion.g>
