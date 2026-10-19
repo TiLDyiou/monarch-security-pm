@@ -58,9 +58,8 @@ export const RiskProfileIllustration = () => {
       <div ref={ref} className="relative grid h-full grid-cols-[1.05fr_1fr] items-center gap-3 p-5 md:p-7">
         <div className="flex flex-col items-center">
           <svg viewBox="0 0 200 118" className="w-full max-w-[220px]" aria-hidden>
-            <path d={arc(180, 0)} stroke="#e2e8f0" strokeWidth="16" fill="none" strokeLinecap="round" />
-            <path d={arc(178, 122)} stroke="#bfe9ee" strokeWidth="16" fill="none" strokeLinecap="round" />
-            <path d={arc(58, 2)} stroke={TEAL} strokeWidth="16" fill="none" strokeLinecap="round" />
+            <path d={arc(180, 122)} stroke="#bfe9ee" strokeWidth="16" fill="none" strokeLinecap="round" />
+            <path d={arc(58, 0)} stroke={TEAL} strokeWidth="16" fill="none" strokeLinecap="round" />
             <path d={arc(122, 58)} stroke="#5cc4cf" strokeWidth="16" fill="none" />
             <motion.g
               initial={false}
