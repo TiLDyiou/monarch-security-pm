@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { appConfig } from "@/utils/app-config";
 
 interface SEOProps {
     title: string;
@@ -19,7 +20,7 @@ const SEO = ({
     twitterCard = "summary_large_image",
     jsonLd,
 }: SEOProps) => {
-    const siteUrl = "https://morganblake.com";
+    const siteUrl = appConfig.url;
     const fullUrl = `${siteUrl}${canonicalUrl}`;
     const fullImageUrl = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
 
@@ -37,7 +38,7 @@ const SEO = ({
             <meta property="og:url" content={fullUrl} />
             <meta property="og:image" content={fullImageUrl} />
             <meta property="og:image:alt" content={title} />
-            <meta property="og:site_name" content="Revio - Offline & Online Payment" />
+            <meta property="og:site_name" content={appConfig.name} />
             <meta property="og:locale" content="en_US" />
 
             {/* Twitter Card Meta Tags */}
@@ -50,7 +51,7 @@ const SEO = ({
             <meta name="twitter:creator" content="@revio.photo" />
 
             {/* Additional Meta Tags */}
-            <meta name="author" content="Revio" />
+            <meta name="author" content={appConfig.name} />
             <meta name="robots" content="index, follow" />
             <meta name="googlebot" content="index, follow" />
 
