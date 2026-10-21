@@ -125,7 +125,7 @@ export interface TranslationDictionary {
             under: string;
             onTarget: string;
           };
-          targetWeightNote: string;
+          reviewNote: string;
         };
       };
     };
@@ -584,7 +584,7 @@ export const translations: Record<Language, TranslationDictionary> = {
               under: 'Dưới mục tiêu',
               onTarget: 'Đúng mục tiêu',
             },
-            targetWeightNote: 'Vạch đen là tỷ trọng mục tiêu. Danh mục được rà soát định kỳ.',
+            reviewNote: 'Danh mục được rà soát định kỳ.',
           },
         },
       },
@@ -1139,7 +1139,7 @@ export const translations: Record<Language, TranslationDictionary> = {
               under: 'Underweight',
               onTarget: 'On target',
             },
-            targetWeightNote: 'Black indicator denotes target weight. Allocations are reviewed periodically.',
+            reviewNote: 'Allocations are reviewed periodically.',
           },
         },
       },

@@ -335,18 +335,13 @@ export const RebalanceIllustration = () => {
                     </motion.span>
                   </AnimatePresence>
                 </div>
-                <div className="relative h-3 rounded-full bg-slate-200/70">
+                <div className="h-3 rounded-full bg-slate-200/70">
                   <motion.div
                     className="h-full rounded-full"
                     style={{ background: r.color }}
                     initial={false}
                     animate={{ width: `${r.value}%` }}
                     transition={GLIDE}
-                  />
-                  <span
-                    className="absolute -top-1 -bottom-1 w-0.5 rounded-full bg-slate-900/70"
-                    style={{ left: `${r.target}%` }}
-                    aria-hidden
                   />
                 </div>
               </div>
@@ -357,7 +352,7 @@ export const RebalanceIllustration = () => {
             <motion.span className="h-full" style={{ background: STOCKS }} initial={false} animate={{ width: `${current.stocks}%` }} transition={GLIDE} />
             <motion.span className="h-full flex-1" style={{ background: BONDS }} />
           </div>
-          <p className="mt-2 text-[11px] text-muted-foreground">{t.landing.process.illustrations.rebalance.targetWeightNote}</p>
+          <p className="mt-2 text-[11px] text-muted-foreground">{t.landing.process.illustrations.rebalance.reviewNote}</p>
         </div>
       </div>
     </Stage>
