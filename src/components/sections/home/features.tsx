@@ -25,6 +25,7 @@ const Features = () => {
       imageSrc: "/images/home/feature-1.png",
       imageAlt: t.landing.features.cards.card1.imageAlt,
       buttonText: t.landing.features.cards.card1.buttonText,
+      section: SECTIONS.principles,
     },
     {
       id: 2,
@@ -33,6 +34,7 @@ const Features = () => {
       imageSrc: "/images/home/feature-2.webp",
       imageAlt: t.landing.features.cards.card2.imageAlt,
       buttonText: t.landing.features.cards.card2.buttonText,
+      section: SECTIONS.process,
     },
     {
       id: 3,
@@ -72,7 +74,7 @@ const Features = () => {
                   {card.buttonText && (
                     <FeatureCardAction>
                       <Button asChild>
-                        <SectionLink to={SECTIONS.process}>
+                        <SectionLink to={card.section ?? SECTIONS.process}>
                           {card.buttonText}
                         </SectionLink>
                       </Button>

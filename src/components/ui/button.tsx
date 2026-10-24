@@ -50,7 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     // 2. Create the sliding content structure
     const content = shouldSlide ? (
       <>
-        <span className="flex items-center gap-1.5 transition-transform duration-300 ease-in-out group-hover:-translate-y-[150%]">
+        <span className="flex items-center gap-1.5 transition-transform duration-300 ease-in-out group-hover:-translate-y-[350%]">
           {childChildren}
         </span>
         <span className="absolute inset-0 flex h-full w-full items-center justify-center gap-1.5 transition-transform duration-300 ease-in-out translate-y-[150%] group-hover:translate-y-0 text-inherit">
